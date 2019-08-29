@@ -1,9 +1,10 @@
 #include <iostream>
 #include <gravity/solver.h>
 
-#include <filenames.h>
+#include "files.h"
 
 using namespace gravity;
+
 
 int main (int argc, char * argv[]) {
 

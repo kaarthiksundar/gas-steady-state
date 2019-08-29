@@ -1,6 +1,5 @@
 file(REMOVE_RECURSE
   "CMakeFiles/gas-steady-state.dir/main.cpp.o"
-  "CMakeFiles/gas-steady-state.dir/filenames.cpp.o"
   "../../bin/gas-steady-state.pdb"
   "../../bin/gas-steady-state"
 )

@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-../include/filenames.h
+../include/files.h
 string
 -
 
@@ -366,15 +366,11 @@ limits
 random
 -
 
-/Users/kaarthik/Documents/research/gas-steady-state/src/filenames.cpp
-filenames.h
--
-
 /Users/kaarthik/Documents/research/gas-steady-state/src/main.cpp
 iostream
 -
 gravity/solver.h
 -
-filenames.h
--
+files.h
+/Users/kaarthik/Documents/research/gas-steady-state/src/files.h
 

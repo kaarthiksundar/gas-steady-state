@@ -125,33 +125,6 @@ gas-steady-state/fast:
 	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/build
 .PHONY : gas-steady-state/fast
 
-filenames.o: filenames.cpp.o
-
-.PHONY : filenames.o
-
-# target to build an object file
-filenames.cpp.o:
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/filenames.cpp.o
-.PHONY : filenames.cpp.o
-
-filenames.i: filenames.cpp.i
-
-.PHONY : filenames.i
-
-# target to preprocess a source file
-filenames.cpp.i:
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/filenames.cpp.i
-.PHONY : filenames.cpp.i
-
-filenames.s: filenames.cpp.s
-
-.PHONY : filenames.s
-
-# target to generate assembly for a file
-filenames.cpp.s:
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/filenames.cpp.s
-.PHONY : filenames.cpp.s
-
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -188,9 +161,6 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... gas-steady-state"
-	@echo "... filenames.o"
-	@echo "... filenames.i"
-	@echo "... filenames.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

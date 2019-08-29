@@ -17,7 +17,7 @@ endif()
 
 
 
-# LEMON settings
+# GRAVITY settings
 find_package(GRAVITY)
 include_directories(${GRAVITY_INCLUDE_DIRS})
 set(LIBS ${LIBS} ${GRAVITY_LIBRARIES})
