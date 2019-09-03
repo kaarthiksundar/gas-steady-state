@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named option_parser
+
+# Build rule for target.
+option_parser: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 option_parser
+.PHONY : option_parser
+
+# fast build rule for target.
+option_parser/fast:
+	$(MAKE) -f third_party/cpp_option_parser/CMakeFiles/option_parser.dir/build.make third_party/cpp_option_parser/CMakeFiles/option_parser.dir/build
+.PHONY : option_parser/fast
+
+#=============================================================================
 # Target rules for targets named gas-steady-state
 
 # Build rule for target.
@@ -131,6 +144,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... option_parser"
 	@echo "... gas-steady-state"
 .PHONY : help
 

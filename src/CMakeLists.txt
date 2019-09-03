@@ -6,6 +6,13 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
 add_executable(gas-steady-state
     main.cpp 
+    pipe.cpp
+    junction.cpp
+    compressor.cpp
+    gnode.cpp
+    input_params.cpp
+    network.cpp
+    files.cpp
 ) 
 
-target_link_libraries(gas-steady-state ${GRAVITY_LIBRARIES})
+target_link_libraries(gas-steady-state ${GRAVITY_LIBRARIES} ${CPP_OPTION_PARSER})

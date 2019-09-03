@@ -125,6 +125,141 @@ gas-steady-state/fast:
 	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/build
 .PHONY : gas-steady-state/fast
 
+compressor.o: compressor.cpp.o
+
+.PHONY : compressor.o
+
+# target to build an object file
+compressor.cpp.o:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/compressor.cpp.o
+.PHONY : compressor.cpp.o
+
+compressor.i: compressor.cpp.i
+
+.PHONY : compressor.i
+
+# target to preprocess a source file
+compressor.cpp.i:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/compressor.cpp.i
+.PHONY : compressor.cpp.i
+
+compressor.s: compressor.cpp.s
+
+.PHONY : compressor.s
+
+# target to generate assembly for a file
+compressor.cpp.s:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/compressor.cpp.s
+.PHONY : compressor.cpp.s
+
+files.o: files.cpp.o
+
+.PHONY : files.o
+
+# target to build an object file
+files.cpp.o:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/files.cpp.o
+.PHONY : files.cpp.o
+
+files.i: files.cpp.i
+
+.PHONY : files.i
+
+# target to preprocess a source file
+files.cpp.i:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/files.cpp.i
+.PHONY : files.cpp.i
+
+files.s: files.cpp.s
+
+.PHONY : files.s
+
+# target to generate assembly for a file
+files.cpp.s:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/files.cpp.s
+.PHONY : files.cpp.s
+
+gnode.o: gnode.cpp.o
+
+.PHONY : gnode.o
+
+# target to build an object file
+gnode.cpp.o:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/gnode.cpp.o
+.PHONY : gnode.cpp.o
+
+gnode.i: gnode.cpp.i
+
+.PHONY : gnode.i
+
+# target to preprocess a source file
+gnode.cpp.i:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/gnode.cpp.i
+.PHONY : gnode.cpp.i
+
+gnode.s: gnode.cpp.s
+
+.PHONY : gnode.s
+
+# target to generate assembly for a file
+gnode.cpp.s:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/gnode.cpp.s
+.PHONY : gnode.cpp.s
+
+input_params.o: input_params.cpp.o
+
+.PHONY : input_params.o
+
+# target to build an object file
+input_params.cpp.o:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/input_params.cpp.o
+.PHONY : input_params.cpp.o
+
+input_params.i: input_params.cpp.i
+
+.PHONY : input_params.i
+
+# target to preprocess a source file
+input_params.cpp.i:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/input_params.cpp.i
+.PHONY : input_params.cpp.i
+
+input_params.s: input_params.cpp.s
+
+.PHONY : input_params.s
+
+# target to generate assembly for a file
+input_params.cpp.s:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/input_params.cpp.s
+.PHONY : input_params.cpp.s
+
+junction.o: junction.cpp.o
+
+.PHONY : junction.o
+
+# target to build an object file
+junction.cpp.o:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/junction.cpp.o
+.PHONY : junction.cpp.o
+
+junction.i: junction.cpp.i
+
+.PHONY : junction.i
+
+# target to preprocess a source file
+junction.cpp.i:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/junction.cpp.i
+.PHONY : junction.cpp.i
+
+junction.s: junction.cpp.s
+
+.PHONY : junction.s
+
+# target to generate assembly for a file
+junction.cpp.s:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/junction.cpp.s
+.PHONY : junction.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -152,6 +287,60 @@ main.cpp.s:
 	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+network.o: network.cpp.o
+
+.PHONY : network.o
+
+# target to build an object file
+network.cpp.o:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/network.cpp.o
+.PHONY : network.cpp.o
+
+network.i: network.cpp.i
+
+.PHONY : network.i
+
+# target to preprocess a source file
+network.cpp.i:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/network.cpp.i
+.PHONY : network.cpp.i
+
+network.s: network.cpp.s
+
+.PHONY : network.s
+
+# target to generate assembly for a file
+network.cpp.s:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/network.cpp.s
+.PHONY : network.cpp.s
+
+pipe.o: pipe.cpp.o
+
+.PHONY : pipe.o
+
+# target to build an object file
+pipe.cpp.o:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/pipe.cpp.o
+.PHONY : pipe.cpp.o
+
+pipe.i: pipe.cpp.i
+
+.PHONY : pipe.i
+
+# target to preprocess a source file
+pipe.cpp.i:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/pipe.cpp.i
+.PHONY : pipe.cpp.i
+
+pipe.s: pipe.cpp.s
+
+.PHONY : pipe.s
+
+# target to generate assembly for a file
+pipe.cpp.s:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/pipe.cpp.s
+.PHONY : pipe.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -161,9 +350,30 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... gas-steady-state"
+	@echo "... compressor.o"
+	@echo "... compressor.i"
+	@echo "... compressor.s"
+	@echo "... files.o"
+	@echo "... files.i"
+	@echo "... files.s"
+	@echo "... gnode.o"
+	@echo "... gnode.i"
+	@echo "... gnode.s"
+	@echo "... input_params.o"
+	@echo "... input_params.i"
+	@echo "... input_params.s"
+	@echo "... junction.o"
+	@echo "... junction.i"
+	@echo "... junction.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... network.o"
+	@echo "... network.i"
+	@echo "... network.s"
+	@echo "... pipe.o"
+	@echo "... pipe.i"
+	@echo "... pipe.s"
 .PHONY : help
 
 

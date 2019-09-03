@@ -1,33 +1,31 @@
 #ifndef FILES_H
 #define FILES_H
 
+#pragma once
+
 #include <string>
 
 struct Filenames {
-    std::string nodes = "input_network_nodes.csv";
-    std::string pipes = "input_network_pipes.csv";
-    std::string compressors = "input_network_comps.csv";
-    std::string gnodes = "input_network_gnodes.csv";
+    const static std::string nodes;
+    const static std::string pipes;
+    const static std::string compressors;
+    const static std::string gnodes;
 
-    std::string input_params = "input_param.csv";
+    const static std::string input_params;
     
-    std::string demand_gnodes_price_bids = "input_int_cd.csv";
-    std::string supply_gnodes_price_bids = "input_int_cs.csv";
+    const static std::string demand_gnodes_price_bids;
+    const static std::string supply_gnodes_price_bids;
 
-    std::string slack_node_price = "input_cslack.csv";
+    const static std::string slack_node_price;
 
-    std::string slack_pressure = "input_pslack.csv";
+    const static std::string slack_pressure;
 
-    std::string demand_gnodes_max_offtakes = "input_dmax.csv";
-    std::string supply_gnodes_max_injections = "input_smax.csv";
+    const static std::string demand_gnodes_max_offtakes;
+    const static std::string supply_gnodes_max_injections;
 
-    std::string nonslack_physical_baseline_withdrawals = "input_qbar.csv";
-    std::string gnodes_baseline_consumer_withdrawals = "input_gbar.csv";
+    const static std::string nonslack_physical_baseline_withdrawals;
+    const static std::string gnodes_baseline_consumer_withdrawals;
 };
 
-const Filenames get_filenames() { 
-    Filenames filenames;
-    return filenames;
-}
 
 #endif 

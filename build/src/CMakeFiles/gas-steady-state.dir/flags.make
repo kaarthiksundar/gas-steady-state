@@ -6,5 +6,5 @@ CXX_FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/Ma
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/Users/kaarthik/Documents/research/Gravity/include -I/Users/kaarthik/Documents/research/gas-steady-state/third_party/cpp_option_parser -I/Users/kaarthik/Documents/research/gas-steady-state/include 
+CXX_INCLUDES = -I/Users/kaarthik/Documents/research/gas-steady-state/third_party/cpp_option_parser -I/Users/kaarthik/Documents/research/Gravity/include -I/Users/kaarthik/Documents/research/gas-steady-state/include 
 

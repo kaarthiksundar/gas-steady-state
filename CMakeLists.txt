@@ -15,7 +15,11 @@ if (debug)
     set(CMAKE_BUILD_TYPE "Debug")
 endif()
 
-
+# Other library settings 
+include_directories(${PROJECT_SOURCE_DIR}/third_party/cpp_option_parser)
+add_subdirectory(third_party/cpp_option_parser)
+set(LIBS ${LIBS} option_parser)
+set(CPP_OPTION_PARSER option_parser)
 
 # GRAVITY settings
 find_package(GRAVITY)
