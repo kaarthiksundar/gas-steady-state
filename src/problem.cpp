@@ -106,13 +106,15 @@ indices Problem::get_gnodes_per_node(const Network & net, indices ind) {
     ids.set_name("gnodes_per_node");
     ids._ids = make_shared<vector<vector<size_t>>>();
     ids._type = matrix_;
-    ids._ids->resize(net.nodes.size());
+    ids._ids->resize(net.num_non_slack_nodes);
+    
     for (auto gnode : net.gnodes) {
         std::string node_id = gnode->_node;
         std::string gnode_name = gnode->_name;
         auto it = std::find_if(net.nodes.begin(), net.nodes.end(), 
             [&node_id] (const Junction* node) { return node->_id == node_id; });
         int index = std::distance(net.nodes.begin(), it);
+        std::cout << index << std::endl << *(net.nodes[index]);
         auto it1 = ids._keys_map->find(gnode_name);
         ids._ids->at(index).push_back(it1->second);
     }
@@ -140,9 +142,9 @@ void Problem::create_model() {
     
     Constraint<> balance("balance");
     gnodes_per_node.print();
-    balance = //phi_pipe.sum_out(non_slack_nodes) - phi_pipe.sum_in(non_slack_nodes) 
-        sum(s, gnodes_per_node) - sum(d, gnodes_per_node) - qbar; //- sum(gbar, gnodes_per_node) - qbar;
-    model.add(balance.in(non_slack_nodes) == 0.0);
+    balance = phi_pipe.sum_out(nodes) - phi_pipe.sum_in(nodes) + phi_compressor.sum_out(nodes) -  phi_compressor.sum_in(nodes)
+        + sum(s, gnodes_per_node) - sum(d, gnodes_per_node);// - qbar; //- sum(gbar, gnodes_per_node) - qbar;
+    model.add(balance.in(nodes) == 0.0);
     // model.print_symbolic();
     // auto test = phi_pipe.sum_out(non_slack_nodes);
     // test.print();
