@@ -417,6 +417,8 @@ random
 /Users/kaarthik/Documents/research/gas-steady-state/src/problem.cpp
 problem.h
 -
-algorithm
+iterator
+-
+memory
 -
 

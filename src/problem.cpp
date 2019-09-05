@@ -1,5 +1,6 @@
 #include <problem.h>
-#include <algorithm>
+#include <iterator>
+#include <memory>
 
 Problem::Problem(const Network & net) {
     this->p_min.set_name("p_min"); this->p_max.set_name("p_max");
@@ -30,10 +31,9 @@ Problem::Problem(const Network & net) {
         if (node->_slack) this->slack_nodes.add(node->_name);
         else this->non_slack_nodes.add(node->_name);
     }
-    this->gnodes_per_node = get_gnodes_per_node(net, gnodes);
-    this->gnodes_per_node.set_name("gnodes_per_node");
+    this->gnodes_per_node = this->get_gnodes_per_node(net, this->gnodes);
 
-    populate_parameters(net);
+    this->populate_parameters(net);
     
 }; 
 
@@ -101,19 +101,22 @@ void Problem::populate_parameters(const Network & net) {
 
 };
 
-indices get_gnode_node(const Network & net, indices ind) {
+indices Problem::get_gnodes_per_node(const Network & net, indices ind) {
     auto ids = indices(ind);
+    ids.set_name("gnodes_per_node");
     ids._ids = make_shared<vector<vector<size_t>>>();
+    ids._type = matrix_;
     ids._ids->resize(net.nodes.size());
     for (auto gnode : net.gnodes) {
         std::string node_id = gnode->_node;
         std::string gnode_name = gnode->_name;
         auto it = std::find_if(net.nodes.begin(), net.nodes.end(), 
-            [&node_id] (const Junction& node) { return node._id == node_id; });
+            [&node_id] (const Junction* node) { return node->_id == node_id; });
         int index = std::distance(net.nodes.begin(), it);
         auto it1 = ids._keys_map->find(gnode_name);
         ids._ids->at(index).push_back(it1->second);
     }
+    
     return ids;
 };
 
@@ -121,11 +124,11 @@ void Problem::create_model() {
     model = Model<>("gas-steady-state");
 
     /* variable declaration */
-    p = var<>("pressure", p_min, p_max);
-    phi_pipe = var<>("phi_pipe", phi_min_pipe, phi_max_pipe);
-    phi_compressor = var<>("phi_compressor", phi_min_compressor, phi_max_compressor);
-    s = var<>("injection", 0.0, smax);
-    d = var<>("withdrawal", 0.0, dmax);
+    p = var<>("p", p_min, p_max);
+    phi_pipe = var<>("phi_p", phi_min_pipe, phi_max_pipe);
+    phi_compressor = var<>("phi_c", phi_min_compressor, phi_max_compressor);
+    s = var<>("s", 0.0, smax);
+    d = var<>("d", 0.0, dmax);
     
     /* add variables to model and index them */
     model.add(p.in(non_slack_nodes));
@@ -136,7 +139,9 @@ void Problem::create_model() {
 
     
     Constraint<> balance("balance");
-    balance = phi_pipe.sum_out(non_slack_nodes) - phi_pipe.sum_in(non_slack_nodes) + sum(s, gnodes_per_node);
+    gnodes_per_node.print();
+    balance = //phi_pipe.sum_out(non_slack_nodes) - phi_pipe.sum_in(non_slack_nodes) 
+        sum(s, gnodes_per_node) - sum(d, gnodes_per_node) - qbar; //- sum(gbar, gnodes_per_node) - qbar;
     model.add(balance.in(non_slack_nodes) == 0.0);
     // model.print_symbolic();
     // auto test = phi_pipe.sum_out(non_slack_nodes);
