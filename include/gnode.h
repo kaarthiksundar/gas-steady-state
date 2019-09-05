@@ -11,7 +11,8 @@ class Gnode {
         std::string _id;
         std::string _name;
         std::string _node;
-        bool _status;
+        bool _active;
+        std::string _type_name;
 
         Gnode();
         ~Gnode();

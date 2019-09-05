@@ -18,7 +18,8 @@ class Pipe {
         int _disc_seg;
         bool _standard_units;
         bool _si_units;
-        bool _status;
+        bool _active;
+        std::string _type_name;
 
         Pipe();
         ~Pipe();

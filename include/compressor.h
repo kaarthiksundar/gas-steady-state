@@ -22,7 +22,8 @@ class Compressor {
         double _friction_factor;
         bool _standard_units;
         bool _si_units;
-        bool _status;
+        bool _active;
+        std::string _type_name;
 
         Compressor();
         ~Compressor();

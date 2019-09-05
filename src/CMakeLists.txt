@@ -13,6 +13,9 @@ add_executable(gas-steady-state
     input_params.cpp
     network.cpp
     files.cpp
+    converter.cpp
+    nondimensionalization.cpp
+    problem.cpp
 ) 
 
 target_link_libraries(gas-steady-state ${GRAVITY_LIBRARIES} ${CPP_OPTION_PARSER})

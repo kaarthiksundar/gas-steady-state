@@ -12,12 +12,13 @@ Compressor::Compressor() {
     _power_max = 0.0;
     _flow_min = 0.0;
     _flow_max = 0.0;
-    _diameter = 36.0;
-    _length = 0.31;
+    _diameter = 1.0; // meters
+    _length = 250.0; // meters
     _friction_factor = 0.0001;
     _standard_units = false;
-    _si_units = false;
-    _status = true;
+    _si_units = true;
+    _active = true;
+    _type_name = "compressors";
 };
 
 Compressor::~Compressor() {};
@@ -39,7 +40,7 @@ std::ostream& operator<<(std::ostream& os, const Compressor &compressor) {
         "flow_max: " << compressor._flow_max << ", " << 
         "standard_units: " << compressor._standard_units << ", " << 
         "si_units: " << compressor._si_units << ", " << 
-        "status: " << compressor._status << ")" << std::endl;
+        "status: " << compressor._active << ")" << std::endl;
     }
     else {
         os << "compressor is not initalized" << std::endl;

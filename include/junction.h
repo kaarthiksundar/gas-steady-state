@@ -19,7 +19,8 @@ class Junction {
         bool _slack;
         bool _standard_units;
         bool _si_units;
-        bool _status;
+        bool _active;
+        std::string _type_name;
 
         Junction();
         ~Junction();

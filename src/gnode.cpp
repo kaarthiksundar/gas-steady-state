@@ -6,7 +6,8 @@ Gnode::Gnode() {
     _id = "";
     _name = "";
     _node = "";
-    _status = true;
+    _active = true;
+    _type_name = "gnodes";
 };
 
 Gnode::~Gnode() {};
@@ -20,7 +21,7 @@ std::ostream& operator<<(std::ostream& os, const Gnode &gnode) {
         "id: " << gnode._id << ", " <<
         "name: " << gnode._name << ", " << 
         "node: " << gnode._node << ", " << 
-        "status: " << gnode._status << ")" << std::endl;
+        "status: " << gnode._active << ")" << std::endl;
     }
     else {
         os << "gnode is not initalized" << std::endl;

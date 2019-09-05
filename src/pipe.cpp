@@ -13,7 +13,8 @@ Pipe::Pipe() {
     _disc_seg = 0;
     _standard_units = false;
     _si_units = false;
-    _status = true;
+    _active = true;
+    _type_name = "pipes";
 };
 
 Pipe::~Pipe() {};
@@ -34,7 +35,7 @@ std::ostream& operator<<(std::ostream& os, const Pipe &pipe) {
         "discretization_segments: " << pipe._disc_seg << ", " <<
         "standard_units: " << pipe._standard_units << ", " << 
         "si_units: " << pipe._si_units << ", " << 
-        "status: " << pipe._status << ")" << std::endl;
+        "status: " << pipe._active << ")" << std::endl;
     }
     else {
         os << "pipe is not initalized" << std::endl;

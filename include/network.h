@@ -33,6 +33,7 @@ class Network {
         int num_non_slack_nodes;
         bool standard_units;
         bool si_units;
+        bool is_dimensional;
 
         Network();
         ~Network();

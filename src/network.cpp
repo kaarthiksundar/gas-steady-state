@@ -10,6 +10,7 @@ Network::Network() {
     si_units = false;
     num_slack_nodes = 0;
     num_non_slack_nodes = 0;
+    is_dimensional = true;
 };
 
 Network::~Network() { 
@@ -20,6 +21,8 @@ Network::~Network() {
         delete node;
     for (auto compressor : compressors) 
         delete compressor;
+    for (auto gnode : gnodes) 
+        delete gnode;
 };
 
 void Network::populate_data(std::string path) {
@@ -59,9 +62,8 @@ void Network::populate_params(std::string path) {
     int exit_if_steady_state_check_infeasible;
     std::string parameter; double value;
     while (in.read_row(parameter, value)) {
-        std::cout << parameter << " -> " << value << std::endl;
         if (parameter.find("Temperature") != std::string::npos)
-            temperature = value; 
+            temperature = value;
         if (parameter.find("Gas") != std::string::npos) 
             gas_specific_gravity = value;
         if (parameter.find("Specific") != std::string::npos) 
@@ -95,7 +97,6 @@ void Network::populate_params(std::string path) {
         if (parameter.find("exit") != std::string::npos) 
             exit_if_steady_state_check_infeasible = (int) value;
     }
-    std::cout << units << std::endl;
     input_params = new InputParams(temperature, gas_specific_gravity, 
         specific_heat_capacity_ratio, fuel_factor, 
         time_horizon, eos, units, intervals, 
@@ -104,7 +105,6 @@ void Network::populate_params(std::string path) {
         tolerance_exponent, objective_scale_exponent, 
         extension_time_intervals, 
         exit_if_steady_state_check_infeasible);
-    std::cout << input_params->temperature << std::endl;
 };
 
 void Network::populate_pipes(std::string path) {
@@ -117,7 +117,8 @@ void Network::populate_pipes(std::string path) {
     int disc_seg;
     while (in.read_row(pipe_id, pipe_name, from_node, to_node, 
         diameter, length, friction_factor, disc_seg)) {
-        auto pipe = create_pipe(pipe_id, pipe_name, 
+        auto pipe = create_pipe(pipe_id, 
+                                pipe_id + "," + from_node + "," + to_node, 
                                 from_node, to_node, 
                                 diameter, length, 
                                 friction_factor, disc_seg, 
@@ -138,7 +139,7 @@ void Network::populate_nodes(std::string path) {
     int slack_bool;
     while (in.read_row(node_id, node_name, node_x, node_y, 
         pmax, pmin, injection_min, injection_max, slack_bool)) {
-            auto node = create_node(node_id, node_name, node_x, 
+            auto node = create_node(node_id, node_id, node_x, 
                                     node_y, pmin, pmax, 
                                     injection_min, injection_max, 
                                     (bool) slack_bool, 
@@ -158,7 +159,8 @@ void Network::populate_compressors(std::string path) {
     double cmin, cmax, power_max, flow_min, flow_max;
     while (in.read_row(id, name, fnode, tnode, cmin, cmax, 
         power_max, flow_min, flow_max)) {
-            auto compressor = create_compressor(id, name, fnode, tnode, 
+            auto compressor = create_compressor(id, id + "," + fnode + "," + tnode,
+                                                fnode, tnode, 
                                                 cmin, cmax, power_max, 
                                                 flow_min, flow_max, 
                                                 input_params->units);
@@ -172,7 +174,7 @@ void Network::populate_gnodes(std::string path) {
         "gnode_id", "gnode_name", "node_id");
     std::string id, name, node_id;
     while (in.read_row(id, name, node_id)) {
-        auto gnode = create_gnode(id, name, node_id);
+        auto gnode = create_gnode(id, id + "," + node_id, node_id);
         gnodes.push_back(gnode);
     }
 };

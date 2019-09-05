@@ -152,6 +152,33 @@ compressor.cpp.s:
 	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/compressor.cpp.s
 .PHONY : compressor.cpp.s
 
+converter.o: converter.cpp.o
+
+.PHONY : converter.o
+
+# target to build an object file
+converter.cpp.o:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/converter.cpp.o
+.PHONY : converter.cpp.o
+
+converter.i: converter.cpp.i
+
+.PHONY : converter.i
+
+# target to preprocess a source file
+converter.cpp.i:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/converter.cpp.i
+.PHONY : converter.cpp.i
+
+converter.s: converter.cpp.s
+
+.PHONY : converter.s
+
+# target to generate assembly for a file
+converter.cpp.s:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/converter.cpp.s
+.PHONY : converter.cpp.s
+
 files.o: files.cpp.o
 
 .PHONY : files.o
@@ -314,6 +341,33 @@ network.cpp.s:
 	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/network.cpp.s
 .PHONY : network.cpp.s
 
+nondimensionalization.o: nondimensionalization.cpp.o
+
+.PHONY : nondimensionalization.o
+
+# target to build an object file
+nondimensionalization.cpp.o:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/nondimensionalization.cpp.o
+.PHONY : nondimensionalization.cpp.o
+
+nondimensionalization.i: nondimensionalization.cpp.i
+
+.PHONY : nondimensionalization.i
+
+# target to preprocess a source file
+nondimensionalization.cpp.i:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/nondimensionalization.cpp.i
+.PHONY : nondimensionalization.cpp.i
+
+nondimensionalization.s: nondimensionalization.cpp.s
+
+.PHONY : nondimensionalization.s
+
+# target to generate assembly for a file
+nondimensionalization.cpp.s:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/nondimensionalization.cpp.s
+.PHONY : nondimensionalization.cpp.s
+
 pipe.o: pipe.cpp.o
 
 .PHONY : pipe.o
@@ -341,6 +395,33 @@ pipe.cpp.s:
 	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/pipe.cpp.s
 .PHONY : pipe.cpp.s
 
+problem.o: problem.cpp.o
+
+.PHONY : problem.o
+
+# target to build an object file
+problem.cpp.o:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/problem.cpp.o
+.PHONY : problem.cpp.o
+
+problem.i: problem.cpp.i
+
+.PHONY : problem.i
+
+# target to preprocess a source file
+problem.cpp.i:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/problem.cpp.i
+.PHONY : problem.cpp.i
+
+problem.s: problem.cpp.s
+
+.PHONY : problem.s
+
+# target to generate assembly for a file
+problem.cpp.s:
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build && $(MAKE) -f src/CMakeFiles/gas-steady-state.dir/build.make src/CMakeFiles/gas-steady-state.dir/problem.cpp.s
+.PHONY : problem.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -353,6 +434,9 @@ help:
 	@echo "... compressor.o"
 	@echo "... compressor.i"
 	@echo "... compressor.s"
+	@echo "... converter.o"
+	@echo "... converter.i"
+	@echo "... converter.s"
 	@echo "... files.o"
 	@echo "... files.i"
 	@echo "... files.s"
@@ -371,9 +455,15 @@ help:
 	@echo "... network.o"
 	@echo "... network.i"
 	@echo "... network.s"
+	@echo "... nondimensionalization.o"
+	@echo "... nondimensionalization.i"
+	@echo "... nondimensionalization.s"
 	@echo "... pipe.o"
 	@echo "... pipe.i"
 	@echo "... pipe.s"
+	@echo "... problem.o"
+	@echo "... problem.i"
+	@echo "... problem.s"
 .PHONY : help
 
 

@@ -11,7 +11,8 @@ Junction::Junction() {
     _slack = false;
     _standard_units = false;
     _si_units = false;
-    _status = true;
+    _active = true;
+    _type_name = "junctions";
 };
 
 Junction::~Junction() {};
@@ -34,7 +35,7 @@ std::ostream& operator<<(std::ostream& os, const Junction &junction) {
         "slack: " << junction._slack << ", " << 
         "standard_units: " << junction._standard_units << ", " << 
         "si_units: " << junction._si_units << ", " << 
-        "status: " << junction._status << ")" << std::endl;
+        "status: " << junction._active << ")" << std::endl;
     }
     else {
         os << "junction is not initalized" << std::endl;

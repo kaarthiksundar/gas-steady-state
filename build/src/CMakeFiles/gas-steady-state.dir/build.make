@@ -60,106 +60,145 @@ include src/CMakeFiles/gas-steady-state.dir/flags.make
 src/CMakeFiles/gas-steady-state.dir/main.cpp.o: src/CMakeFiles/gas-steady-state.dir/flags.make
 src/CMakeFiles/gas-steady-state.dir/main.cpp.o: ../src/main.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/kaarthik/Documents/research/gas-steady-state/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object src/CMakeFiles/gas-steady-state.dir/main.cpp.o"
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gas-steady-state.dir/main.cpp.o -c /Users/kaarthik/Documents/research/gas-steady-state/src/main.cpp
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gas-steady-state.dir/main.cpp.o -c /Users/kaarthik/Documents/research/gas-steady-state/src/main.cpp
 
 src/CMakeFiles/gas-steady-state.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gas-steady-state.dir/main.cpp.i"
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/kaarthik/Documents/research/gas-steady-state/src/main.cpp > CMakeFiles/gas-steady-state.dir/main.cpp.i
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/kaarthik/Documents/research/gas-steady-state/src/main.cpp > CMakeFiles/gas-steady-state.dir/main.cpp.i
 
 src/CMakeFiles/gas-steady-state.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gas-steady-state.dir/main.cpp.s"
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/kaarthik/Documents/research/gas-steady-state/src/main.cpp -o CMakeFiles/gas-steady-state.dir/main.cpp.s
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/kaarthik/Documents/research/gas-steady-state/src/main.cpp -o CMakeFiles/gas-steady-state.dir/main.cpp.s
 
 src/CMakeFiles/gas-steady-state.dir/pipe.cpp.o: src/CMakeFiles/gas-steady-state.dir/flags.make
 src/CMakeFiles/gas-steady-state.dir/pipe.cpp.o: ../src/pipe.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/kaarthik/Documents/research/gas-steady-state/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object src/CMakeFiles/gas-steady-state.dir/pipe.cpp.o"
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gas-steady-state.dir/pipe.cpp.o -c /Users/kaarthik/Documents/research/gas-steady-state/src/pipe.cpp
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gas-steady-state.dir/pipe.cpp.o -c /Users/kaarthik/Documents/research/gas-steady-state/src/pipe.cpp
 
 src/CMakeFiles/gas-steady-state.dir/pipe.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gas-steady-state.dir/pipe.cpp.i"
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/kaarthik/Documents/research/gas-steady-state/src/pipe.cpp > CMakeFiles/gas-steady-state.dir/pipe.cpp.i
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/kaarthik/Documents/research/gas-steady-state/src/pipe.cpp > CMakeFiles/gas-steady-state.dir/pipe.cpp.i
 
 src/CMakeFiles/gas-steady-state.dir/pipe.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gas-steady-state.dir/pipe.cpp.s"
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/kaarthik/Documents/research/gas-steady-state/src/pipe.cpp -o CMakeFiles/gas-steady-state.dir/pipe.cpp.s
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/kaarthik/Documents/research/gas-steady-state/src/pipe.cpp -o CMakeFiles/gas-steady-state.dir/pipe.cpp.s
 
 src/CMakeFiles/gas-steady-state.dir/junction.cpp.o: src/CMakeFiles/gas-steady-state.dir/flags.make
 src/CMakeFiles/gas-steady-state.dir/junction.cpp.o: ../src/junction.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/kaarthik/Documents/research/gas-steady-state/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object src/CMakeFiles/gas-steady-state.dir/junction.cpp.o"
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gas-steady-state.dir/junction.cpp.o -c /Users/kaarthik/Documents/research/gas-steady-state/src/junction.cpp
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gas-steady-state.dir/junction.cpp.o -c /Users/kaarthik/Documents/research/gas-steady-state/src/junction.cpp
 
 src/CMakeFiles/gas-steady-state.dir/junction.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gas-steady-state.dir/junction.cpp.i"
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/kaarthik/Documents/research/gas-steady-state/src/junction.cpp > CMakeFiles/gas-steady-state.dir/junction.cpp.i
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/kaarthik/Documents/research/gas-steady-state/src/junction.cpp > CMakeFiles/gas-steady-state.dir/junction.cpp.i
 
 src/CMakeFiles/gas-steady-state.dir/junction.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gas-steady-state.dir/junction.cpp.s"
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/kaarthik/Documents/research/gas-steady-state/src/junction.cpp -o CMakeFiles/gas-steady-state.dir/junction.cpp.s
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/kaarthik/Documents/research/gas-steady-state/src/junction.cpp -o CMakeFiles/gas-steady-state.dir/junction.cpp.s
 
 src/CMakeFiles/gas-steady-state.dir/compressor.cpp.o: src/CMakeFiles/gas-steady-state.dir/flags.make
 src/CMakeFiles/gas-steady-state.dir/compressor.cpp.o: ../src/compressor.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/kaarthik/Documents/research/gas-steady-state/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object src/CMakeFiles/gas-steady-state.dir/compressor.cpp.o"
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gas-steady-state.dir/compressor.cpp.o -c /Users/kaarthik/Documents/research/gas-steady-state/src/compressor.cpp
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gas-steady-state.dir/compressor.cpp.o -c /Users/kaarthik/Documents/research/gas-steady-state/src/compressor.cpp
 
 src/CMakeFiles/gas-steady-state.dir/compressor.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gas-steady-state.dir/compressor.cpp.i"
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/kaarthik/Documents/research/gas-steady-state/src/compressor.cpp > CMakeFiles/gas-steady-state.dir/compressor.cpp.i
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/kaarthik/Documents/research/gas-steady-state/src/compressor.cpp > CMakeFiles/gas-steady-state.dir/compressor.cpp.i
 
 src/CMakeFiles/gas-steady-state.dir/compressor.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gas-steady-state.dir/compressor.cpp.s"
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/kaarthik/Documents/research/gas-steady-state/src/compressor.cpp -o CMakeFiles/gas-steady-state.dir/compressor.cpp.s
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/kaarthik/Documents/research/gas-steady-state/src/compressor.cpp -o CMakeFiles/gas-steady-state.dir/compressor.cpp.s
 
 src/CMakeFiles/gas-steady-state.dir/gnode.cpp.o: src/CMakeFiles/gas-steady-state.dir/flags.make
 src/CMakeFiles/gas-steady-state.dir/gnode.cpp.o: ../src/gnode.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/kaarthik/Documents/research/gas-steady-state/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object src/CMakeFiles/gas-steady-state.dir/gnode.cpp.o"
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gas-steady-state.dir/gnode.cpp.o -c /Users/kaarthik/Documents/research/gas-steady-state/src/gnode.cpp
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gas-steady-state.dir/gnode.cpp.o -c /Users/kaarthik/Documents/research/gas-steady-state/src/gnode.cpp
 
 src/CMakeFiles/gas-steady-state.dir/gnode.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gas-steady-state.dir/gnode.cpp.i"
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/kaarthik/Documents/research/gas-steady-state/src/gnode.cpp > CMakeFiles/gas-steady-state.dir/gnode.cpp.i
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/kaarthik/Documents/research/gas-steady-state/src/gnode.cpp > CMakeFiles/gas-steady-state.dir/gnode.cpp.i
 
 src/CMakeFiles/gas-steady-state.dir/gnode.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gas-steady-state.dir/gnode.cpp.s"
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/kaarthik/Documents/research/gas-steady-state/src/gnode.cpp -o CMakeFiles/gas-steady-state.dir/gnode.cpp.s
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/kaarthik/Documents/research/gas-steady-state/src/gnode.cpp -o CMakeFiles/gas-steady-state.dir/gnode.cpp.s
 
 src/CMakeFiles/gas-steady-state.dir/input_params.cpp.o: src/CMakeFiles/gas-steady-state.dir/flags.make
 src/CMakeFiles/gas-steady-state.dir/input_params.cpp.o: ../src/input_params.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/kaarthik/Documents/research/gas-steady-state/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object src/CMakeFiles/gas-steady-state.dir/input_params.cpp.o"
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gas-steady-state.dir/input_params.cpp.o -c /Users/kaarthik/Documents/research/gas-steady-state/src/input_params.cpp
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gas-steady-state.dir/input_params.cpp.o -c /Users/kaarthik/Documents/research/gas-steady-state/src/input_params.cpp
 
 src/CMakeFiles/gas-steady-state.dir/input_params.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gas-steady-state.dir/input_params.cpp.i"
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/kaarthik/Documents/research/gas-steady-state/src/input_params.cpp > CMakeFiles/gas-steady-state.dir/input_params.cpp.i
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/kaarthik/Documents/research/gas-steady-state/src/input_params.cpp > CMakeFiles/gas-steady-state.dir/input_params.cpp.i
 
 src/CMakeFiles/gas-steady-state.dir/input_params.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gas-steady-state.dir/input_params.cpp.s"
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/kaarthik/Documents/research/gas-steady-state/src/input_params.cpp -o CMakeFiles/gas-steady-state.dir/input_params.cpp.s
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/kaarthik/Documents/research/gas-steady-state/src/input_params.cpp -o CMakeFiles/gas-steady-state.dir/input_params.cpp.s
 
 src/CMakeFiles/gas-steady-state.dir/network.cpp.o: src/CMakeFiles/gas-steady-state.dir/flags.make
 src/CMakeFiles/gas-steady-state.dir/network.cpp.o: ../src/network.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/kaarthik/Documents/research/gas-steady-state/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object src/CMakeFiles/gas-steady-state.dir/network.cpp.o"
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gas-steady-state.dir/network.cpp.o -c /Users/kaarthik/Documents/research/gas-steady-state/src/network.cpp
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gas-steady-state.dir/network.cpp.o -c /Users/kaarthik/Documents/research/gas-steady-state/src/network.cpp
 
 src/CMakeFiles/gas-steady-state.dir/network.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gas-steady-state.dir/network.cpp.i"
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/kaarthik/Documents/research/gas-steady-state/src/network.cpp > CMakeFiles/gas-steady-state.dir/network.cpp.i
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/kaarthik/Documents/research/gas-steady-state/src/network.cpp > CMakeFiles/gas-steady-state.dir/network.cpp.i
 
 src/CMakeFiles/gas-steady-state.dir/network.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gas-steady-state.dir/network.cpp.s"
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/kaarthik/Documents/research/gas-steady-state/src/network.cpp -o CMakeFiles/gas-steady-state.dir/network.cpp.s
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/kaarthik/Documents/research/gas-steady-state/src/network.cpp -o CMakeFiles/gas-steady-state.dir/network.cpp.s
 
 src/CMakeFiles/gas-steady-state.dir/files.cpp.o: src/CMakeFiles/gas-steady-state.dir/flags.make
 src/CMakeFiles/gas-steady-state.dir/files.cpp.o: ../src/files.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/kaarthik/Documents/research/gas-steady-state/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object src/CMakeFiles/gas-steady-state.dir/files.cpp.o"
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gas-steady-state.dir/files.cpp.o -c /Users/kaarthik/Documents/research/gas-steady-state/src/files.cpp
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gas-steady-state.dir/files.cpp.o -c /Users/kaarthik/Documents/research/gas-steady-state/src/files.cpp
 
 src/CMakeFiles/gas-steady-state.dir/files.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gas-steady-state.dir/files.cpp.i"
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/kaarthik/Documents/research/gas-steady-state/src/files.cpp > CMakeFiles/gas-steady-state.dir/files.cpp.i
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/kaarthik/Documents/research/gas-steady-state/src/files.cpp > CMakeFiles/gas-steady-state.dir/files.cpp.i
 
 src/CMakeFiles/gas-steady-state.dir/files.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gas-steady-state.dir/files.cpp.s"
-	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/kaarthik/Documents/research/gas-steady-state/src/files.cpp -o CMakeFiles/gas-steady-state.dir/files.cpp.s
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/kaarthik/Documents/research/gas-steady-state/src/files.cpp -o CMakeFiles/gas-steady-state.dir/files.cpp.s
+
+src/CMakeFiles/gas-steady-state.dir/converter.cpp.o: src/CMakeFiles/gas-steady-state.dir/flags.make
+src/CMakeFiles/gas-steady-state.dir/converter.cpp.o: ../src/converter.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/kaarthik/Documents/research/gas-steady-state/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object src/CMakeFiles/gas-steady-state.dir/converter.cpp.o"
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gas-steady-state.dir/converter.cpp.o -c /Users/kaarthik/Documents/research/gas-steady-state/src/converter.cpp
+
+src/CMakeFiles/gas-steady-state.dir/converter.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gas-steady-state.dir/converter.cpp.i"
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/kaarthik/Documents/research/gas-steady-state/src/converter.cpp > CMakeFiles/gas-steady-state.dir/converter.cpp.i
+
+src/CMakeFiles/gas-steady-state.dir/converter.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gas-steady-state.dir/converter.cpp.s"
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/kaarthik/Documents/research/gas-steady-state/src/converter.cpp -o CMakeFiles/gas-steady-state.dir/converter.cpp.s
+
+src/CMakeFiles/gas-steady-state.dir/nondimensionalization.cpp.o: src/CMakeFiles/gas-steady-state.dir/flags.make
+src/CMakeFiles/gas-steady-state.dir/nondimensionalization.cpp.o: ../src/nondimensionalization.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/kaarthik/Documents/research/gas-steady-state/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object src/CMakeFiles/gas-steady-state.dir/nondimensionalization.cpp.o"
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gas-steady-state.dir/nondimensionalization.cpp.o -c /Users/kaarthik/Documents/research/gas-steady-state/src/nondimensionalization.cpp
+
+src/CMakeFiles/gas-steady-state.dir/nondimensionalization.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gas-steady-state.dir/nondimensionalization.cpp.i"
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/kaarthik/Documents/research/gas-steady-state/src/nondimensionalization.cpp > CMakeFiles/gas-steady-state.dir/nondimensionalization.cpp.i
+
+src/CMakeFiles/gas-steady-state.dir/nondimensionalization.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gas-steady-state.dir/nondimensionalization.cpp.s"
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/kaarthik/Documents/research/gas-steady-state/src/nondimensionalization.cpp -o CMakeFiles/gas-steady-state.dir/nondimensionalization.cpp.s
+
+src/CMakeFiles/gas-steady-state.dir/problem.cpp.o: src/CMakeFiles/gas-steady-state.dir/flags.make
+src/CMakeFiles/gas-steady-state.dir/problem.cpp.o: ../src/problem.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/kaarthik/Documents/research/gas-steady-state/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object src/CMakeFiles/gas-steady-state.dir/problem.cpp.o"
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/gas-steady-state.dir/problem.cpp.o -c /Users/kaarthik/Documents/research/gas-steady-state/src/problem.cpp
+
+src/CMakeFiles/gas-steady-state.dir/problem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gas-steady-state.dir/problem.cpp.i"
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/kaarthik/Documents/research/gas-steady-state/src/problem.cpp > CMakeFiles/gas-steady-state.dir/problem.cpp.i
+
+src/CMakeFiles/gas-steady-state.dir/problem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gas-steady-state.dir/problem.cpp.s"
+	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && /usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/kaarthik/Documents/research/gas-steady-state/src/problem.cpp -o CMakeFiles/gas-steady-state.dir/problem.cpp.s
 
 # Object files for target gas-steady-state
 gas__steady__state_OBJECTS = \
@@ -170,7 +209,10 @@ gas__steady__state_OBJECTS = \
 "CMakeFiles/gas-steady-state.dir/gnode.cpp.o" \
 "CMakeFiles/gas-steady-state.dir/input_params.cpp.o" \
 "CMakeFiles/gas-steady-state.dir/network.cpp.o" \
-"CMakeFiles/gas-steady-state.dir/files.cpp.o"
+"CMakeFiles/gas-steady-state.dir/files.cpp.o" \
+"CMakeFiles/gas-steady-state.dir/converter.cpp.o" \
+"CMakeFiles/gas-steady-state.dir/nondimensionalization.cpp.o" \
+"CMakeFiles/gas-steady-state.dir/problem.cpp.o"
 
 # External object files for target gas-steady-state
 gas__steady__state_EXTERNAL_OBJECTS =
@@ -183,11 +225,14 @@ gas__steady__state_EXTERNAL_OBJECTS =
 ../bin/gas-steady-state: src/CMakeFiles/gas-steady-state.dir/input_params.cpp.o
 ../bin/gas-steady-state: src/CMakeFiles/gas-steady-state.dir/network.cpp.o
 ../bin/gas-steady-state: src/CMakeFiles/gas-steady-state.dir/files.cpp.o
+../bin/gas-steady-state: src/CMakeFiles/gas-steady-state.dir/converter.cpp.o
+../bin/gas-steady-state: src/CMakeFiles/gas-steady-state.dir/nondimensionalization.cpp.o
+../bin/gas-steady-state: src/CMakeFiles/gas-steady-state.dir/problem.cpp.o
 ../bin/gas-steady-state: src/CMakeFiles/gas-steady-state.dir/build.make
 ../bin/gas-steady-state: /Users/kaarthik/Documents/research/Gravity/lib/libgravity.a
 ../bin/gas-steady-state: third_party/cpp_option_parser/liboption_parser.a
 ../bin/gas-steady-state: src/CMakeFiles/gas-steady-state.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/kaarthik/Documents/research/gas-steady-state/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable ../../bin/gas-steady-state"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/kaarthik/Documents/research/gas-steady-state/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX executable ../../bin/gas-steady-state"
 	cd /Users/kaarthik/Documents/research/gas-steady-state/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/gas-steady-state.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

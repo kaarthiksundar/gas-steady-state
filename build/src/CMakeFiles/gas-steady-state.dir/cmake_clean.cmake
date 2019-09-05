@@ -7,6 +7,9 @@ file(REMOVE_RECURSE
   "CMakeFiles/gas-steady-state.dir/input_params.cpp.o"
   "CMakeFiles/gas-steady-state.dir/network.cpp.o"
   "CMakeFiles/gas-steady-state.dir/files.cpp.o"
+  "CMakeFiles/gas-steady-state.dir/converter.cpp.o"
+  "CMakeFiles/gas-steady-state.dir/nondimensionalization.cpp.o"
+  "CMakeFiles/gas-steady-state.dir/problem.cpp.o"
   "../../bin/gas-steady-state.pdb"
   "../../bin/gas-steady-state"
 )
