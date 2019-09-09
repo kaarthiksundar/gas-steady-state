@@ -26,5 +26,3 @@ InputParams::InputParams(double temperature, double gas_specific_gravity,
         this->extension_time_intervals = extension_time_intervals;
         this->exit_if_steady_state_check_infeasible = exit_if_steady_state_check_infeasible;
 };
-
-InputParams::~InputParams() {};

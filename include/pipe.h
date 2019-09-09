@@ -1,8 +1,11 @@
 #ifndef PIPE_H
 #define PIPE_H
 
+#pragma once 
+
 #include <string>
 #include <iostream>
+#include <memory>
 
 class Pipe {
     private: 
@@ -22,21 +25,20 @@ class Pipe {
         std::string _type_name;
 
         Pipe();
-        ~Pipe();
 
         bool is_empty() const;
         void set_filled();
         friend std::ostream& operator<<(std::ostream& os, const Pipe &pipe);
 };
 
-Pipe* create_pipe(std::string id, 
-                std::string name, 
-                std::string fnode, 
-                std::string tnode, 
-                double diameter, 
-                double length, 
-                double friction_factor, 
-                int disc_seg, 
-                int units);
+std::shared_ptr<Pipe> create_pipe(std::string id, 
+                                std::string name, 
+                                std::string fnode, 
+                                std::string tnode, 
+                                double diameter, 
+                                double length, 
+                                double friction_factor, 
+                                int disc_seg, 
+                                int units);
 
 #endif 

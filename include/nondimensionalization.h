@@ -15,7 +15,6 @@ class Nondimensionalization {
         double time_factor;
 
         Nondimensionalization(const Network & net, const Converter & converter);
-        ~Nondimensionalization();
 
         void non_dimensionalize(Network & net);
 };

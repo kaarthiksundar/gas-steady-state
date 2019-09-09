@@ -1,9 +1,12 @@
 #ifndef JUNCTION_H
 #define JUNCTION_H
 
+#pragma once 
+
 #include <string>
 #include <iostream>
 #include <utility>
+#include <memory>
 
 class Junction {
     private: 
@@ -23,20 +26,19 @@ class Junction {
         std::string _type_name;
 
         Junction();
-        ~Junction();
 
         bool is_empty() const;
         void set_filled();
         friend std::ostream& operator<<(std::ostream& os, const Junction &node);
 };
 
-Junction* create_node(std::string id, 
-                    std::string name, 
-                    double x, double y, 
-                    double pmin, double pmax, 
-                    double injection_min, 
-                    double injection_max, 
-                    bool slack, 
-                    int units);
+std::shared_ptr<Junction> create_node(std::string id, 
+                                    std::string name, 
+                                    double x, double y, 
+                                    double pmin, double pmax, 
+                                    double injection_min, 
+                                    double injection_max, 
+                                    bool slack, 
+                                    int units);
 
 #endif 

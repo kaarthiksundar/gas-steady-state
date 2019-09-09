@@ -10,8 +10,6 @@ Gnode::Gnode() {
     _type_name = "gnodes";
 };
 
-Gnode::~Gnode() {};
-
 bool Gnode::is_empty() const { return _empty; };
 void Gnode::set_filled() { _empty = false; };
 
@@ -29,8 +27,8 @@ std::ostream& operator<<(std::ostream& os, const Gnode &gnode) {
     return os;
 };
 
-Gnode* create_gnode(std::string id, std::string name, std::string node) {
-    Gnode* gnode = new Gnode;
+std::shared_ptr<Gnode> create_gnode(std::string id, std::string name, std::string node) {
+    auto gnode = std::make_shared<Gnode>();
     gnode->_id = id;
     gnode->_name = name;
     gnode->_node = node;

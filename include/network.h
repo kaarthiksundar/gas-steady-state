@@ -10,14 +10,15 @@
 #include <junction.h>
 #include <compressor.h>
 #include <gnode.h>
+#include <memory>
 
 class Network {
     public: 
-        const InputParams* input_params;
-        std::vector<Pipe*> pipes;
-        std::vector<Junction*> nodes;
-        std::vector<Compressor*> compressors;
-        std::vector<Gnode*> gnodes;
+        std::unique_ptr<InputParams> input_params;
+        std::vector<std::shared_ptr<Pipe>> pipes;
+        std::vector<std::shared_ptr<Junction>> nodes;
+        std::vector<std::shared_ptr<Compressor>> compressors;
+        std::vector<std::shared_ptr<Gnode>> gnodes;
         std::vector<std::string> pslack_ids;
         std::vector<std::string> cslack_ids;
         std::vector<double> pslack;
@@ -36,7 +37,6 @@ class Network {
         bool is_dimensional;
 
         Network();
-        ~Network();
 
         void populate_data(std::string path);
 

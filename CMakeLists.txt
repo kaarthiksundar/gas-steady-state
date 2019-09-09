@@ -21,9 +21,14 @@ add_subdirectory(third_party/cpp_option_parser)
 set(LIBS ${LIBS} option_parser)
 set(CPP_OPTION_PARSER option_parser)
 
-# GRAVITY settings
-find_package(GRAVITY)
-include_directories(${GRAVITY_INCLUDE_DIRS})
-set(LIBS ${LIBS} ${GRAVITY_LIBRARIES})
+include_directories(${PROJECT_SOURCE_DIR}/third_party/csv)
+
+# Ipopt settings
+message("Enabling IPOPT")
+add_definitions(-DUSE_IPOPT)
+find_package(IPOPT REQUIRED)
+include_directories(${IPOPT_INCLUDE_DIRS}/..)
+message("Ipopt include directories: ${IPOPT_INCLUDE_DIRS}")
+set(LIBS ${LIBS} ${IPOPT_LIBRARIES})
 
 add_subdirectory(src)

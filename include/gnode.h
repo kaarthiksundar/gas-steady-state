@@ -1,8 +1,11 @@
 #ifndef GNODE_H
 #define GNODE_H
 
+#pragma once 
+
 #include <string>
 #include <iostream>
+#include <memory>
 
 class Gnode {
     private: 
@@ -15,15 +18,14 @@ class Gnode {
         std::string _type_name;
 
         Gnode();
-        ~Gnode();
 
         bool is_empty() const;
         void set_filled();
         friend std::ostream& operator<<(std::ostream& os, const Gnode &gnode);
 };
 
-Gnode* create_gnode(std::string id, 
-                    std::string name, 
-                    std::string node);
+std::shared_ptr<Gnode> create_gnode(std::string id, 
+                                    std::string name, 
+                                    std::string node);
 
 #endif 

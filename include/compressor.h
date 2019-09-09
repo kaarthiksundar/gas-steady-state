@@ -1,8 +1,11 @@
 #ifndef COMPRESSOR_H
 #define COMPRESSOR_H
 
+#pragma once 
+
 #include <string>
 #include <iostream>
+#include <memory>
 
 class Compressor {
     private: 
@@ -26,20 +29,19 @@ class Compressor {
         std::string _type_name;
 
         Compressor();
-        ~Compressor();
 
         bool is_empty() const;
         void set_filled();
         friend std::ostream& operator<<(std::ostream& os, const Compressor &compressor);
 };
 
-Compressor* create_compressor(std::string id, 
-                            std::string name, 
-                            std::string fnode, 
-                            std::string tnode, 
-                            double cmin, double cmax, 
-                            double power_max, 
-                            double flow_min, double flow_max, 
-                            int units);
+std::shared_ptr<Compressor> create_compressor(std::string id, 
+                                            std::string name, 
+                                            std::string fnode, 
+                                            std::string tnode, 
+                                            double cmin, double cmax, 
+                                            double power_max, 
+                                            double flow_min, double flow_max, 
+                                            int units);
 
 #endif 

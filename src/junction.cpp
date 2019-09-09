@@ -15,7 +15,6 @@ Junction::Junction() {
     _type_name = "junctions";
 };
 
-Junction::~Junction() {};
 
 bool Junction::is_empty() const { return _empty; };
 void Junction::set_filled() { _empty = false; };
@@ -43,16 +42,16 @@ std::ostream& operator<<(std::ostream& os, const Junction &junction) {
     return os;
 };
 
-Junction* create_node(std::string id, 
-                    std::string name, 
-                    double x, double y, 
-                    double pmin, double pmax, 
-                    double injection_min, 
-                    double injection_max, 
-                    bool slack, 
-                    int units) {
+std::shared_ptr<Junction> create_node(std::string id, 
+                                    std::string name, 
+                                    double x, double y, 
+                                    double pmin, double pmax, 
+                                    double injection_min, 
+                                    double injection_max, 
+                                    bool slack, 
+                                    int units) {
     
-    Junction* node = new Junction;
+    auto node = std::make_shared<Junction>();
     node->_id = id;
     node->_name = name;
     node->_coords = std::make_pair(x, y);

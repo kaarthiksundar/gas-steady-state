@@ -33,7 +33,6 @@ class InputParams {
             int tolerance_exponent, int objective_scale_exponent, 
             int extension_time_intervals, 
             int exit_if_steady_state_check_infeasible);
-        ~InputParams();
 };
 
 

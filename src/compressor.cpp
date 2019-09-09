@@ -21,7 +21,6 @@ Compressor::Compressor() {
     _type_name = "compressors";
 };
 
-Compressor::~Compressor() {};
 
 bool Compressor::is_empty() const { return _empty; };
 void Compressor::set_filled() { _empty = false; };
@@ -48,16 +47,16 @@ std::ostream& operator<<(std::ostream& os, const Compressor &compressor) {
     return os;
 };
 
-Compressor* create_compressor(std::string id, 
-                            std::string name, 
-                            std::string fnode, 
-                            std::string tnode, 
-                            double cmin, double cmax, 
-                            double power_max, 
-                            double flow_min, double flow_max, 
-                            int units) {
+std::shared_ptr<Compressor> create_compressor(std::string id, 
+                                            std::string name, 
+                                            std::string fnode, 
+                                            std::string tnode, 
+                                            double cmin, double cmax, 
+                                            double power_max, 
+                                            double flow_min, double flow_max, 
+                                            int units) {
     
-    Compressor* compressor = new Compressor;
+    auto compressor = std::make_shared<Compressor>();
     compressor->_id = id; 
     compressor->_name = name;
     compressor->_fnode = fnode;

@@ -11,7 +11,9 @@ class Converter {
     public: 
         double psi_to_pascal;
         double km_to_m;
-        double R;
+        double universal_R;
+        double molecular_weight_air;
+        double gas_R;
         double one_atm; 
         double mmscfd_to_kgps;
         double mmscfd_to_hp;
@@ -20,7 +22,6 @@ class Converter {
         double inches_to_m;
 
         Converter();
-        ~Converter();
         void populate_mmscfd_conversion_factors(const InputParams* ip);
         void convert_to_si(Network & net);
 };

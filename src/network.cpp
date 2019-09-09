@@ -1,7 +1,7 @@
 #include <network.h>
 
 #include <files.h>
-#include <gravity/csv.h>
+#include <csv.h>
 #include <fstream>
 #include <sstream>
 
@@ -11,18 +11,6 @@ Network::Network() {
     num_slack_nodes = 0;
     num_non_slack_nodes = 0;
     is_dimensional = true;
-};
-
-Network::~Network() { 
-    delete input_params;
-    for (auto pipe : pipes)
-        delete pipe;
-    for (auto node : nodes) 
-        delete node;
-    for (auto compressor : compressors) 
-        delete compressor;
-    for (auto gnode : gnodes) 
-        delete gnode;
 };
 
 void Network::populate_data(std::string path) {
@@ -97,7 +85,7 @@ void Network::populate_params(std::string path) {
         if (parameter.find("exit") != std::string::npos) 
             exit_if_steady_state_check_infeasible = (int) value;
     }
-    input_params = new InputParams(temperature, gas_specific_gravity, 
+    input_params = std::make_unique<InputParams>(temperature, gas_specific_gravity, 
         specific_heat_capacity_ratio, fuel_factor, 
         time_horizon, eos, units, intervals, 
         save_csv_output, steady_state_solve_only, 
@@ -118,7 +106,7 @@ void Network::populate_pipes(std::string path) {
     while (in.read_row(pipe_id, pipe_name, from_node, to_node, 
         diameter, length, friction_factor, disc_seg)) {
         auto pipe = create_pipe(pipe_id, 
-                                pipe_id + "," + from_node + "," + to_node, 
+                                pipe_name, 
                                 from_node, to_node, 
                                 diameter, length, 
                                 friction_factor, disc_seg, 
@@ -134,12 +122,11 @@ void Network::populate_nodes(std::string path) {
         "min_pressure", "max_pressure", "min_injection", 
         "max_injection", "slack_bool");
     std::string node_id, node_name; 
-    double node_x, node_y, pmax, pmin, injection_min, 
-    injection_max; 
+    double node_x, node_y, pmax, pmin, injection_min, injection_max;
     int slack_bool;
     while (in.read_row(node_id, node_name, node_x, node_y, 
-        pmax, pmin, injection_min, injection_max, slack_bool)) {
-            auto node = create_node(node_id, node_id, node_x, 
+        pmin, pmax, injection_min, injection_max, slack_bool)) {
+            auto node = create_node(node_id, node_name, node_x, 
                                     node_y, pmin, pmax, 
                                     injection_min, injection_max, 
                                     (bool) slack_bool, 
@@ -159,7 +146,7 @@ void Network::populate_compressors(std::string path) {
     double cmin, cmax, power_max, flow_min, flow_max;
     while (in.read_row(id, name, fnode, tnode, cmin, cmax, 
         power_max, flow_min, flow_max)) {
-            auto compressor = create_compressor(id, id + "," + fnode + "," + tnode,
+            auto compressor = create_compressor(id, name,
                                                 fnode, tnode, 
                                                 cmin, cmax, power_max, 
                                                 flow_min, flow_max, 

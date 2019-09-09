@@ -17,7 +17,6 @@ Pipe::Pipe() {
     _type_name = "pipes";
 };
 
-Pipe::~Pipe() {};
 
 bool Pipe::is_empty() const { return _empty; };
 void Pipe::set_filled() { _empty = false; };
@@ -43,17 +42,17 @@ std::ostream& operator<<(std::ostream& os, const Pipe &pipe) {
     return os;
 };
 
-Pipe* create_pipe(std::string id, 
-                std::string name, 
-                std::string fnode, 
-                std::string tnode, 
-                double diameter, 
-                double length, 
-                double friction_factor, 
-                int disc_seg,
-                int units) {
+std::shared_ptr<Pipe> create_pipe(std::string id, 
+                                std::string name, 
+                                std::string fnode, 
+                                std::string tnode, 
+                                double diameter, 
+                                double length, 
+                                double friction_factor, 
+                                int disc_seg,
+                                int units) {
 
-    Pipe* pipe = new Pipe;
+    auto pipe = std::make_shared<Pipe>();
     pipe->_id = id; pipe->_name = name;
     pipe->_fnode = fnode; pipe->_tnode = tnode;
     pipe->_diameter = diameter; 
