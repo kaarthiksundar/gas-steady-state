@@ -64,8 +64,8 @@ void ProblemData::populate_parameters(const Network & net, const Nondimensionali
         qbar.set_value(non_slack_node_index, net.qbar.at(i));
     }
 
-    phi_min_pipe.in(pipes, -10000.0);
-    phi_max_pipe.in(pipes, 10000.0);
+    phi_min_pipe.in(pipes, -100.0);
+    phi_max_pipe.in(pipes, 200.0);
     length_pipe.in(pipes);
     diameter_pipe.in(pipes);
     friction_factor_pipe.in(pipes);
@@ -78,13 +78,13 @@ void ProblemData::populate_parameters(const Network & net, const Nondimensionali
         friction_factor_pipe.set_value(pipe_index, pipe->_friction_factor);
         double area = 3.14159 * pipe->_diameter * pipe->_diameter / 4.0;
         area_pipe.set_value(pipe_index, area);
-        double resistance = pipe->_friction_factor * pipe->_length * 
-            nd.space_factor / 2.0 / pipe->_diameter;
+        double resistance = pipe->_friction_factor * pipe->_length *
+            nd.space_factor / pipe->_diameter;
         resistance_pipe.set_value(pipe_index, resistance);
     }
     
-    phi_min_compressor.in(compressors, -10000.0);
-    phi_max_compressor.in(compressors, 10000.0);
+    phi_min_compressor.in(compressors);
+    phi_max_compressor.in(compressors);
     c_ratio_min.in(compressors);
     c_ratio_max.in(compressors);
     length_compressor.in(compressors);
@@ -100,9 +100,11 @@ void ProblemData::populate_parameters(const Network & net, const Nondimensionali
         diameter_compressor.set_value(compressor_index, compressor->_diameter);
         friction_factor_compressor.set_value(compressor_index, compressor->_friction_factor);
         double area = 3.14159 * compressor->_diameter * compressor->_diameter / 4.0;
+        phi_min_compressor.set_value(compressor_index, compressor->_flow_min/area);
+        phi_max_compressor.set_value(compressor_index, compressor->_flow_max/area);
         area_compressor.set_value(compressor_index, area);
-        double resistance = compressor->_friction_factor * compressor->_length * 
-            nd.space_factor / 2.0 / compressor->_diameter;
+        double resistance = compressor->_friction_factor * compressor->_length *
+            nd.space_factor / compressor->_diameter;
         resistance_compressor.set_value(compressor_index, resistance);
     }
 };

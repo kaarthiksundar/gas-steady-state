@@ -8,6 +8,7 @@
 #include <problem_data.h>
 #include <model_data.h>
 #include <ipopt_problem.h>
+#include <solution.h>
 
 
 int main (int argc, char * argv[]) {
@@ -15,7 +16,7 @@ int main (int argc, char * argv[]) {
     /* creating command line options */
     op::OptionParser opt;
     opt.add_option("h", "help", "shows option help"); 
-    opt.add_option("n", "case_name", "case name", "model30");
+    opt.add_option("n", "case_name", "case name", "model30ss_csv_si");
     opt.add_option("p", "case_path", "case file path", "/Users/kaarthik/Documents/research/gas-steady-state/data/" );
 
     /* parse options */
@@ -61,5 +62,8 @@ int main (int argc, char * argv[]) {
     std::cout << "number of constraints : " << model->get_num_constraints() << std::endl;
     
     solve_model(model.get());
+    
+    auto solution = populate_steady_state_solution_data(net, model_data.get(), problem_data.get(), model.get(), nd, converter);
+    
     return 0;
 }

@@ -46,10 +46,8 @@ bool GasNLP::get_starting_point(Index n, bool init_x, Number *x, bool init_z, Nu
     assert(init_lambda == false);
     
     for (Index i=0; i<n; ++i) {
-        double lb = std::get<0>(_model->get_variable_bounds(i));
-        double ub = std::get<1>(_model->get_variable_bounds(i));
-        double mid_point = (lb + ub)/2.0;
-        x[i] = (Number)mid_point;
+        double start = _model->get_variable_start(i);
+        x[i] = (Number)start;
     }
     
     return true;
@@ -128,15 +126,16 @@ void solve_model(Model * model) {
     app->RethrowNonIpoptException(true);
     
     // Change some options
-    app->Options()->SetNumericValue("tol", 1e-4);
+    app->Options()->SetNumericValue("tol", 1e-3);
+    app->Options()->SetNumericValue("constr_viol_tol", 1e-4);
     app->Options()->SetStringValue("mu_strategy", "adaptive");
     app->Options()->SetStringValue("output_file", "gas_ss_nlp.out");
 //    app->Options()->SetStringValue("jacobian_approximation", "finite-difference-values");
-//    app->Options()->SetStringValue("derivative_test", "first-order");
+    app->Options()->SetStringValue("derivative_test", "first-order");
     app->Options()->SetIntegerValue("max_iter", 250);
     app->Options()->SetStringValue("hessian_approximation", "limited-memory");
     app->Options()->SetStringValue("limited_memory_update_type", "BFGS");
-    app->Options()->SetStringValueIfUnset("linear_solver", "ma57");
+    app->Options()->SetStringValueIfUnset("linear_solver", "mumps");
     // The following overwrites the default name (ipopt.opt) of the
      app->Options()->SetStringValue("option_file_name", "gas_ss.opt");
     

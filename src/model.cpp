@@ -134,6 +134,8 @@ int Model::get_num_variables() { return _num_variables; };
 int Model::get_num_constraints() { return _num_constraints; };
 std::string Model::get_name() { return _name; };
 int Model::get_solve_status() { return _solve_status; };
+double Model::get_variable_start(int i) { return _variables[i]->get_start(); };
+double Model::get_variable_start(std::shared_ptr<Variable> var) { return var->get_start(); };
 std::tuple<double, double> Model::get_variable_bounds(int i) { return _variables[i]->get_bounds(); };
 std::tuple<double, double> Model::get_variable_bounds(std::shared_ptr<Variable> var) { return var->get_bounds(); };
 std::tuple<double, double> Model::get_constraint_bounds(int i) { return _constraints[i]->get_bounds(); };

@@ -30,7 +30,7 @@ void Network::populate_data(std::string path) {
 void Network::populate_params(std::string path) {
     io::CSVReader<2, 
         io::trim_chars<' '>, 
-        io::double_quote_escape<',','\"'> > in(path + Filenames::input_params);
+        io::double_quote_escape<',','\"'> > in(path + InputFilenames::input_params);
     double temperature;
     double gas_specific_gravity;
     double specific_heat_capacity_ratio; 
@@ -96,7 +96,7 @@ void Network::populate_params(std::string path) {
 };
 
 void Network::populate_pipes(std::string path) {
-    io::CSVReader<8> in(path + Filenames::pipes);
+    io::CSVReader<8> in(path + InputFilenames::pipes);
     in.read_header(io::ignore_extra_column, 
         "pipe_id", "pipe_name", "from_node", "to_node", 
         "diameter", "length", "friction_factor", "disc_seg");
@@ -116,7 +116,7 @@ void Network::populate_pipes(std::string path) {
 };
 
 void Network::populate_nodes(std::string path) {
-    io::CSVReader<9> in(path + Filenames::nodes);
+    io::CSVReader<9> in(path + InputFilenames::nodes);
     in.read_header(io::ignore_extra_column, 
         "node_id", "node_name", "x_coord", "y_coord", 
         "min_pressure", "max_pressure", "min_injection", 
@@ -138,7 +138,7 @@ void Network::populate_nodes(std::string path) {
 };
 
 void Network::populate_compressors(std::string path) {
-    io::CSVReader<9> in(path + Filenames::compressors);
+    io::CSVReader<9> in(path + InputFilenames::compressors);
     in.read_header(io::ignore_extra_column, 
         "comp_id", "comp_name", "from_node", "to_node", 
         "c_min", "c_max", "max_power", "min_flow", "max_flow");
@@ -156,7 +156,7 @@ void Network::populate_compressors(std::string path) {
 };
 
 void Network::populate_gnodes(std::string path) {
-    io::CSVReader<3> in(path + Filenames::gnodes);
+    io::CSVReader<3> in(path + InputFilenames::gnodes);
     in.read_header(io::ignore_extra_column, 
         "gnode_id", "gnode_name", "node_id");
     std::string id, name, node_id;
@@ -172,7 +172,7 @@ void Network::populate_slack_data(std::string path) {
 };
 
 void Network::populate_slack_pressure_data(std::string path) {  
-    io::LineReader in(path + Filenames::slack_pressure);
+    io::LineReader in(path + InputFilenames::slack_pressure);
     std::string line = std::string(in.next_line());
     std::string delimiter = ",";
     size_t position = 0;
@@ -196,7 +196,7 @@ void Network::populate_slack_pressure_data(std::string path) {
 };
 
 void Network::populate_slack_price_data(std::string path) {
-    io::LineReader in(path + Filenames::slack_node_price);
+    io::LineReader in(path + InputFilenames::slack_node_price);
     std::string line = std::string(in.next_line());
     std::string delimiter = ",";
     size_t position = 0;
@@ -220,7 +220,7 @@ void Network::populate_slack_price_data(std::string path) {
 };
 
 void Network::populate_non_slack_data(std::string path) {
-    io::LineReader in(path + Filenames::nonslack_physical_baseline_withdrawals);
+    io::LineReader in(path + InputFilenames::nonslack_physical_baseline_withdrawals);
     std::string line = std::string(in.next_line());
     std::string delimiter = ",";
     size_t position = 0;
@@ -244,9 +244,9 @@ void Network::populate_non_slack_data(std::string path) {
 };
 
 void Network::populate_gnode_data(std::string path) {
-    io::LineReader gbar_in(path + Filenames::gnodes_baseline_consumer_withdrawals);
-    io::LineReader smax_in(path + Filenames::supply_gnodes_max_injections);
-    io::LineReader dmax_in(path + Filenames::demand_gnodes_max_offtakes);
+    io::LineReader gbar_in(path + InputFilenames::gnodes_baseline_consumer_withdrawals);
+    io::LineReader smax_in(path + InputFilenames::supply_gnodes_max_injections);
+    io::LineReader dmax_in(path + InputFilenames::demand_gnodes_max_offtakes);
     std::string line, token, delimiter = ",";
     size_t position = 0;
     /* read gbar */
@@ -278,8 +278,8 @@ void Network::populate_gnode_data(std::string path) {
 };
 
 void Network::populate_cost_data(std::string path) {
-    io::LineReader cd_in(path + Filenames::demand_gnodes_price_bids);
-    io::LineReader cs_in(path + Filenames::supply_gnodes_price_bids);
+    io::LineReader cd_in(path + InputFilenames::demand_gnodes_price_bids);
+    io::LineReader cs_in(path + InputFilenames::supply_gnodes_price_bids);
     std::string line, token, delimiter = ",";
     size_t position = 0;
     /* read cd */

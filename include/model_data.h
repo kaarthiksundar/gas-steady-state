@@ -22,8 +22,9 @@ struct SteadyStateModelData {
     std::unordered_map<int, std::shared_ptr<Constraint>> compressor_bounds;
 
     std::shared_ptr<Func> objective;
+
 };
 
-std::unique_ptr<Model> build_steady_state_model(ProblemData *, SteadyStateModelData*);
+std::unique_ptr<Model> build_steady_state_model(ProblemData*, struct SteadyStateModelData*);
 
 #endif 

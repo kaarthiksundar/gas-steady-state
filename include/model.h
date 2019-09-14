@@ -48,6 +48,8 @@ class Model {
         std::string get_name();
         std::tuple<double, double> get_variable_bounds(int i);
         std::tuple<double, double> get_variable_bounds(std::shared_ptr<Variable> var);
+    double get_variable_start(int i);
+    double get_variable_start(std::shared_ptr<Variable> var);
         std::tuple<double, double> get_constraint_bounds(int i);
         std::tuple<double, double> get_constraint_bounds(std::shared_ptr<Constraint> constraint);
         double evaluate_objective_function_value(const double *);
