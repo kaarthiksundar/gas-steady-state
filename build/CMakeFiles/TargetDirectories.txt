@@ -1,4 +1,0 @@
-/Users/kaarthik/Documents/research/gas-steady-state/build/CMakeFiles/ALL_BUILD.dir
-/Users/kaarthik/Documents/research/gas-steady-state/build/CMakeFiles/ZERO_CHECK.dir
-/Users/kaarthik/Documents/research/gas-steady-state/build/third_party/cpp_option_parser/CMakeFiles/option_parser.dir
-/Users/kaarthik/Documents/research/gas-steady-state/build/src/CMakeFiles/gas-steady-state.dir
