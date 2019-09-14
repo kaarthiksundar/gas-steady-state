@@ -126,16 +126,16 @@ void solve_model(Model * model) {
     app->RethrowNonIpoptException(true);
     
     // Change some options
-    app->Options()->SetNumericValue("tol", 1e-3);
-    app->Options()->SetNumericValue("constr_viol_tol", 1e-4);
+//    app->Options()->SetNumericValue("tol", 1e-3);
+//    app->Options()->SetNumericValue("constr_viol_tol", 1e-4);
     app->Options()->SetStringValue("mu_strategy", "adaptive");
     app->Options()->SetStringValue("output_file", "gas_ss_nlp.out");
 //    app->Options()->SetStringValue("jacobian_approximation", "finite-difference-values");
-    app->Options()->SetStringValue("derivative_test", "first-order");
+//    app->Options()->SetStringValue("derivative_test", "first-order");
     app->Options()->SetIntegerValue("max_iter", 250);
     app->Options()->SetStringValue("hessian_approximation", "limited-memory");
     app->Options()->SetStringValue("limited_memory_update_type", "BFGS");
-    app->Options()->SetStringValueIfUnset("linear_solver", "mumps");
+    app->Options()->SetStringValueIfUnset("linear_solver", "ma57");
     // The following overwrites the default name (ipopt.opt) of the
      app->Options()->SetStringValue("option_file_name", "gas_ss.opt");
     
