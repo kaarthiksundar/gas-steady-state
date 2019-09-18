@@ -28,7 +28,7 @@ private:
     
 public:
     SteadyStateSolution(const Network &, struct SteadyStateModelData*, ProblemData*, Model*);
-    void write_output(const Network &);
+    void write_output(const Network &, std::string);
     void dimensionalize(const Nondimensionalization &);
     void convert_to_standard_units(const Converter &);
 };

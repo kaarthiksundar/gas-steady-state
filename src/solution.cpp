@@ -1,4 +1,7 @@
 #include <solution.h>
+#include <csvwriter.h>
+#include <files.h>
+#include <iomanip>
 
 SteadyStateSolution::SteadyStateSolution(const Network & net,
                                          struct SteadyStateModelData* md,
@@ -18,6 +21,18 @@ SteadyStateSolution::SteadyStateSolution(const Network & net,
     for (auto slack_node_id : net.pslack_ids) {
         auto id = std::stoi(slack_node_id);
         _slack_flows.push_back(m->get_value(md->slack_production[id]));
+    }
+    
+    for (auto non_slack_node_id : net.qbar_ids) {
+        auto id = std::stoi(non_slack_node_id);
+        double val = pd->qbar.get_value(id);
+        auto gnodes_in_node = pd->gnodes_in_node[id];
+        for (auto gnode_id : gnodes_in_node) {
+            val += m->get_value(md->d[gnode_id]);
+            val -= m->get_value(md->s[gnode_id]);
+            val += pd->gbar.get_value(gnode_id);
+        }
+        _non_slack_flows.push_back(val);
     }
     
     for (auto node : net.nodes) {
@@ -62,6 +77,9 @@ void SteadyStateSolution::dimensionalize(const Nondimensionalization & nd) {
                    std::bind(std::multiplies<double>(), std::placeholders::_1, nd.flow_factor));
     
     std::transform(_slack_flows.begin(), _slack_flows.end(), _slack_flows.begin(),
+                   std::bind(std::multiplies<double>(), std::placeholders::_1, nd.flow_factor));
+    
+    std::transform(_non_slack_flows.begin(), _non_slack_flows.end(), _slack_flows.begin(),
                    std::bind(std::multiplies<double>(), std::placeholders::_1, nd.flow_factor));
     
     std::transform(_gnode_demand_flows.begin(), _gnode_demand_flows.end(), _gnode_demand_flows.begin(),
@@ -112,6 +130,9 @@ void SteadyStateSolution::convert_to_standard_units(const Converter & converter)
     std::transform(_slack_flows.begin(), _slack_flows.end(), _slack_flows.begin(),
                   std::bind(std::divides<double>(), std::placeholders::_1, converter.mmscfd_to_kgps));
     
+    std::transform(_non_slack_flows.begin(), _non_slack_flows.end(), _non_slack_flows.begin(),
+                   std::bind(std::divides<double>(), std::placeholders::_1, converter.mmscfd_to_kgps));
+    
     std::transform(_gnode_demand_flows.begin(), _gnode_demand_flows.end(), _gnode_demand_flows.begin(),
                    std::bind(std::divides<double>(), std::placeholders::_1, converter.mmscfd_to_kgps));
     
@@ -143,7 +164,53 @@ void SteadyStateSolution::convert_to_standard_units(const Converter & converter)
                     std::bind(std::divides<double>(), std::placeholders::_1, converter.psi_to_pascal));
 };
 
-void SteadyStateSolution::write_output(const Network & net) {
+void SteadyStateSolution::write_output(const Network & net, std::string path) {
+    /* write the csv files */
+    CSVWriter pipe_flow_in(",", net.pipes.size()), pipe_flow_out(",", net.pipes.size());
+    CSVWriter pipe_pressure_in(",", net.pipes.size()), pipe_pressure_out(",", net.pipes.size());
+    for (auto pipe : net.pipes) {
+        pipe_flow_in << pipe->_id;
+        pipe_flow_out << pipe->_id;
+        pipe_pressure_in << pipe->_id;
+        pipe_pressure_out << pipe->_id;
+    }
+    
+    for (auto i=0; i<net.pipes.size(); ++i) {
+        pipe_flow_in << std::to_string(_pipe_flow_in[i]);
+        pipe_flow_out << std::to_string(_pipe_flow_out[i]);
+        pipe_pressure_in << std::to_string(_pipe_pressure_in[i]);
+        pipe_pressure_out << std::to_string(_pipe_pressure_out[i]);
+    }
+    
+    pipe_flow_in.writeToFile(path + OutputFilenames::pipe_flow_in);
+    pipe_flow_out.writeToFile(path + OutputFilenames::pipe_flow_out);
+    pipe_pressure_in.writeToFile(path + OutputFilenames::pipe_pressure_in);
+    pipe_pressure_out.writeToFile(path + OutputFilenames::pipe_pressure_out);
+    
+    CSVWriter slack_flows(",", net.num_slack_nodes), non_slack_flows(",", net.num_non_slack_nodes);
+    for (auto slack_id : net.pslack_ids)
+        slack_flows << slack_id;
+    for (auto non_slack_id : net.qbar_ids)
+        non_slack_flows << non_slack_id;
+    
+    for (auto i=0; i<net.pslack_ids.size(); ++i)
+        slack_flows << std::to_string(_slack_flows[i]);
+    
+    for (auto i=0; i<net.qbar_ids.size(); ++i)
+        non_slack_flows << std::to_string(_non_slack_flows[i]);
+    
+    slack_flows.writeToFile(path + OutputFilenames::slack_flows);
+    non_slack_flows.writeToFile(path + OutputFilenames::non_slack_flows);
+    
+    CSVWriter nodal_pressure(",", net.nodes.size());
+    for (auto node : net.nodes)
+        nodal_pressure << node->_id;
+    
+    for (auto i=0; i<net.nodes.size(); ++i)
+        nodal_pressure << std::to_string(_nodal_pressure[i]);
+    
+    nodal_pressure.writeToFile(path + OutputFilenames::nodal_pressure);
+    
     
 };
 

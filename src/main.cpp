@@ -65,5 +65,6 @@ int main (int argc, char * argv[]) {
     
     auto solution = populate_steady_state_solution_data(net, model_data.get(), problem_data.get(), model.get(), nd, converter);
     
+    solution->write_output(net, opt["p"] + opt["n"] + "/");
     return 0;
 }
