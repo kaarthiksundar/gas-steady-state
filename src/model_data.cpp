@@ -1,6 +1,6 @@
 #include <model_data.h>
 
-std::unique_ptr<Model> build_steady_state_model(ProblemData * pd, struct SteadyStateModelData* md) {
+std::unique_ptr<Model> build_steady_state_model(ProblemData * pd,  SteadyStateModelData* md) {
     auto model = std::make_unique<Model>("Steady State NLP model");
     
     /* nodal rho variables for all non-slack nodes */

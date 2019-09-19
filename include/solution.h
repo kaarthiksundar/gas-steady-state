@@ -27,14 +27,14 @@ private:
     bool is_si;
     
 public:
-    SteadyStateSolution(const Network &, struct SteadyStateModelData*, ProblemData*, Model*);
+    SteadyStateSolution(const Network &,  SteadyStateModelData*, ProblemData*, Model*);
     void write_output(const Network &, std::string);
     void dimensionalize(const Nondimensionalization &);
     void convert_to_standard_units(const Converter &);
 };
 
-std::unique_ptr<SteadyStateSolution> populate_steady_state_solution_data(const Network &,
-                                                                         struct SteadyStateModelData*,
+SteadyStateSolution populate_steady_state_solution_data(const Network &,
+                                                                         SteadyStateModelData*,
                                                                          ProblemData*,
                                                                          Model*,
                                                                          const Nondimensionalization &,

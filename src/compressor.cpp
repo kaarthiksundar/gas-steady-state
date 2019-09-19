@@ -14,7 +14,7 @@ Compressor::Compressor() {
     _flow_max = 0.0;
     _diameter = 1.0; // meters
     _length = 250.0; // meters
-    _friction_factor = 0.0001;
+    _friction_factor = 0.001;
     _standard_units = false;
     _si_units = true;
     _active = true;

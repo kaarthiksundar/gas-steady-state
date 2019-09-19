@@ -25,6 +25,6 @@ struct SteadyStateModelData {
 
 };
 
-std::unique_ptr<Model> build_steady_state_model(ProblemData*, struct SteadyStateModelData*);
+std::unique_ptr<Model> build_steady_state_model(ProblemData*,  SteadyStateModelData*);
 
 #endif 

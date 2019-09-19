@@ -4,7 +4,7 @@
 #include <iomanip>
 
 SteadyStateSolution::SteadyStateSolution(const Network & net,
-                                         struct SteadyStateModelData* md,
+                                          SteadyStateModelData* md,
                                          ProblemData *pd,
                                          Model* m) {
     for (auto pipe : net.pipes) {
@@ -214,17 +214,17 @@ void SteadyStateSolution::write_output(const Network & net, std::string path) {
     
 };
 
-std::unique_ptr<SteadyStateSolution> populate_steady_state_solution_data(const Network & net,
-                                                                         struct SteadyStateModelData* md,
+SteadyStateSolution populate_steady_state_solution_data(const Network & net,
+                                                                         SteadyStateModelData* md,
                                                                          ProblemData* pd,
                                                                          Model* m,
                                                                          const Nondimensionalization & nd,
                                                                          const Converter & converter) {
-    auto solution =  std::make_unique<SteadyStateSolution>(net, md, pd, m);
-    solution->dimensionalize(nd);
+    SteadyStateSolution solution(net, md, pd, m);
+    solution.dimensionalize(nd);
     
     if (net.input_params->units == 1)
-        solution->convert_to_standard_units(converter);
+        solution.convert_to_standard_units(converter);
     
     return solution;
 };
