@@ -21,7 +21,7 @@ ProblemData::ProblemData(const Network & net, const Nondimensionalization & nd) 
     gbar = Param("gbar"); smax = Param("smax"); dmax = Param("dmax");
     area_pipe = Param("area_pipe");
     area_compressor = Param("area_compressor");
-
+    
     populate_indices(net);
     populate_parameters(net, nd);
 }; 
@@ -34,7 +34,7 @@ void ProblemData::populate_parameters(const Network & net, const Nondimensionali
         p_min.set_value(node_index, node->_pmin);
         p_max.set_value(node_index, node->_pmax);
     }
-
+    
     gbar.in(gnodes); smax.in(gnodes); dmax.in(gnodes);
     cs.in(gnodes); cd.in(gnodes);
     for (size_t i = 0; i<net.gbar.size(); ++i) {
@@ -45,25 +45,25 @@ void ProblemData::populate_parameters(const Network & net, const Nondimensionali
         cs.set_value(gnode_index, net.cs.at(i));
         cd.set_value(gnode_index, net.cd.at(i));
     }
-
+    
     pslack.in(slack_nodes); 
     for (size_t i=0; i<net.num_slack_nodes; ++i) {
         auto slack_node_index = std::stoi(net.pslack_ids[i]);
         pslack.set_value(slack_node_index, net.pslack.at(i));
     }
-
+    
     cslack.in(slack_nodes);
     for (size_t i=0; i<net.num_slack_nodes; ++i) {
         auto slack_node_index = std::stoi(net.cslack_ids[i]);
         cslack.set_value(slack_node_index, net.cslack.at(i));
     }
-
+    
     qbar.in(non_slack_nodes);
     for (size_t i=0; i<net.num_non_slack_nodes; ++i) {
         auto non_slack_node_index = std::stoi(net.qbar_ids[i]);
         qbar.set_value(non_slack_node_index, net.qbar.at(i));
     }
-
+    
     phi_min_pipe.in(pipes, -100.0);
     phi_max_pipe.in(pipes, 200.0);
     length_pipe.in(pipes);
@@ -79,7 +79,7 @@ void ProblemData::populate_parameters(const Network & net, const Nondimensionali
         double area = 3.14159 * pipe->_diameter * pipe->_diameter / 4.0;
         area_pipe.set_value(pipe_index, area);
         double resistance = pipe->_friction_factor * pipe->_length *
-            nd.space_factor / pipe->_diameter;
+        nd.space_factor / pipe->_diameter;
         resistance_pipe.set_value(pipe_index, resistance);
     }
     
@@ -104,7 +104,7 @@ void ProblemData::populate_parameters(const Network & net, const Nondimensionali
         phi_max_compressor.set_value(compressor_index, compressor->_flow_max/area);
         area_compressor.set_value(compressor_index, area);
         double resistance = compressor->_friction_factor * compressor->_length *
-            nd.space_factor / compressor->_diameter;
+        nd.space_factor / compressor->_diameter;
         resistance_compressor.set_value(compressor_index, resistance);
     }
 };
@@ -121,7 +121,7 @@ void ProblemData::populate_indices(const Network & net) {
         in_compressors_in_node[node_index] = Indices();
         gnodes_in_node[node_index] = Indices();
     }
-
+    
     for (auto pipe : net.pipes) {
         auto pipe_index = std::stoi(pipe->_id);
         pipes.insert(pipe_index);
@@ -132,7 +132,7 @@ void ProblemData::populate_indices(const Network & net) {
         fnode_of_pipe[pipe_index] = fnode_index;
         tnode_of_pipe[pipe_index] = tnode_index;
     }
-
+    
     for (auto compressor : net.compressors) {
         auto compressor_index = std::stoi(compressor->_id);
         compressors.insert(compressor_index);
@@ -143,13 +143,13 @@ void ProblemData::populate_indices(const Network & net) {
         fnode_of_compressor[compressor_index] = fnode_index;
         tnode_of_compressor[compressor_index] = tnode_index;
     }
-
+    
     for (auto gnode : net.gnodes) {
         auto gnode_index = std::stoi(gnode->_id);
         gnodes.insert(gnode_index);
         auto node_index = std::stoi(gnode->_node);
         gnodes_in_node[node_index].insert(gnode_index);
     }
-
+    
     return;
 };

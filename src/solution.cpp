@@ -4,7 +4,7 @@
 #include <iomanip>
 
 SteadyStateSolution::SteadyStateSolution(const Network & net,
-                                          SteadyStateModelData* md,
+                                         SteadyStateModelData* md,
                                          ProblemData *pd,
                                          Model* m) {
     for (auto pipe : net.pipes) {
@@ -128,7 +128,7 @@ void SteadyStateSolution::convert_to_standard_units(const Converter & converter)
                    std::bind(std::divides<double>(), std::placeholders::_1, converter.mmscfd_to_kgps));
     
     std::transform(_slack_flows.begin(), _slack_flows.end(), _slack_flows.begin(),
-                  std::bind(std::divides<double>(), std::placeholders::_1, converter.mmscfd_to_kgps));
+                   std::bind(std::divides<double>(), std::placeholders::_1, converter.mmscfd_to_kgps));
     
     std::transform(_non_slack_flows.begin(), _non_slack_flows.end(), _non_slack_flows.begin(),
                    std::bind(std::divides<double>(), std::placeholders::_1, converter.mmscfd_to_kgps));
@@ -137,7 +137,7 @@ void SteadyStateSolution::convert_to_standard_units(const Converter & converter)
                    std::bind(std::divides<double>(), std::placeholders::_1, converter.mmscfd_to_kgps));
     
     std::transform(_gnode_supply_flows.begin(), _gnode_supply_flows.end(), _gnode_supply_flows.begin(),
-                  std::bind(std::divides<double>(), std::placeholders::_1, converter.mmscfd_to_kgps));
+                   std::bind(std::divides<double>(), std::placeholders::_1, converter.mmscfd_to_kgps));
     
     std::transform(_comp_flow_in.begin(), _comp_flow_in.end(), _comp_flow_in.begin(),
                    std::bind(std::divides<double>(), std::placeholders::_1, converter.mmscfd_to_kgps));
@@ -149,19 +149,19 @@ void SteadyStateSolution::convert_to_standard_units(const Converter & converter)
                    std::bind(std::divides<double>(), std::placeholders::_1, converter.psi_to_pascal));
     
     std::transform(_pipe_pressure_out.begin(), _pipe_pressure_out.end(), _pipe_pressure_out.begin(),
-                    std::bind(std::divides<double>(), std::placeholders::_1, converter.psi_to_pascal));
+                   std::bind(std::divides<double>(), std::placeholders::_1, converter.psi_to_pascal));
     
     std::transform(_nodal_pressure.begin(), _nodal_pressure.end(), _nodal_pressure.begin(),
-                    std::bind(std::divides<double>(), std::placeholders::_1, converter.psi_to_pascal));
+                   std::bind(std::divides<double>(), std::placeholders::_1, converter.psi_to_pascal));
     
     std::transform(_comp_discharge_pressure.begin(), _comp_discharge_pressure.end(), _comp_discharge_pressure.begin(),
-                    std::bind(std::divides<double>(), std::placeholders::_1, converter.psi_to_pascal));
+                   std::bind(std::divides<double>(), std::placeholders::_1, converter.psi_to_pascal));
     
     std::transform(_comp_pressure_in.begin(), _comp_pressure_in.end(), _comp_pressure_in.begin(),
-                    std::bind(std::divides<double>(), std::placeholders::_1, converter.psi_to_pascal));
+                   std::bind(std::divides<double>(), std::placeholders::_1, converter.psi_to_pascal));
     
     std::transform(_comp_pressure_out.begin(), _comp_pressure_out.end(), _comp_pressure_out.begin(),
-                    std::bind(std::divides<double>(), std::placeholders::_1, converter.psi_to_pascal));
+                   std::bind(std::divides<double>(), std::placeholders::_1, converter.psi_to_pascal));
 };
 
 void SteadyStateSolution::write_output(const Network & net, std::string path) {
@@ -215,11 +215,11 @@ void SteadyStateSolution::write_output(const Network & net, std::string path) {
 };
 
 SteadyStateSolution populate_steady_state_solution_data(const Network & net,
-                                                                         SteadyStateModelData* md,
-                                                                         ProblemData* pd,
-                                                                         Model* m,
-                                                                         const Nondimensionalization & nd,
-                                                                         const Converter & converter) {
+                                                        SteadyStateModelData* md,
+                                                        ProblemData* pd,
+                                                        Model* m,
+                                                        const Nondimensionalization & nd,
+                                                        const Converter & converter) {
     SteadyStateSolution solution(net, md, pd, m);
     solution.dimensionalize(nd);
     
