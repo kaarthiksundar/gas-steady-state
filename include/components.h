@@ -7,7 +7,6 @@
 
 class Pipe {
 private:
-    bool _empty = true;
     int _id;
     std::string _name;
     int _fnode;
@@ -22,12 +21,10 @@ private:
     bool _per_unit;
     
 public:
-    Pipe();
     Pipe(int id, std::string name, int fnode, int tnode,
          double diameter, double length, double friction_factor,
          int num_discretization_segments, int units);
     
-    bool is_empty() const;
     std::string get_name() const;
     int get_id() const;
     int get_fnode_id() const;
@@ -41,7 +38,6 @@ public:
     bool is_per_unit() const;
     bool get_status() const;
     
-    void set_filled();
     void make_per_unit();
     void make_standard();
     void make_si();
@@ -51,7 +47,6 @@ public:
 
 class Node {
 private:
-    bool _empty = true;
     int _id;
     std::string _name;
     std::pair<double, double> _coords;
@@ -66,12 +61,10 @@ private:
     bool _per_unit;
     
 public:
-    Node();
     Node(int id, std::string name, double x, double y,
          double pmin, double pmax, double injection_min,
          double injection_max, bool slack, int units);
     
-    bool is_empty() const;
     int get_id() const;
     std::string get_name() const;
     std::pair<double, double> get_coords() const;
@@ -83,17 +76,16 @@ public:
     bool is_si() const;
     bool is_standard() const;
     bool is_per_unit() const;
+    bool get_status() const;
     
-    void set_filled();
     void make_per_unit();
     void make_standard();
     void make_si();
-    friend std::ostream& operator<<(std::ostream& os, const Junction &node);
+    friend std::ostream& operator<<(std::ostream& os, const Node &node);
 };
 
 class Compressor {
 private:
-    bool _empty = true;
     int _id;
     std::string _name;
     int _fnode;
@@ -112,18 +104,18 @@ private:
     bool _per_unit;
     
 public:
-    Compressor();
     Compressor(int id, std::string name, int fnode, int tnode,
                double cmin, double cmax, double power_max,
                double flow_min, double flow_max, int units);
     
-    bool is_empty() const;
     int get_id() const;
     std::string get_name() const;
     int get_fnode_id() const;
     int get_tnode_id() const;
     double get_cmin() const;
     double get_cmax() const;
+    double get_flow_min() const;
+    double get_flow_max() const;
     double get_power_max() const;
     double get_diameter() const;
     double get_length() const;
@@ -131,8 +123,8 @@ public:
     bool is_standard() const;
     bool is_si() const;
     bool is_per_unit() const;
+    bool get_status() const;
     
-    void set_filled();
     void make_per_unit();
     void make_standard();
     void make_si();
@@ -141,7 +133,6 @@ public:
 
 class Gnode {
 private:
-    bool _empty = true;
     int _id;
     std::string _name;
     int _node;
@@ -151,12 +142,11 @@ public:
     Gnode();
     Gnode(int id, std::string name, int node);
     
-    bool is_empty() const;
     int get_id() const;
     std::string get_name() const;
     int get_node_id() const;
-    
-    void set_filled();
+    bool get_status() const;
+
     friend std::ostream& operator<<(std::ostream& os, const Gnode &gnode);
 };
 
