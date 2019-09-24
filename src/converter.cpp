@@ -15,11 +15,11 @@ Converter::Converter() {
 };
 
 void Converter::populate_mmscfd_conversion_factors(const InputParams* ip) {
-    mmscfd_to_kgps = 1000*0.02832/86400*(one_atm/(universal_R * ip->temperature)*100*100*100)*
-        ip->gas_specific_gravity*molecular_weight_air;
-    gas_R = universal_R / molecular_weight_air /ip->gas_specific_gravity;
+    mmscfd_to_kgps = 1000*0.02832/86400*(one_atm/(universal_R * ip->get_temperature())*100*100*100)*
+        ip->get_gas_specific_gravity()*molecular_weight_air;
+    gas_R = universal_R / molecular_weight_air /ip->get_gas_specific_gravity();
     mmscfd_to_hp = 1000.0/0.0593807; /* fix later - should depend on calorific value */
-    a = std::sqrt(gas_R * ip->temperature);
+    a = std::sqrt(gas_R * ip->get_temperature());
 };
 
 void Converter::convert_to_si(Network & net) {

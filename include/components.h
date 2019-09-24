@@ -4,6 +4,7 @@
 #pragma once
 
 #include <string>
+#include <conversions.h>
 
 class Pipe {
 private:
@@ -15,8 +16,8 @@ private:
     double _length;
     double _friction_factor;
     int _num_discretization_segments;
-    bool _standard_units;
-    bool _si_units;
+    bool _standard;
+    bool _si;
     bool _status;
     bool _per_unit;
     
@@ -38,9 +39,9 @@ public:
     bool is_per_unit() const;
     bool get_status() const;
     
-    void make_per_unit();
-    void make_standard();
-    void make_si();
+    void make_per_unit(const ConversionFactors &, const ScalingFactors &);
+    void make_standard(const ConversionFactors &, const ScalingFactors &);
+    void make_si(const ConversionFactors &, const ScalingFactors &);
     
     friend std::ostream& operator<<(std::ostream& os, const Pipe &pipe);
 };
@@ -55,8 +56,8 @@ private:
     double _injection_min;
     double _injection_max;
     bool _slack;
-    bool _standard_units;
-    bool _si_units;
+    bool _standard;
+    bool _si;
     bool _status;
     bool _per_unit;
     
@@ -78,9 +79,9 @@ public:
     bool is_per_unit() const;
     bool get_status() const;
     
-    void make_per_unit();
-    void make_standard();
-    void make_si();
+    void make_per_unit(const ConversionFactors &, const ScalingFactors &);
+    void make_standard(const ConversionFactors &, const ScalingFactors &);
+    void make_si(const ConversionFactors &, const ScalingFactors &);
     friend std::ostream& operator<<(std::ostream& os, const Node &node);
 };
 
@@ -98,8 +99,8 @@ private:
     double _diameter;
     double _length;
     double _friction_factor;
-    bool _standard_units;
-    bool _si_units;
+    bool _standard;
+    bool _si;
     bool _status;
     bool _per_unit;
     
@@ -125,9 +126,9 @@ public:
     bool is_per_unit() const;
     bool get_status() const;
     
-    void make_per_unit();
-    void make_standard();
-    void make_si();
+    void make_per_unit(const ConversionFactors &, const ScalingFactors &);
+    void make_standard(const ConversionFactors &, const ScalingFactors &);
+    void make_si(const ConversionFactors &, const ScalingFactors &);
     friend std::ostream& operator<<(std::ostream& os, const Compressor &compressor);
 };
 

@@ -1,14 +1,17 @@
 #include <iostream>
 #include <optionParser.hpp>
 
-#include <network.h>
-#include <converter.h>
-#include <nondimensionalization.h>
-
-#include <problem_data.h>
-#include <model_data.h>
-#include <ipopt_problem.h>
-#include <solution.h>
+#include <input_params.h>
+#include <conversions.h>
+#include <data.h>
+//#include <network.h>
+//#include <converter.h>
+//#include <nondimensionalization.h>
+//
+//#include <problem_data.h>
+//#include <model_data.h>
+//#include <ipopt_problem.h>
+//#include <solution.h>
 
 
 int main (int argc, char * argv[]) {
@@ -25,7 +28,14 @@ int main (int argc, char * argv[]) {
     if(!correct_parsing){
         return EXIT_FAILURE;
     }
-
+    
+    InputParams ip = build_input_params(opt["p"] + opt["n"] + "/");
+    ConversionFactors cf(ip);
+    Data data(opt["p"] + opt["n"] + "/", ip.get_units());
+    ScalingFactors sf = build_scaling_factors(data.get_slack_pmin(), cf);
+    data.make_per_unit(cf, sf);
+    
+    /*
     Network net;
     net.populate_data(opt["p"] + opt["n"] + "/");
     std::cout << "number of pipes: " << net.pipes.size() << std::endl;
@@ -66,5 +76,7 @@ int main (int argc, char * argv[]) {
     auto solution = populate_steady_state_solution_data(net, model_data.get(), problem_data.get(), model.get(), nd, converter);
     
     solution.write_output(net, opt["p"] + opt["n"] + "/");
+    return 0;
+     */
     return 0;
 }

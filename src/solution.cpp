@@ -223,7 +223,7 @@ SteadyStateSolution populate_steady_state_solution_data(const Network & net,
     SteadyStateSolution solution(net, md, pd, m);
     solution.dimensionalize(nd);
     
-    if (net.input_params->units == 1)
+    if (net.input_params->get_units() == 1)
         solution.convert_to_standard_units(converter);
     
     return solution;

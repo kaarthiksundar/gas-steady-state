@@ -15,7 +15,7 @@ Network::Network() {
 
 void Network::populate_data(std::string path) {
     populate_params(path);
-    if (input_params->units == 0) si_units = true;
+    if (input_params->get_units() == 0) si_units = true;
     else standard_units = true;
     populate_pipes(path);
     populate_nodes(path);
@@ -86,7 +86,7 @@ void Network::populate_params(std::string path) {
             exit_if_steady_state_check_infeasible = (int) value;
     }
     input_params = std::make_unique<InputParams>(temperature, gas_specific_gravity, 
-        specific_heat_capacity_ratio, fuel_factor, 
+        specific_heat_capacity_ratio, 
         time_horizon, eos, units, intervals, 
         save_csv_output, steady_state_solve_only, 
         space_interval, econ_weight, max_iterations, 
@@ -110,7 +110,7 @@ void Network::populate_pipes(std::string path) {
                                 from_node, to_node, 
                                 diameter, length, 
                                 friction_factor, disc_seg, 
-                                input_params->units);
+                                input_params->get_units());
         pipes.push_back(pipe);
     }
 };
@@ -130,7 +130,7 @@ void Network::populate_nodes(std::string path) {
                                     node_y, pmin, pmax, 
                                     injection_min, injection_max, 
                                     (bool) slack_bool, 
-                                    input_params->units);
+                                    input_params->get_units());
             if (node->_slack) num_slack_nodes++;
             else num_non_slack_nodes++;
             nodes.push_back(node);
@@ -150,7 +150,7 @@ void Network::populate_compressors(std::string path) {
                                                 fnode, tnode, 
                                                 cmin, cmax, power_max, 
                                                 flow_min, flow_max, 
-                                                input_params->units);
+                                                input_params->get_units());
             compressors.push_back(compressor);
         }
 };
