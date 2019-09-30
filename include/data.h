@@ -28,12 +28,12 @@ public:
     ComponentData(std::string, int units);
     ComponentData(const ComponentData &&);
     
-    std::vector<std::shared_ptr<Pipe>> get_pipes();
-    std::vector<std::shared_ptr<Node>> get_nodes();
-    std::vector<std::shared_ptr<Compressor>> get_compressors();
-    std::vector<std::shared_ptr<Gnode>> get_gnodes();
-    int get_num_slack_nodes();
-    int get_num_non_slack_nodes();
+    std::vector<std::shared_ptr<Pipe>> get_pipes() const;
+    std::vector<std::shared_ptr<Node>> get_nodes() const;
+    std::vector<std::shared_ptr<Compressor>> get_compressors() const;
+    std::vector<std::shared_ptr<Gnode>> get_gnodes() const;
+    int get_num_slack_nodes() const;
+    int get_num_non_slack_nodes() const;
 };
 
 class ParameterData {

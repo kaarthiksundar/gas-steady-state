@@ -1,67 +1,68 @@
 #include <problem_data.h>
 #include <algorithm>
 
-ProblemData::ProblemData(const Network & net, const Nondimensionalization & nd) {
-    p_min = Param("p_min"); p_max = Param("p_max");
-    phi_min_compressor = Param("phi_min_comperssor"); 
-    phi_max_compressor = Param("phi_max_compressor");
-    phi_min_pipe = Param("phi_min_pipe"); 
-    phi_max_pipe = Param("phi_max_pipe");
-    c_ratio_min = Param("c_ratio_min"); 
-    c_ratio_max = Param("c_ratio_max");
-    length_pipe = Param("length_pipe");
-    diameter_pipe = Param("diameter_pipe");
-    friction_factor_pipe = Param("friction_factor_pipe");
-    length_compressor = Param("length_compressor");
-    diameter_compressor = Param("diameter_compressor");
-    friction_factor_compressor = Param("friction_factor_compressor");
-    cd = Param("cd"); cs = Param("cs");
-    pslack = Param("pslack"); cslack = Param("cslack");
-    qbar = Param("qbar"); 
-    gbar = Param("gbar"); smax = Param("smax"); dmax = Param("dmax");
-    area_pipe = Param("area_pipe");
-    area_compressor = Param("area_compressor");
+ProblemData::ProblemData(const Data & data, const ScalingFactors & sf) {
+    _p_min = Param("p_min"); _p_max = Param("p_max");
+    _phi_min_compressor = Param("phi_min_comperssor");
+    _phi_max_compressor = Param("phi_max_compressor");
+    _phi_min_pipe = Param("phi_min_pipe");
+    _phi_max_pipe = Param("phi_max_pipe");
+    _c_ratio_min = Param("c_ratio_min");
+    _c_ratio_max = Param("c_ratio_max");
+    _length_pipe = Param("length_pipe");
+    _diameter_pipe = Param("diameter_pipe");
+    _friction_factor_pipe = Param("friction_factor_pipe");
+    _length_compressor = Param("length_compressor");
+    _diameter_compressor = Param("diameter_compressor");
+    _friction_factor_compressor = Param("friction_factor_compressor");
+    _power_max_compressor = Param("power_max_compressor");
+    _cd = Param("cd"); _cs = Param("cs");
+    _pslack = Param("pslack"); _cslack = Param("cslack");
+    _qbar = Param("qbar");
+    _gbar = Param("gbar"); _smax = Param("smax"); _dmax = Param("dmax");
+    _area_pipe = Param("area_pipe");
+    _area_compressor = Param("area_compressor");
     
-    populate_indices(net);
-    populate_parameters(net, nd);
+    populate_indices(data);
+    populate_parameters(data, sf);
 }; 
 
-void ProblemData::populate_parameters(const Network & net, const Nondimensionalization & nd) {
-    p_min.in(nodes); 
-    p_max.in(nodes);
-    for (auto node : net.nodes) {
-        auto node_index = std::stoi(node->_id);
-        p_min.set_value(node_index, node->_pmin);
-        p_max.set_value(node_index, node->_pmax);
+void ProblemData::populate_parameters(const Data & data, const ScalingFactors & sf) {
+    _p_min.in(_nodes);
+    _p_max.in(_nodes);
+    for (auto node : data.get_nodes()) {
+        auto node_index = node->get_id();
+        _p_min.set_value(node_index, node->get_pmin());
+        _p_max.set_value(node_index, node->get_pmax());
     }
     
-    gbar.in(gnodes); smax.in(gnodes); dmax.in(gnodes);
-    cs.in(gnodes); cd.in(gnodes);
-    for (size_t i = 0; i<net.gbar.size(); ++i) {
-        auto gnode_index = std::stoi(net.gnodes[i]->_id);
-        gbar.set_value(gnode_index, net.gbar.at(i));
-        smax.set_value(gnode_index, net.smax.at(i));
-        dmax.set_value(gnode_index, net.dmax.at(i));
-        cs.set_value(gnode_index, net.cs.at(i));
-        cd.set_value(gnode_index, net.cd.at(i));
+    _gbar.in(_gnodes); _smax.in(_gnodes); _dmax.in(_gnodes);
+    _cs.in(_gnodes); _cd.in(_gnodes);
+    for (size_t i=0; i<data.get_gnodes().size(); ++i) {
+        auto gnode_index = data.get_nodes().at(i)->get_id();
+        _gbar.set_value(gnode_index, data.get_gbar().at(i));
+        _smax.set_value(gnode_index, data.get_smax().at(i));
+        _dmax.set_value(gnode_index, data.get_dmax().at(i));
+        _cs.set_value(gnode_index, data.get_cs().at(i));
+        _cd.set_value(gnode_index, data.get_cd().at(i));
     }
     
-    pslack.in(slack_nodes); 
-    for (size_t i=0; i<net.num_slack_nodes; ++i) {
-        auto slack_node_index = std::stoi(net.pslack_ids[i]);
-        pslack.set_value(slack_node_index, net.pslack.at(i));
+    _pslack.in(_slack_nodes);
+    for (size_t i=0; i<data.get_num_slack_nodes(); ++i) {
+        auto slack_node_index = data.get_pslack_ids().at(i);
+        _pslack.set_value(slack_node_index, data.get_pslack().at(i));
     }
     
-    cslack.in(slack_nodes);
-    for (size_t i=0; i<net.num_slack_nodes; ++i) {
-        auto slack_node_index = std::stoi(net.cslack_ids[i]);
-        cslack.set_value(slack_node_index, net.cslack.at(i));
+    _cslack.in(_slack_nodes);
+    for (size_t i=0; i<data.get_num_slack_nodes(); ++i) {
+        auto slack_node_index = data.get_cslack_ids().at(i);
+        _cslack.set_value(slack_node_index, data.get_cslack().at(i));
     }
     
-    qbar.in(non_slack_nodes);
-    for (size_t i=0; i<net.num_non_slack_nodes; ++i) {
-        auto non_slack_node_index = std::stoi(net.qbar_ids[i]);
-        qbar.set_value(non_slack_node_index, net.qbar.at(i));
+    _qbar.in(_non_slack_nodes);
+    for (size_t i=0; i<data.get_num_non_slack_nodes(); ++i) {
+        auto non_slack_node_index = data.get_qbar_ids().at(i);
+        _qbar.set_value(non_slack_node_index, data.get_qbar().at(i));
     }
     
     phi_min_pipe.in(pipes, -100.0);
@@ -109,11 +110,11 @@ void ProblemData::populate_parameters(const Network & net, const Nondimensionali
     }
 };
 
-void ProblemData::populate_indices(const Network & net) {
-    for (auto node : net.nodes) {
-        auto node_index = std::stoi(node->_id);
-        nodes.insert(node_index);
-        if (node->_slack) slack_nodes.insert(node_index);
+void ProblemData::populate_indices(const Data & data) {
+    for (auto node : data.get_nodes()) {
+        auto node_index = node->get_id();
+        _nodes.insert(node_index);
+        if (node->is_slack()) slack_nodes.insert(node_index);
         else non_slack_nodes.insert(node_index);
         out_pipes_in_node[node_index] = Indices();
         in_pipes_in_node[node_index] = Indices();

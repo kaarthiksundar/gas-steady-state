@@ -12,12 +12,12 @@ _nodes(std::move(cd._nodes)),
 _compressors(std::move(cd._compressors)),
 _gnodes(std::move(cd._gnodes)) {};
 
-std::vector<std::shared_ptr<Pipe>> ComponentData::get_pipes() { return _pipes; };
-std::vector<std::shared_ptr<Node>> ComponentData::get_nodes() { return _nodes; };
-std::vector<std::shared_ptr<Compressor>> ComponentData::get_compressors() { return _compressors; };
-std::vector<std::shared_ptr<Gnode>> ComponentData::get_gnodes() { return _gnodes; };
-int ComponentData::get_num_slack_nodes() { return _num_slack_nodes; };
-int ComponentData::get_num_non_slack_nodes() { return _num_non_slack_nodes; };
+std::vector<std::shared_ptr<Pipe>> ComponentData::get_pipes() const { return _pipes; };
+std::vector<std::shared_ptr<Node>> ComponentData::get_nodes() const { return _nodes; };
+std::vector<std::shared_ptr<Compressor>> ComponentData::get_compressors() const { return _compressors; };
+std::vector<std::shared_ptr<Gnode>> ComponentData::get_gnodes() const { return _gnodes; };
+int ComponentData::get_num_slack_nodes() const { return _num_slack_nodes; };
+int ComponentData::get_num_non_slack_nodes() const { return _num_non_slack_nodes; };
 
 void ComponentData::populate_component_data(std::string path, int units) {
     populate_pipe_data(path, units); populate_node_data(path, units);

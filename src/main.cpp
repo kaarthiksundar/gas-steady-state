@@ -4,10 +4,7 @@
 #include <input_params.h>
 #include <conversions.h>
 #include <data.h>
-//#include <network.h>
-//#include <converter.h>
-//#include <nondimensionalization.h>
-//
+
 //#include <problem_data.h>
 //#include <model_data.h>
 //#include <ipopt_problem.h>

@@ -2,43 +2,44 @@
 #define PROBLEM_DATA_H
 
 #include <utils.h>
-#include <network.h>
-#include <nondimensionalization.h>
+#include <data.h>
+#include <conversions.h>
 
 class ProblemData {
-    public:
-        /* parameters */
-        Param p_min, p_max;
-        Param phi_min_compressor, phi_max_compressor;
-        Param phi_min_pipe, phi_max_pipe;
-        Param c_ratio_min, c_ratio_max;
-        Param length_pipe, diameter_pipe, friction_factor_pipe;
-        Param length_compressor, diameter_compressor, friction_factor_compressor;
-        Param resistance_pipe, resistance_compressor;
-        Param cd, cs;
-        Param pslack, cslack;
-        Param qbar;
-        Param gbar, smax, dmax;
-        Param area_pipe, area_compressor;
-        /* Indices */
-        Indices nodes;
-        Indices pipes;
-        Indices compressors;
-        Indices gnodes;
-        Indices slack_nodes;
-        Indices non_slack_nodes;
-        std::unordered_map<int, Indices> out_pipes_in_node, in_pipes_in_node;
-        std::unordered_map<int, Indices> out_compressors_in_node, in_compressors_in_node;
-        std::unordered_map<int, Indices> gnodes_in_node;
-        std::unordered_map<int, int> fnode_of_pipe, tnode_of_pipe;
-        std::unordered_map<int, int> fnode_of_compressor, tnode_of_compressor;
-        
-        ProblemData(const Network & network, const Nondimensionalization & nd);
-
-    private: 
-        void populate_parameters(const Network & network, const Nondimensionalization & nd);
-        void populate_indices(const Network & network);
-
+public:
+    /* parameters */
+    Param _p_min, _p_max;
+    Param _phi_min_compressor, _phi_max_compressor;
+    Param _phi_min_pipe, _phi_max_pipe;
+    Param _c_ratio_min, _c_ratio_max;
+    Param _length_pipe, _diameter_pipe, _friction_factor_pipe;
+    Param _length_compressor, _diameter_compressor, _friction_factor_compressor;
+    Param _resistance_pipe, _resistance_compressor;
+    Param _power_max_compressor;
+    Param _cd, _cs;
+    Param _pslack, _cslack;
+    Param _qbar;
+    Param _gbar, _smax, _dmax;
+    Param _area_pipe, _area_compressor;
+    /* Indices */
+    Indices _nodes;
+    Indices _pipes;
+    Indices _compressors;
+    Indices _gnodes;
+    Indices _slack_nodes;
+    Indices _non_slack_nodes;
+    std::unordered_map<int, Indices> _out_pipes_in_node, _in_pipes_in_node;
+    std::unordered_map<int, Indices> _out_compressors_in_node, _in_compressors_in_node;
+    std::unordered_map<int, Indices> _gnodes_in_node;
+    std::unordered_map<int, int> _fnode_of_pipe, _tnode_of_pipe;
+    std::unordered_map<int, int> _fnode_of_compressor, _tnode_of_compressor;
+    
+    ProblemData(const Data & data, const ScalingFactors & sf);
+    
+private:
+    void populate_parameters(const Data & data, const ScalingFactors & sf);
+    void populate_indices(const Data & data);
+    
 };
 
 #endif 
