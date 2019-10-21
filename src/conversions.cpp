@@ -33,7 +33,10 @@ double ConversionFactors::m_to_miles() const { return 1.0/_miles_to_m; };
 double ConversionFactors::inches_to_m() const { return _inches_to_m; };
 double ConversionFactors::m_to_inches() const { return 1.0/_inches_to_m; };
 
-ScalingFactors::ScalingFactors(double pressure_scaling, double flow_scaling, double time_scaling, double space_scaling) :
+ScalingFactors::ScalingFactors(double pressure_scaling,
+                               double flow_scaling,
+                               double time_scaling,
+                               double space_scaling):
 _pressure_scaling(pressure_scaling),
 _flow_scaling(flow_scaling),
 _time_scaling(time_scaling),

@@ -147,7 +147,7 @@ public:
     std::string get_name() const;
     int get_node_id() const;
     bool get_status() const;
-
+    
     friend std::ostream& operator<<(std::ostream& os, const Gnode &gnode);
 };
 

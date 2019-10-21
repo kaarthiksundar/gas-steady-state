@@ -1,14 +1,14 @@
 #include <utils.h>
 
 std::ostream& operator<<(std::ostream& os, const Indices& indices) { 
-    os << "["; 
-    for (auto it : indices) { 
-        os << it; 
-        if (it != *indices.rbegin()) 
-            os << ", "; 
-    } 
-    os << "]" << std::endl; 
-    return os; 
+    os << "[";
+    for (auto it : indices) {
+        os << it;
+        if (it != *indices.rbegin())
+            os << ", ";
+    }
+    os << "]" << std::endl;
+    return os;
 };
 
 Param::Param() : _name(""), _indices(), _values() {};
@@ -24,7 +24,7 @@ void Param::in(Indices & indices) {
 void Param::in(Indices & indices, double value) {
     for (auto i : indices) {
         _indices.insert(i);
-    _values[i] = value;
+        _values[i] = value;
     }
 };
 
@@ -33,7 +33,7 @@ void Param::set_value(int key, double value) {
         std::cerr << "parameter has no value in key " << key << std::endl;
         std::exit(1);
     }
-    _values[key] = value; 
+    _values[key] = value;
 };
 
 double Param::get_value(int key) {
@@ -48,6 +48,6 @@ const Indices & Param::get_indices() const { return _indices; };
 
 bool Param::has_key(int key) {
     if (_indices.find(key) == _indices.end())
-        return false; 
-    return true; 
+        return false;
+    return true;
 };

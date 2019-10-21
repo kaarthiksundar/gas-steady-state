@@ -1,0 +1,72 @@
+Compressor Inlet Pressure
+1   4000000
+2   3321241.746
+	
+Compressor Discharge Pressure
+1   4967054.054	
+2   4483667.129
+	
+Compressor Ratio
+1   1.24177686	
+2   1.349999885
+	
+Compressor Flow
+1   97.33184034	
+2   37.64319829
+
+Compressor Power
+1   3000038.914	
+2   1627549.856
+
+Nodal Physical Outflows
+1   -97.33184034
+2   30
+3   40
+4   27.3316936449414
+5   0
+6   0
+
+Nodal Physical Pressures
+1   4000000					
+2   3321241.746
+3   3000000.013
+4   4103496.143
+5   4967054.054
+6   4483667.129
+
+Pipe Physical Flows
+1   97.33184034			
+2   29.68857482
+3   37.64319829
+4   -10.31142442
+
+Pipe Inlet Pressures
+1	4967054.054		
+2	3321241.746
+3	4483667.129
+4   3000000.013
+
+Pipe Outlet Pressures
+1   3321241.746			
+2   3000000.013
+3   4103496.143
+4   4103496.143
+			
+Consumer Scheduled Flows
+1	30
+2	40
+3	20
+4	0
+5   7.331693645
+
+Producer Scheduled Flows
+6   97.33184034	
+
+Nodal Prices
+1   1.25
+2	2.79085321	
+3	3.286454925	
+4	2.849999815	
+5	1.62870927	
+6   2.80020799	
+

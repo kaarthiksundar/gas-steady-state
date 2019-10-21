@@ -3,23 +3,23 @@
 #include <iostream>
 
 Func::Func() : 
-    _terms(),
-    _variable_id_to_terms(),
-    _name(""),
-    _variable_ids_with_nz_second_derivative(),
-    _variable_id_pairs_with_nz_mixed_second_derivative()
-    {};
+_terms(),
+_variable_id_to_terms(),
+_name(""),
+_variable_ids_with_nz_second_derivative(),
+_variable_id_pairs_with_nz_mixed_second_derivative()
+{};
 
 Func::Func(std::string name) : 
-    _terms(), 
-    _variable_id_to_terms(), 
-    _name(name),
-    _variable_ids_with_nz_second_derivative(),
-    _variable_id_pairs_with_nz_mixed_second_derivative()
-    {};
+_terms(),
+_variable_id_to_terms(),
+_name(name),
+_variable_ids_with_nz_second_derivative(),
+_variable_id_pairs_with_nz_mixed_second_derivative()
+{};
 
 std::string Func::get_name() { return _name; };
-        
+
 void Func::set_name(std::string name) { _name = name; };
 
 void Func::add_term(Term term) {
@@ -27,7 +27,7 @@ void Func::add_term(Term term) {
     for (auto variable_id : term.get_variable_ids()) {
         if (has_variable_id(variable_id))
             _variable_id_to_terms[variable_id].push_back(_terms.size()-1);
-        else 
+        else
             _variable_id_to_terms[variable_id] = std::vector<int>(1, _terms.size()-1);
     }
     switch (term.get_term_type()) {
@@ -53,25 +53,31 @@ void Func::add_term(Term term) {
             _variable_id_pairs_with_nz_mixed_second_derivative.insert(variable_id_pair);
             break;
         }
+        case TermType::xpowermminusone_absy : {
+            int var_id_x = term.get_variable_ids()[0], var_id_y = term.get_variable_ids()[1];
+            _variable_ids_with_nz_second_derivative.insert(var_id_x);
+            auto variable_id_pair = std::make_pair(std::min(var_id_x, var_id_y), std::max(var_id_x, var_id_y));
+            _variable_id_pairs_with_nz_mixed_second_derivative.insert(variable_id_pair);
+            break;
+        }
         default:
             break;
     }
 };
 
 double Func::get_value(const double* var_values) {
-    double fcn_value = 0.0; 
+    double fcn_value = 0.0;
     for (auto term : _terms) {
         auto var_ids = term.get_variable_ids();
         std::vector<double> values;
-        for (auto var_id : var_ids) 
+        for (auto var_id : var_ids)
             values.push_back(var_values[var_id]);
         fcn_value += term.get_value(values);
     }
     return fcn_value;
 };
 
-std::vector<std::tuple<int, double>> Func::get_gradient(int num_variables,
-    const double* var_values) {
+std::vector<std::tuple<int, double>> Func::get_gradient(int num_variables, const double* var_values) {
     std::vector<std::tuple<int, double>> grad;
     for (auto i=0; i<num_variables; ++i) {
         double gradient = 0.0;
@@ -83,7 +89,7 @@ std::vector<std::tuple<int, double>> Func::get_gradient(int num_variables,
                 for (auto j=0; j<var_ids.size(); ++j) {
                     int var_id = var_ids[j];
                     if (var_id == i) wrt = j;
-                        values.push_back(var_values[var_id]);
+                    values.push_back(var_values[var_id]);
                 }
                 gradient += _terms[term_id].get_derivative(wrt, values);
             }
@@ -108,7 +114,7 @@ std::set<std::pair<int, int>> Func::get_variable_id_pairs_with_nz_mixed_second_d
 };
 
 bool Func::has_variable_id(int id) {
-    if (_variable_id_to_terms.find(id) == _variable_id_to_terms.end()) 
-        return false; 
-    return true; 
+    if (_variable_id_to_terms.find(id) == _variable_id_to_terms.end())
+        return false;
+    return true;
 }

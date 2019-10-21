@@ -110,36 +110,39 @@ bool GasNLP::eval_h(Index n, const Number *x, bool new_x, Number obj_factor, Ind
 };
 
 void GasNLP::finalize_solution(SolverReturn status, Index n, const Number *x, const Number *z_L, const Number *z_U, Index m, const Number *g, const Number *lambda, Number obj_value, const IpoptData *ip_data, IpoptCalculatedQuantities *ip_cq) {
-    _model->set_solve_status((int)status);
+    _model->set_solver_status((int)status);
     _model->set_objective_value(obj_value);
-    _model->set_solution(x);
+    _model->set_primal_solution(x);
 };
 
 void solve_model(Model * model) {
-    // Create a new instance of the GasNLP
+    /* Create a new instance of the GasNLP */
     SmartPtr<TNLP> gas_nlp = new GasNLP(model);
     
-    // Create a new instance of IpoptApplication
-    // We are using the factory, since this allows us to compile this
-    // example with an Ipopt Windows DLL
+    /**
+     * Create a new instance of IpoptApplication
+     * We are using the factory, since this allows us to compile this
+     * example with an Ipopt Windows DLL
+     */
     SmartPtr<IpoptApplication> app = IpoptApplicationFactory();
     app->RethrowNonIpoptException(true);
     
-    // Change some options
-//    app->Options()->SetNumericValue("tol", 1e-3);
-//    app->Options()->SetNumericValue("constr_viol_tol", 1e-4);
+    /* Change some ipopt options */
+    app->Options()->SetNumericValue("tol", 1e-6);
+    app->Options()->SetNumericValue("constr_viol_tol", 1e-6);
     app->Options()->SetStringValue("mu_strategy", "adaptive");
     app->Options()->SetStringValue("output_file", "gas_ss_nlp.out");
-//    app->Options()->SetStringValue("jacobian_approximation", "finite-difference-values");
-//    app->Options()->SetStringValue("derivative_test", "first-order");
+    app->Options()->SetStringValue("jacobian_approximation", "finite-difference-values");
+    /* perform derivative test */
+    // app->Options()->SetStringValue("derivative_test", "first-order");
     app->Options()->SetIntegerValue("max_iter", 250);
     app->Options()->SetStringValue("hessian_approximation", "limited-memory");
     app->Options()->SetStringValue("limited_memory_update_type", "BFGS");
     app->Options()->SetStringValueIfUnset("linear_solver", "ma57");
-    // The following overwrites the default name (ipopt.opt) of the
-     app->Options()->SetStringValue("option_file_name", "gas_ss.opt");
+    /* The following overwrites the default name (ipopt.opt) of the options file */
+    app->Options()->SetStringValue("option_file_name", "gas_ss.opt");
     
-    // Initialize the IpoptApplication and process the options
+    /* Initialize the IpoptApplication and process the options */
     ApplicationReturnStatus status;
     status = app->Initialize();
     std::cout << "initalized" << std::endl;
@@ -148,9 +151,10 @@ void solve_model(Model * model) {
         std::exit(1);
     }
     
-    // Ask Ipopt to solve the problem
+    /* Ask Ipopt to solve the problem */
     status = app->OptimizeTNLP(gas_nlp);
     std::cout << "optimized" << std::endl;
+    std::cout << "status : " << status << std::endl;
     if (status == Solve_Succeeded)
         std::cout << std::endl << std::endl << "*** The problem solved!" << std::endl;
     else {
@@ -158,8 +162,10 @@ void solve_model(Model * model) {
         std::exit(1);
     }
     
-    // As the SmartPtrs go out of scope, the reference count
-    // will be decremented and the objects will automatically
-    // be deleted.
+    /**
+     * As the SmartPtrs go out of scope, the reference count
+     * will be decremented and the objects will automatically
+     * be deleted.
+     */
 };
 

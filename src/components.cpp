@@ -175,8 +175,8 @@ void Node::make_si(const ConversionFactors & cf, const ScalingFactors & sf) {
 
 /* constructor, getters and functions for the Compressor class */
 Compressor::Compressor(int id, std::string name, int fnode, int tnode,
-           double cmin, double cmax, double power_max,
-           double flow_min, double flow_max, int units) {
+                       double cmin, double cmax, double power_max,
+                       double flow_min, double flow_max, int units) {
     _id = id; _name = name;
     _fnode = fnode; _tnode = tnode;
     _cmin = cmin; _cmax = cmax; _power_max = power_max;
