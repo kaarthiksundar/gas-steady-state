@@ -129,8 +129,9 @@ void solve_model(Model * model) {
     app->RethrowNonIpoptException(true);
     
     /* Change some ipopt options */
-    app->Options()->SetNumericValue("tol", 1e-3);
-    app->Options()->SetNumericValue("constr_viol_tol", 1e-3);
+    app->Options()->SetNumericValue("tol", 1e-6);
+    app->Options()->SetNumericValue("acceptable_tol", 1e-6);
+    app->Options()->SetNumericValue("constr_viol_tol", 1e-7);
     app->Options()->SetStringValue("mu_strategy", "adaptive");
     app->Options()->SetStringValue("output_file", "gas_ss_nlp.out");
     app->Options()->SetStringValue("jacobian_approximation", "finite-difference-values");

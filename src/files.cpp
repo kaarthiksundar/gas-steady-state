@@ -36,8 +36,9 @@ const std::string OutputFilenames::gnode_demand_flows = "output_ss_gnode_demand_
 const std::string OutputFilenames::gnode_supply_flows = "output_ss_gnode_supply_flows.csv";
 
 const std::string OutputFilenames::comp_ratios = "output_ss_comp_ratios.csv";
-const std::string OutputFilenames::comp_discharge_pressure = "ouput_ss_comp_discharge_pressure";
+const std::string OutputFilenames::comp_discharge_pressure = "ouput_ss_comp_discharge_pressure.csv";
 const std::string OutputFilenames::comp_flow_in = "output_ss_comp_flows_in.csv";
 const std::string OutputFilenames::comp_flow_out = "output_ss_comp_flows_out.csv";
 const std::string OutputFilenames::comp_pressure_in = "output_ss_comp_pressure_in.csv";
 const std::string OutputFilenames::comp_pressure_out = "output_ss_comp_pressure_out.csv";
+const std::string OutputFilenames::comp_power = "output_ss_comp_power.csv";

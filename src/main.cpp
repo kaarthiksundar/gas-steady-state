@@ -15,7 +15,7 @@ int main (int argc, char * argv[]) {
     /* creating command line options */
     op::OptionParser opt;
     opt.add_option("h", "help", "shows option help"); 
-    opt.add_option("n", "case_name", "case name", "model6ss_test_0");
+    opt.add_option("n", "case_name", "case name", "model6ss_test_1");
     opt.add_option("p", "case_path", "case file path", "/Users/kaarthik/Documents/research/gas-steady-state/data/");
     opt.add_option("o", "output_path", "output folder path", "/Users/kaarthik/Documents/research/gas-steady-state/output/");
     
@@ -46,15 +46,7 @@ int main (int argc, char * argv[]) {
     else
         sss.make_standard(cf, sf);
     
+    sss.write_output(data, opt["o"] + opt["n"] + "/");
     
-    
-    /*
-     solve_model(model.get());
-     
-     auto solution = populate_steady_state_solution_data(net, model_data.get(), problem_data.get(), model.get(), nd, converter);
-     
-     solution.write_output(net, opt["p"] + opt["n"] + "/");
-     return 0;
-     */
     return 0;
 }

@@ -43,6 +43,7 @@ struct OutputFilenames {
     const static std::string comp_flow_out;
     const static std::string comp_pressure_in;
     const static std::string comp_pressure_out;
+    const static std::string comp_power;
 };
 
 
