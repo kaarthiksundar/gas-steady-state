@@ -113,6 +113,7 @@ void GasNLP::finalize_solution(SolverReturn status, Index n, const Number *x, co
     _model->set_solver_status((int)status);
     _model->set_objective_value(obj_value);
     _model->set_primal_solution(x);
+    _model->set_dual_solution(lambda);
 };
 
 void solve_model(Model * model) {
@@ -128,13 +129,16 @@ void solve_model(Model * model) {
     app->RethrowNonIpoptException(true);
     
     /* Change some ipopt options */
-    app->Options()->SetNumericValue("tol", 1e-6);
-    app->Options()->SetNumericValue("constr_viol_tol", 1e-6);
+    app->Options()->SetNumericValue("tol", 1e-4);
+    app->Options()->SetNumericValue("constr_viol_tol", 1e-4);
     app->Options()->SetStringValue("mu_strategy", "adaptive");
     app->Options()->SetStringValue("output_file", "gas_ss_nlp.out");
     app->Options()->SetStringValue("jacobian_approximation", "finite-difference-values");
-    /* perform derivative test */
-    // app->Options()->SetStringValue("derivative_test", "first-order");
+    /**
+     * perform derivative test (for testing purposes only)
+     * app->Options()->SetStringValue("derivative_test", "first-order");
+     */
+    app->Options()->SetStringValue("derivative_test", "first-order");
     app->Options()->SetIntegerValue("max_iter", 250);
     app->Options()->SetStringValue("hessian_approximation", "limited-memory");
     app->Options()->SetStringValue("limited_memory_update_type", "BFGS");

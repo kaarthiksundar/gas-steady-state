@@ -35,7 +35,7 @@ public:
     
     double get_temperature() const;
     double get_gas_specific_gravity() const;
-    double get_specific_heat_capacity() const;
+    double get_specific_heat_capacity_ratio() const;
     double get_time_horizon() const;
     int get_eos() const;
     int get_units() const;

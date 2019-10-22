@@ -30,7 +30,7 @@ InputParams::InputParams(double temperature, double gas_specific_gravity,
 
 double InputParams::get_temperature() const { return _temperature; };
 double InputParams::get_gas_specific_gravity() const { return _gas_specific_gravity; };
-double InputParams::get_specific_heat_capacity() const { return _specific_heat_capacity_ratio; };
+double InputParams::get_specific_heat_capacity_ratio() const { return _specific_heat_capacity_ratio; };
 double InputParams::get_time_horizon() const { return _time_horizon; };
 int InputParams::get_eos() const { return _eos; };
 int InputParams::get_units() const { return _units; };

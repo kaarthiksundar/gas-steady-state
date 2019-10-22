@@ -10,7 +10,7 @@ ConversionFactors::ConversionFactors(const InputParams &ip) {
     _miles_to_m = 1609.64;
     _inches_to_m = 2.54/100.0;
     _gas_R = _universal_R / _molecular_weight_air / ip.get_gas_specific_gravity();
-    _mmscfd_to_kgps = 1000 * 0.02832 /86400 * (_one_atm/(_universal_R * ip.get_temperature())*100*100*100) * ip.get_gas_specific_gravity() * _molecular_weight_air;
+    _mmscfd_to_kgps = 1000.0 * 0.02832 / 86400.0 * (_one_atm / (_universal_R * ip.get_temperature())*100*100*100) * ip.get_gas_specific_gravity() * _molecular_weight_air;
     _a = std::sqrt(_gas_R * ip.get_temperature());
     _hp_to_watts = 745.7;
 };

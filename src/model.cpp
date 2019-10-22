@@ -32,6 +32,7 @@ _solver_status()
 /* generic functions */
 std::string Model::get_name() { return _name; };
 void Model::set_name(std::string name) { _name = name; };
+bool Model::has_objective() { return _has_objective; };
 
 /* get_nlp_info functions */
 int Model::get_num_variables() { return _num_variables; };

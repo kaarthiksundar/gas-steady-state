@@ -79,8 +79,6 @@ void ComponentData::populate_gnode_data(std::string path, int units) {
 
 ParameterData::ParameterData(std::string path, int units) {
     populate_slack_data(path, units);
-    populate_slack_pressure_data(path, units);
-    populate_slack_price_data(path, units);
     populate_non_slack_data(path, units);
     populate_gnode_data(path, units);
     populate_cost_data(path, units);

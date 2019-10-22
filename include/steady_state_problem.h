@@ -38,24 +38,26 @@ public:
     std::shared_ptr<Constraint> compressor_power_bounds(int);
     std::shared_ptr<Func> objective();
     
-    double get_rho(int);
-    double get_phi_p(int);
-    double get_phi_c(int);
-    double get_alpha(int);
-    double get_s(int);
-    double get_d(int);
-    double get_slack_production(int);
-    double get_nodal_balance(int);
-    double get_pipe_physics(int);
-    double get_compressor_physics(int);
-    double get_compressor_bounds(int);
-    double get_compressor_power_bounds(int);
-    double get_objective_value();
+    double get_rho(int) const;
+    double get_phi_p(int) const;
+    double get_phi_c(int) const;
+    double get_alpha(int) const;
+    double get_s(int) const;
+    double get_d(int) const;
+    double get_slack_production(int) const;
+    double get_nodal_balance(int) const;
+    double get_pipe_physics(int) const;
+    double get_compressor_physics(int) const;
+    double get_compressor_bounds(int) const;
+    double get_compressor_power_bounds(int) const;
+    double get_objective_value() const;
     
     
     void add_variables();
     void add_constraints(const InputParams &);
     void add_objective(const InputParams &);
+    
+    void populate_solution();
     
 private:
     /* variables */

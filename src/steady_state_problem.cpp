@@ -29,19 +29,19 @@ std::shared_ptr<Constraint> SteadyStateProblem::compressor_power_bounds(int i) {
 };
 std::shared_ptr<Func> SteadyStateProblem::objective() { return _objective; };
 
-double SteadyStateProblem::get_rho(int i) { return _primal_values.at("rho").at(i); };
-double SteadyStateProblem::get_phi_p(int i) { return _primal_values.at("phi_pipe").at(i); };
-double SteadyStateProblem::get_phi_c(int i) { return _primal_values.at("phi_compressor").at(i); };
-double SteadyStateProblem::get_alpha(int i) { return _primal_values.at("alpha").at(i); };
-double SteadyStateProblem::get_s(int i) { return _primal_values.at("s").at(i); };
-double SteadyStateProblem::get_d(int i) { return _primal_values.at("d").at(i); };
-double SteadyStateProblem::get_slack_production(int i) { return _primal_values.at("slack_production").at(i); };
-double SteadyStateProblem::get_nodal_balance(int i) { return _dual_values.at("nodal_balance").at(i); };
-double SteadyStateProblem::get_pipe_physics(int i) { return _dual_values.at("pipe_physics").at(i); };
-double SteadyStateProblem::get_compressor_physics(int i) { return _dual_values.at("compressor_physics").at(i); };
-double SteadyStateProblem::get_compressor_bounds(int i) { return _dual_values.at("compressor_discharge_bounds").at(i); };
-double SteadyStateProblem::get_compressor_power_bounds(int i) { return _dual_values.at("compressor_power_bounds").at(i); };
-double SteadyStateProblem::get_objective_value() { return _objective_value; };
+double SteadyStateProblem::get_rho(int i) const{ return _primal_values.at("rho").at(i); };
+double SteadyStateProblem::get_phi_p(int i) const { return _primal_values.at("phi_pipe").at(i); };
+double SteadyStateProblem::get_phi_c(int i) const { return _primal_values.at("phi_compressor").at(i); };
+double SteadyStateProblem::get_alpha(int i) const { return _primal_values.at("alpha").at(i); };
+double SteadyStateProblem::get_s(int i) const { return _primal_values.at("s").at(i); };
+double SteadyStateProblem::get_d(int i) const { return _primal_values.at("d").at(i); };
+double SteadyStateProblem::get_slack_production(int i) const { return _primal_values.at("slack_production").at(i); };
+double SteadyStateProblem::get_nodal_balance(int i) const { return _dual_values.at("nodal_balance").at(i); };
+double SteadyStateProblem::get_pipe_physics(int i) const { return _dual_values.at("pipe_physics").at(i); };
+double SteadyStateProblem::get_compressor_physics(int i) const { return _dual_values.at("compressor_physics").at(i); };
+double SteadyStateProblem::get_compressor_bounds(int i) const { return _dual_values.at("compressor_discharge_bounds").at(i); };
+double SteadyStateProblem::get_compressor_power_bounds(int i) const { return _dual_values.at("compressor_power_bounds").at(i); };
+double SteadyStateProblem::get_objective_value() const { return _objective_value; };
 
 void SteadyStateProblem::add_variables() {
     add_rho_variables();
@@ -59,6 +59,24 @@ void SteadyStateProblem::add_constraints(const InputParams & ip) {
     add_compressor_power_bounds(ip);
 };
 
+void SteadyStateProblem::populate_solution() {
+    std::vector<std::string> variable_keys{"rho",
+        "phi_pipe",
+        "phi_compressor", "alpha",
+        "s", "d", "slack_production"};
+    std::vector<std::string> constraint_keys{"nodal_balance",
+        "pipe_physics", "compressor_physics",
+        "compressor_discharge_bounds", "compressor_power_bounds"};
+    for (auto key : variable_keys)
+        for (auto i : _variables.at(key))
+            _primal_values.at(key).at(i.first) = _model.get_primal_value(i.second);
+    
+    for (auto key : constraint_keys)
+        for (auto i : _constraints.at(key))
+            _dual_values.at(key).at(i.first) = _model.get_dual_value(i.second);
+    if (_model.has_objective())
+        _objective_value = _model.get_objective_value();
+};
 
 void SteadyStateProblem::add_rho_variables() {
     /* nodal rho variables for all non-slack nodes */
@@ -289,7 +307,7 @@ void SteadyStateProblem::add_compressor_discharge_pressure_bounds() {
 };
 
 void SteadyStateProblem::add_compressor_power_bounds(const InputParams & ip) {
-    double m = ip.get_specific_heat_capacity() / (ip.get_specific_heat_capacity() - 1);
+    double m = (ip.get_specific_heat_capacity_ratio() - 1) / ip.get_specific_heat_capacity_ratio();
     double Wc = 286.76 * ip.get_temperature() / ip.get_gas_specific_gravity() / m;
     auto power_max = _ssd.get_power_max_compressor();
     _constraints["compressor_power_bounds"] = std::unordered_map<int, std::shared_ptr<Constraint>>();
@@ -305,7 +323,7 @@ void SteadyStateProblem::add_compressor_power_bounds(const InputParams & ip) {
 };
 
 void SteadyStateProblem::add_objective(const InputParams & ip) {
-    double m = ip.get_specific_heat_capacity() / (ip.get_specific_heat_capacity() - 1);
+    double m = (ip.get_specific_heat_capacity_ratio() - 1) / ip.get_specific_heat_capacity_ratio();
     double Wc = 286.76 * ip.get_temperature() / ip.get_gas_specific_gravity() / m;
     double econ_weight = ip.get_econ_weight();
     auto cd = _ssd.get_cd();
@@ -315,13 +333,13 @@ void SteadyStateProblem::add_objective(const InputParams & ip) {
     _objective = _model.add_objective("social_welfare_compressor_power");
     _objective_value = std::nan("");
     for (auto index : _ssd.get_gnode_indexes()) {
-        _objective->add_term(Term(d(index), -cd.get_value(index) * econ_weight));
-        _objective->add_term(Term(s(index), cs.get_value(index) * econ_weight));
+        _objective->add_term(Term(d(index), -cd.get_value(index) * econ_weight * 1000.0));
+        _objective->add_term(Term(s(index), cs.get_value(index) * econ_weight * 1000.0));
     }
     for (auto index : _ssd.get_slack_node_indexes())
-        _objective->add_term(Term(slack_production(index), cslack.get_value(index) * econ_weight));
+        _objective->add_term(Term(slack_production(index), cslack.get_value(index) * econ_weight * 1000.0));
     
     /* objective term 2 : (1.0 - econ_weight) * sum(i in compressors) compressor_power(i) */
-    for (auto compressor_index : _ssd.get_compressor_indexes())
-        _objective->add_term(Term({ alpha(compressor_index), phi_c(compressor_index) }, {m, 1.0}, Wc * (1.0 - econ_weight), TermType::xpowermminusone_absy));
+//    for (auto compressor_index : _ssd.get_compressor_indexes())
+//        _objective->add_term(Term({ alpha(compressor_index), phi_c(compressor_index) }, {m, 1.0}, Wc * (1.0 - econ_weight), TermType::xpowermminusone_absy));
 };

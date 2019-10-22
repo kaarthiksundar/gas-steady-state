@@ -31,6 +31,7 @@ public:
     /* generic functions */
     std::string get_name();
     void set_name(std::string);
+    bool has_objective();
     
     /* get_nlp_info functions */
     int get_num_variables();

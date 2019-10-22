@@ -29,14 +29,14 @@ _variables({variable}),
 _variable_ids({variable->get_id()}),
 _power({1.0}),
 _coefficient(1.0),
-_type(TermType::linear) {};
+_type(type) {};
 
 Term::Term(std::shared_ptr<Variable> variable, double coefficient, TermType type) :
 _variables({variable}),
 _variable_ids({variable->get_id()}),
 _power({1.0}),
 _coefficient(coefficient),
-_type(TermType::linear) {};
+_type(type) {};
 
 Term::Term(std::vector<std::shared_ptr<Variable>> variables, TermType type) {
     if (type == TermType::xpowermminusone_absy) {

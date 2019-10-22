@@ -111,8 +111,8 @@ void SteadyStateData::populate_parameters(const Data & data, const ScalingFactor
         _qbar.set_value(non_slack_node_index, data.get_qbar().at(i));
     }
     
-    _phi_min_pipe.in(_pipes, -1000.0);
-    _phi_max_pipe.in(_pipes, +1000.0);
+    _phi_min_pipe.in(_pipes);
+    _phi_max_pipe.in(_pipes);
     _length_pipe.in(_pipes);
     _diameter_pipe.in(_pipes);
     _friction_factor_pipe.in(_pipes);
@@ -127,6 +127,15 @@ void SteadyStateData::populate_parameters(const Data & data, const ScalingFactor
         _area_pipe.set_value(pipe_index, area);
         double resistance = pipe->get_friction_factor() * pipe->get_length() * sf.get_space_scaling() / pipe->get_diameter();
         _resistance_pipe.set_value(pipe_index, resistance);
+        int fnode_index = pipe->get_fnode_id(); int tnode_index = pipe->get_tnode_id();
+        double fnode_p_min = _p_min.get_value(fnode_index);
+        double fnode_p_max = _p_max.get_value(fnode_index);
+        double tnode_p_min = _p_min.get_value(tnode_index);
+        double tnode_p_max = _p_max.get_value(tnode_index);
+        double phi_min = -std::sqrt((tnode_p_max * tnode_p_max - fnode_p_min * fnode_p_min)/resistance);
+        double phi_max = std::sqrt((fnode_p_max * fnode_p_max - tnode_p_min * tnode_p_min)/resistance);
+        _phi_min_pipe.set_value(pipe_index, phi_min);
+        _phi_max_pipe.set_value(pipe_index, phi_max);
     }
     
     _phi_min_compressor.in(_compressors);

@@ -1,5 +1,5 @@
-#ifndef solution_h
-#define solution_h
+#ifndef STEADY_STATE_SOLUTION_H
+#define STEADY_STATE_SOLUTION_H
 
 #pragma once
 #include <vector>
@@ -8,7 +8,7 @@
 #include <steady_state_problem.h>
 #include <steady_state_data.h>
 
-class SteadyStateSolutionData {
+class SteadyStateSolution {
 private:
     std::vector<double> _pipe_flow_in, _pipe_flow_out;
     std::vector<double> _pipe_pressure_in, _pipe_pressure_out;
@@ -19,11 +19,41 @@ private:
     std::vector<double> _comp_ratios, _comp_discharge_pressure;
     std::vector<double> _comp_flow_in, _comp_flow_out;
     std::vector<double> _comp_pressure_in, _comp_pressure_out;
+    std::vector<double> _comp_power;
     bool _si;
     bool _standard;
     bool _per_unit;
 public:
-    SteadyStateSolutionData(const Data &, const SteadyStateProblem &);
+    SteadyStateSolution(const Data &,
+                        const SteadyStateData &,
+                        const SteadyStateProblem &,
+                        const InputParams &);
+    
+    const std::vector<double> & get_pipe_flow_in() const;
+    const std::vector<double> & get_pipe_flow_out() const;
+    const std::vector<double> & get_pipe_pressure_in() const;
+    const std::vector<double> & get_pipe_pressure_out() const;
+    const std::vector<double> & get_slack_flows() const;
+    const std::vector<double> & get_non_slack_flows() const;
+    const std::vector<double> & get_nodal_pressure() const;
+    const std::vector<double> & get_gnode_demand_flows() const;
+    const std::vector<double> & get_gnode_supply_flows() const;
+    const std::vector<double> & get_comp_ratios() const;
+    const std::vector<double> & get_comp_discharge_pressure() const;
+    const std::vector<double> & get_comp_flow_in() const;
+    const std::vector<double> & get_comp_flow_out() const;
+    const std::vector<double> & get_comp_pressure_in() const;
+    const std::vector<double> & get_comp_pressure_out() const;
+    const std::vector<double> & get_comp_power() const;
+    
+    bool is_si() const;
+    bool is_standard() const;
+    bool is_per_unit() const;
+    
+    void make_si(const ConversionFactors &, const ScalingFactors &);
+    void make_standard(const ConversionFactors &, const ScalingFactors &);
+    void make_per_unit(const ConversionFactors &, const ScalingFactors &);
+    
 };
 
 
