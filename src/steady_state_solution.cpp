@@ -63,7 +63,8 @@ SteadyStateSolution::SteadyStateSolution(const Data & data,
         /* compressor power calculation */
         double alpha = ssp.get_alpha(compressor->get_id());
         double q = ssp.get_phi_c(compressor->get_id());
-        double power_consumption = Wc * (std::pow(alpha, m) - 1) * std::fabs(q);
+        double area = area_compressor.get_value(compressor->get_id());
+        double power_consumption = Wc * (std::pow(alpha, m) - 1) * std::fabs(q) * area;
         _comp_power.push_back(power_consumption);
     }
     

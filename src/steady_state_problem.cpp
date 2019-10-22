@@ -104,6 +104,7 @@ void SteadyStateProblem::add_phi_variables() {
         auto var = _model.add_variable("phi_pipe_" + std::to_string(index));
         var->set_lb(phi_min_pipe.get_value(index));
         var->set_ub(phi_max_pipe.get_value(index));
+        var->set_start((var->get_lb() + var->get_ub()) / 2.0);
         _variables["phi_pipe"][index] = var;
         _primal_values["phi_pipe"][index] = std::nan("");
     }
@@ -117,6 +118,7 @@ void SteadyStateProblem::add_phi_variables() {
         auto var = _model.add_variable("phi_compressor_" + std::to_string(index));
         var->set_lb(phi_min_compressor.get_value(index));
         var->set_ub(phi_max_compressor.get_value(index));
+        var->set_start((var->get_lb() + var->get_ub()) / 2.0);
         _variables["phi_compressor"][index] = var;
         _primal_values["phi_compressor"][index] = std::nan("");
     }
@@ -147,6 +149,7 @@ void SteadyStateProblem::add_production_consumption_variables() {
         auto var = _model.add_variable("s_" + std::to_string(index));
         var->set_lb(0.0);
         var->set_ub(smax.get_value(index));
+        var->set_start(0.0);
         _variables["s"][index] = var;
         _primal_values["s"][index] = std::nan("");
     }
@@ -166,13 +169,23 @@ void SteadyStateProblem::add_production_consumption_variables() {
 };
 
 void SteadyStateProblem::add_slack_production_variables() {
+    /* calculation of maximum withdrawal in the system = sum (g in gnodes) (dmax(g) + gbar(g)) + sum (i in non-slack) qbar(i) */
+    auto dmax = _ssd.get_dmax();
+    auto gbar = _ssd.get_gbar();
+    auto qbar = _ssd.get_qbar();
+    double max_withdrawal = 0.0;
+    for (auto index : _ssd.get_gnode_indexes())
+        max_withdrawal += dmax.get_value(index) + gbar.get_value(index);
+    for (auto index : _ssd.get_non_slack_node_indexes())
+        max_withdrawal += qbar.get_value(index);
     /* slack production variables */
     _variables["slack_production"] = std::unordered_map<int, std::shared_ptr<Variable>>();
     _primal_values["slack_production"] = std::unordered_map<int, double>();
     for (auto index : _ssd.get_slack_node_indexes()) {
         auto var = _model.add_variable("slack_production_" + std::to_string(index));
         var->set_lb(0.0);
-        var->set_ub(10000.0);
+        var->set_ub(max_withdrawal);
+        var->set_start(max_withdrawal);
         _variables["slack_production"][index] = var;
         _primal_values["slack_production"][index] = std::nan("");
     }
@@ -312,10 +325,12 @@ void SteadyStateProblem::add_compressor_power_bounds(const InputParams & ip) {
     auto power_max = _ssd.get_power_max_compressor();
     _constraints["compressor_power_bounds"] = std::unordered_map<int, std::shared_ptr<Constraint>>();
     _dual_values["compressor_power_bounds"] = std::unordered_map<int, double>();
+    auto area_compressor = _ssd.get_area_compressor();
     /* compressor power bounds */
     for (auto compressor_index : _ssd.get_compressor_indexes()) {
+        double area = area_compressor.get_value(compressor_index);
         auto constraint = _model.add_constraint("compressor_power_bounds_" + std::to_string(compressor_index));
-        constraint->add_term(Term({ alpha(compressor_index), phi_c(compressor_index) }, {m, 1.0}, Wc, TermType::xpowermminusone_absy));
+        constraint->add_term(Term({ alpha(compressor_index), phi_c(compressor_index) }, {m, 1.0}, Wc * area, TermType::xpowermminusone_absy));
         constraint->less_than_equal_to(power_max.get_value(compressor_index));
         _constraints["compressor_power_bounds"][compressor_index] = constraint;
         _dual_values["compressor_power_bounds"][compressor_index] = std::nan("");
@@ -324,8 +339,8 @@ void SteadyStateProblem::add_compressor_power_bounds(const InputParams & ip) {
 
 void SteadyStateProblem::add_objective(const InputParams & ip) {
     double m = (ip.get_specific_heat_capacity_ratio() - 1) / ip.get_specific_heat_capacity_ratio();
-    double Wc = 286.76 * ip.get_temperature() / ip.get_gas_specific_gravity() / m;
     double econ_weight = ip.get_econ_weight();
+    double objective_scaling = std::pow(10, ip.get_objective_scale_exponent());
     auto cd = _ssd.get_cd();
     auto cs = _ssd.get_cs();
     auto cslack = _ssd.get_cslack();
@@ -333,13 +348,16 @@ void SteadyStateProblem::add_objective(const InputParams & ip) {
     _objective = _model.add_objective("social_welfare_compressor_power");
     _objective_value = std::nan("");
     for (auto index : _ssd.get_gnode_indexes()) {
-        _objective->add_term(Term(d(index), -cd.get_value(index) * econ_weight * 1000.0));
-        _objective->add_term(Term(s(index), cs.get_value(index) * econ_weight * 1000.0));
+        _objective->add_term(Term(d(index), -cd.get_value(index) * econ_weight * objective_scaling));
+        _objective->add_term(Term(s(index), cs.get_value(index) * econ_weight * objective_scaling));
     }
     for (auto index : _ssd.get_slack_node_indexes())
-        _objective->add_term(Term(slack_production(index), cslack.get_value(index) * econ_weight * 1000.0));
+        _objective->add_term(Term(slack_production(index), cslack.get_value(index) * econ_weight * objective_scaling));
     
+    auto area_compressor = _ssd.get_area_compressor();
     /* objective term 2 : (1.0 - econ_weight) * sum(i in compressors) compressor_power(i) */
-//    for (auto compressor_index : _ssd.get_compressor_indexes())
-//        _objective->add_term(Term({ alpha(compressor_index), phi_c(compressor_index) }, {m, 1.0}, Wc * (1.0 - econ_weight), TermType::xpowermminusone_absy));
+    for (auto compressor_index : _ssd.get_compressor_indexes())
+        _objective->add_term(Term({ alpha(compressor_index), phi_c(compressor_index) }, {m, 1.0},
+                                  objective_scaling * area_compressor.get_value(compressor_index) * (1.0 - econ_weight),
+                                  TermType::xpowermminusone_absy));
 };
