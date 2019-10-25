@@ -143,7 +143,7 @@ void solve_model(Model * model) {
     app->Options()->SetIntegerValue("max_iter", 250);
     app->Options()->SetStringValue("hessian_approximation", "limited-memory");
     app->Options()->SetStringValue("limited_memory_update_type", "BFGS");
-    app->Options()->SetStringValueIfUnset("linear_solver", "ma57");
+    app->Options()->SetStringValueIfUnset("linear_solver", "mumps");
     /* The following overwrites the default name (ipopt.opt) of the options file */
     app->Options()->SetStringValue("option_file_name", "gas_ss.opt");
     
