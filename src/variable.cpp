@@ -2,28 +2,28 @@
 #include <limits>
 
 Variable::Variable() : 
-    _id(),
-    _name(""), 
-    _lb(-std::numeric_limits<double>::infinity()), 
-    _ub(std::numeric_limits<double>::infinity()),
-    _start(0.0)
-    {};
-
-Variable::Variable(std::string name) : 
-    _id(),
-    _name(name), 
-    _lb(-std::numeric_limits<double>::infinity()), 
+_id(),
+_name(""),
+_lb(-std::numeric_limits<double>::infinity()),
 _ub(std::numeric_limits<double>::infinity()),
 _start(0.0)
-    {};
+{};
+
+Variable::Variable(std::string name) : 
+_id(),
+_name(name),
+_lb(-std::numeric_limits<double>::infinity()),
+_ub(std::numeric_limits<double>::infinity()),
+_start(0.0)
+{};
 
 Variable::Variable(std::string name, double lb, double ub) : 
-    _id(),
-    _name(name), 
-    _lb(lb), 
+_id(),
+_name(name),
+_lb(lb),
 _ub(ub),
 _start(0.0)
-    {};
+{};
 
 void Variable::set_id(int id) { _id = id; };
 void Variable::set_name(std::string name) { _name = name; };

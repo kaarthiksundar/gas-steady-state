@@ -1,14 +1,14 @@
 #include <iostream>
 #include <optionParser.hpp>
+#include <fstream>
 
-#include <network.h>
-#include <converter.h>
-#include <nondimensionalization.h>
-
-#include <problem_data.h>
-#include <model_data.h>
+#include <input_params.h>
+#include <conversions.h>
+#include <data.h>
+#include <steady_state_data.h>
+#include <steady_state_problem.h>
 #include <ipopt_problem.h>
-#include <solution.h>
+#include <steady_state_solution.h>
 
 
 int main (int argc, char * argv[]) {
@@ -16,55 +16,61 @@ int main (int argc, char * argv[]) {
     /* creating command line options */
     op::OptionParser opt;
     opt.add_option("h", "help", "shows option help"); 
-    opt.add_option("n", "case_name", "case name", "model30ss_csv_si");
-    opt.add_option("p", "case_path", "case file path", "/Users/kaarthik/Documents/research/gas-steady-state/data/" );
-
+    opt.add_option("n", "case_name", "case name", "model6ss_test_1");
+    opt.add_option("p", "case_path", "case file path", "/Users/kaarthik/Documents/research/gas-steady-state/data/");
+    opt.add_option("o", "output_path", "output folder path", "/Users/kaarthik/Documents/research/gas-steady-state/output/");
+    
     /* parse options */
     bool correct_parsing = opt.parse_options(argc, argv);
     
-    if(!correct_parsing){
+    if(!correct_parsing) {
         return EXIT_FAILURE;
     }
-
-    Network net;
-    net.populate_data(opt["p"] + opt["n"] + "/");
-    std::cout << "number of pipes: " << net.pipes.size() << std::endl;
-    std::cout << "number of nodes: " << net.nodes.size() << std::endl;
-    std::cout << "number of compressors: " << net.compressors.size() << std::endl;
-    std::cout << "number of gnodes: " << net.gnodes.size() << std::endl;
-    std::cout << "number of slack nodes: " << net.num_slack_nodes << std::endl;
-    std::cout << "number of non-slack nodes: " << net.num_non_slack_nodes << std::endl;
-    if (net.input_params->units == 0) 
-        std::cout << "all data in SI units" << std::endl;
-    else 
-        std::cout << "add data in standard units" << std::endl;
     
-    Converter converter;
-    converter.populate_mmscfd_conversion_factors(net.input_params.get());
-    converter.convert_to_si(net);
-    std::cout << "conversion done " << std::endl;
-    if (net.si_units) 
-        std::cout << "all data in SI units" << std::endl;
-    else 
-        std::cout << "add data in standard units" << std::endl;
-
-    Nondimensionalization nd(net, converter);
-    nd.non_dimensionalize(net);
-    std::cout << "non-dimensionalization performed " << std::endl;
-    std::cout << "is network dimensional: " << net.is_dimensional << std::endl;
-
-    auto problem_data = std::make_unique<ProblemData>(net, nd);
-    auto model_data = std::make_unique<SteadyStateModelData>();
-
-    auto model = build_steady_state_model(problem_data.get(), model_data.get());
-
-    std::cout << "number of variables : " << model->get_num_variables() << std::endl;
-    std::cout << "number of constraints : " << model->get_num_constraints() << std::endl;
+    bool has_help = op::str2bool(opt["h"]);
+    if (has_help) { 
+        opt.show_help(); 
+        std::exit(0); 
+    }
     
-    solve_model(model.get());
+    std::ifstream data_dir((opt["p"] + opt["n"]).c_str());
+    std::ifstream out_dir((opt["o"] + opt["n"]).c_str());
+    if (!data_dir.good()) {
+        std::cerr << "The data directory specified is " << opt["p"] + opt["n"] << "." << std::endl <<
+        "This directory does not exist." << std::endl <<
+        "Enter the correct directory using the flags -p and -n. " << std::endl <<
+        "Use the -h or --help flag to get a detailed list of command line options available. " << std::endl;
+        std::exit(0);
+    }
+    if (!out_dir.good()) {
+        std::cerr << "The output directory specified is " << opt["p"] + opt["n"] << "." << std::endl <<
+        "This directory does not exist." << std::endl <<
+        "Enter the correct directory using the flags -o and -n. " << std::endl <<
+        "Use the -h or --help flag to get a detailed list of command line options available. " << std::endl;
+        std::exit(0);
+    }
     
-    auto solution = populate_steady_state_solution_data(net, model_data.get(), problem_data.get(), model.get(), nd, converter);
+    InputParams ip = build_input_params(opt["p"] + opt["n"] + "/");
+    ConversionFactors cf(ip);
+    Data data(opt["p"] + opt["n"] + "/", ip.get_units());
+    ScalingFactors sf = build_scaling_factors(data.get_slack_pmin(), cf);
+    data.make_per_unit(cf, sf);
     
-    solution.write_output(net, opt["p"] + opt["n"] + "/");
+    SteadyStateData ssd(data, sf);
+    SteadyStateProblem ssp("Steady State NLP model", ssd);
+    ssp.add_variables();
+    ssp.add_constraints(ip);
+    ssp.add_objective(ip);
+    
+    solve_model(&ssp.get_model());
+    ssp.populate_solution();
+    SteadyStateSolution sss(data, ssd, ssp, ip);
+    if (ip.get_units() == 0)
+        sss.make_si(cf, sf);
+    else
+        sss.make_standard(cf, sf);
+    
+    sss.write_output(data, opt["o"] + opt["n"] + "/");
+    
     return 0;
 }

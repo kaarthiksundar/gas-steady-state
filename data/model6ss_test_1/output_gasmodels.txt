@@ -1,0 +1,43 @@
+Metadata
+  baseP: 3000000
+  baseQ: 8071.800
+  multinetwork: false
+  per_unit: false
+
+Table Counts
+  compressor: 2
+  junction: 6
+  pipe: 4
+
+
+Table: compressor
+             f, ratio
+      1: 0.031, 1.317
+      2: 4.266, 1.027
+
+
+Table: junction
+                     p
+      1: 3.888073803e6
+      2: 5.120095103e6
+      3: 5.124140623e6
+      4: 5.252772208e6
+      5: 5.120095239e6
+      6: 5.256760698e6
+
+
+Table: pipe
+              f
+      1:  0.031
+      2: -4.241
+      3:  4.266
+      4: -4.255
+
+
+Table: resistance
+
+      1:  1.8737892389071288e-6 
+      2:  5.996125564502812e-5
+      3:  5.996125564502812e-5
+      4:  9.5938009032045e-5
+
