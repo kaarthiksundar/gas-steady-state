@@ -1,5 +1,6 @@
 #include <iostream>
 #include <optionParser.hpp>
+#include <fstream>
 
 #include <input_params.h>
 #include <conversions.h>
@@ -22,8 +23,31 @@ int main (int argc, char * argv[]) {
     /* parse options */
     bool correct_parsing = opt.parse_options(argc, argv);
     
-    if(!correct_parsing){
+    if(!correct_parsing) {
         return EXIT_FAILURE;
+    }
+    
+    bool has_help = op::str2bool(opt["h"]);
+    if (has_help) { 
+        opt.show_help(); 
+        std::exit(0); 
+    }
+    
+    std::ifstream data_dir((opt["p"] + opt["n"]).c_str());
+    std::ifstream out_dir((opt["o"] + opt["n"]).c_str());
+    if (!data_dir.good()) {
+        std::cerr << "The data directory specified is " << opt["p"] + opt["n"] << "." << std::endl <<
+        "This directory does not exist." << std::endl <<
+        "Enter the correct directory using the flags -p and -n. " << std::endl <<
+        "Use the -h or --help flag to get a detailed list of command line options available. " << std::endl;
+        std::exit(0);
+    }
+    if (!out_dir.good()) {
+        std::cerr << "The output directory specified is " << opt["p"] + opt["n"] << "." << std::endl <<
+        "This directory does not exist." << std::endl <<
+        "Enter the correct directory using the flags -o and -n. " << std::endl <<
+        "Use the -h or --help flag to get a detailed list of command line options available. " << std::endl;
+        std::exit(0);
     }
     
     InputParams ip = build_input_params(opt["p"] + opt["n"] + "/");

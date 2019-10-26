@@ -6,14 +6,15 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake)
 
-option(debug "Turn on debug mode" ON)
+# option(debug "Turn on debug mode" OFF)
 
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Ofast")
+# set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
+# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 
-set(CMAKE_BUILD_TYPE "Release")
-if (debug)
-    set(CMAKE_BUILD_TYPE "Debug")
-endif()
+# set(CMAKE_BUILD_TYPE "Release")
+# if (debug)
+#set(CMAKE_BUILD_TYPE "Release")
+#endif()
 
 # Other library settings 
 include_directories(${PROJECT_SOURCE_DIR}/third_party/cpp_option_parser)

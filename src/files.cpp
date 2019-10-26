@@ -1,5 +1,4 @@
 #include <files.h>
-
 #include <string>
 
 const std::string InputFilenames::nodes = "input_network_nodes.csv";
@@ -42,3 +41,4 @@ const std::string OutputFilenames::comp_flow_out = "output_ss_comp_flows_out.csv
 const std::string OutputFilenames::comp_pressure_in = "output_ss_comp_pressure_in.csv";
 const std::string OutputFilenames::comp_pressure_out = "output_ss_comp_pressure_out.csv";
 const std::string OutputFilenames::comp_power = "output_ss_comp_power.csv";
+
