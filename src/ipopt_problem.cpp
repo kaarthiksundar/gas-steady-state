@@ -139,7 +139,6 @@ void solve_model(Model * model) {
      * perform derivative test (for testing purposes only)
      * app->Options()->SetStringValue("derivative_test", "first-order");
      */
-    app->Options()->SetStringValue("derivative_test", "first-order");
     app->Options()->SetIntegerValue("max_iter", 250);
     app->Options()->SetStringValue("hessian_approximation", "limited-memory");
     app->Options()->SetStringValue("limited_memory_update_type", "BFGS");
