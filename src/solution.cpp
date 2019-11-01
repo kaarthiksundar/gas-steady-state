@@ -75,7 +75,7 @@ void SteadyStateSolution::dimensionalize(const Nondimensionalization & nd) {
     
     std::transform(_pipe_flow_out.begin(), _pipe_flow_out.end(), _pipe_flow_out.begin(),
                    std::bind(std::multiplies<double>(), std::placeholders::_1, nd.flow_factor));
-    
+/*  
     std::transform(_slack_flows.begin(), _slack_flows.end(), _slack_flows.begin(),
                    std::bind(std::multiplies<double>(), std::placeholders::_1, nd.flow_factor));
     
@@ -93,13 +93,13 @@ void SteadyStateSolution::dimensionalize(const Nondimensionalization & nd) {
     
     std::transform(_comp_flow_out.begin(), _comp_flow_out.end(), _comp_flow_out.begin(),
                    std::bind(std::multiplies<double>(), std::placeholders::_1, nd.flow_factor));
-    
+*/    
     std::transform(_pipe_pressure_in.begin(), _pipe_pressure_in.end(), _pipe_pressure_in.begin(),
                    std::bind(std::multiplies<double>(), std::placeholders::_1, nd.p_factor));
     
     std::transform(_pipe_pressure_out.begin(), _pipe_pressure_out.end(), _pipe_pressure_out.begin(),
                    std::bind(std::multiplies<double>(), std::placeholders::_1, nd.p_factor));
-    
+/*    
     std::transform(_nodal_pressure.begin(), _nodal_pressure.end(), _nodal_pressure.begin(),
                    std::bind(std::multiplies<double>(), std::placeholders::_1, nd.p_factor));
     
@@ -111,7 +111,7 @@ void SteadyStateSolution::dimensionalize(const Nondimensionalization & nd) {
     
     std::transform(_comp_pressure_out.begin(), _comp_pressure_out.end(), _comp_pressure_out.begin(),
                    std::bind(std::multiplies<double>(), std::placeholders::_1, nd.p_factor));
-    
+*/    
     is_dimensional = true;
     is_si = true;
     return;
@@ -181,7 +181,6 @@ void SteadyStateSolution::write_output(const Network & net, std::string path) {
         pipe_pressure_in << std::to_string(_pipe_pressure_in[i]);
         pipe_pressure_out << std::to_string(_pipe_pressure_out[i]);
     }
-    
     pipe_flow_in.writeToFile(path + OutputFilenames::pipe_flow_in);
     pipe_flow_out.writeToFile(path + OutputFilenames::pipe_flow_out);
     pipe_pressure_in.writeToFile(path + OutputFilenames::pipe_pressure_in);
