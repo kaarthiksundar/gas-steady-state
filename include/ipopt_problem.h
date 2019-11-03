@@ -5,6 +5,7 @@
 
 #include <coin/IpTNLP.hpp>
 #include <model.h>
+#include <input_params.h>
 
 using namespace Ipopt;
 
@@ -144,5 +145,5 @@ private:
     //@}
 };
 
-void solve_model(Model * model);
+void solve_model(Model * model, const InputParams & ip);
 #endif 

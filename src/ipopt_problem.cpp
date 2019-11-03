@@ -116,7 +116,7 @@ void GasNLP::finalize_solution(SolverReturn status, Index n, const Number *x, co
     _model->set_dual_solution(lambda);
 };
 
-void solve_model(Model * model) {
+void solve_model(Model * model, const InputParams & ip) {
     /* Create a new instance of the GasNLP */
     SmartPtr<TNLP> gas_nlp = new GasNLP(model);
     
@@ -129,27 +129,31 @@ void solve_model(Model * model) {
     app->RethrowNonIpoptException(true);
     
     /* Change some ipopt options */
-    app->Options()->SetNumericValue("tol", 1e-6);
-    app->Options()->SetNumericValue("acceptable_tol", 1e-6);
-    app->Options()->SetNumericValue("constr_viol_tol", 1e-7);
+    double tolerance_value = std::pow(10.0, ip.get_tolerance_exponent());
+    app->Options()->SetNumericValue("tol", tolerance_value);
+    app->Options()->SetNumericValue("acceptable_tol", tolerance_value);
+    app->Options()->SetNumericValue("constr_viol_tol", tolerance_value);
     app->Options()->SetStringValue("mu_strategy", "adaptive");
     app->Options()->SetStringValue("output_file", "gas_ss_nlp.out");
-    app->Options()->SetStringValue("jacobian_approximation", "finite-difference-values");
     /**
      * perform derivative test (for testing purposes only)
+     * app->Options()->SetStringValue("jacobian_approximation", "finite-difference-values");
      * app->Options()->SetStringValue("derivative_test", "first-order");
      */
-    app->Options()->SetIntegerValue("max_iter", 250);
+    app->Options()->SetIntegerValue("max_iter", ip.get_max_iterations());
     app->Options()->SetStringValue("hessian_approximation", "limited-memory");
     app->Options()->SetStringValue("limited_memory_update_type", "BFGS");
-    app->Options()->SetStringValueIfUnset("linear_solver", "mumps");
+    app->Options()->SetStringValueIfUnset("linear_solver", "ma57");
     /* The following overwrites the default name (ipopt.opt) of the options file */
     app->Options()->SetStringValue("option_file_name", "gas_ss.opt");
+    app->Options()->SetStringValue("print_user_options", "yes");
     
     /* Initialize the IpoptApplication and process the options */
     ApplicationReturnStatus status;
     status = app->Initialize();
-    std::cout << "initalized" << std::endl;
+    std::cout << "------------------------------------" << std::endl;
+    std::cout << "       Ipopt problem initalized     " << std::endl;
+    std::cout << "------------------------------------" << std::endl;
     if( status != Solve_Succeeded ) {
         std::cout << std::endl << std::endl << "*** Error during initialization!" << std::endl;
         std::exit(1);
@@ -157,12 +161,21 @@ void solve_model(Model * model) {
     
     /* Ask Ipopt to solve the problem */
     status = app->OptimizeTNLP(gas_nlp);
-    std::cout << "optimized" << std::endl;
-    std::cout << "status : " << status << std::endl;
-    if (status == Solve_Succeeded)
-        std::cout << std::endl << std::endl << "*** The problem solved!" << std::endl;
+    std::vector<ApplicationReturnStatus> success = {Solve_Succeeded, Solved_To_Acceptable_Level,
+    Feasible_Point_Found, Maximum_Iterations_Exceeded, Maximum_CpuTime_Exceeded};
+    std::cout << "------------------------------------" << std::endl;
+    std::cout << "      Optimization performed        " << std::endl;
+    std::cout << "         Solver status : " << status << std::endl;
+    std::cout << "------------------------------------" << std::endl;
+    
+    if (std::find(success.begin(), success.end(), status) != success.end()) {
+        std::cout << "*** IPOPT has performed a successful solve " << std::endl;
+        std::cout << "*** Success implies one of the following : " << std::endl;
+        std::cout << "*** Solve_Succeeded (" << success[0] << "), Solved_To_Acceptable_Level (" << success[1] << "), Feasible_Point_Found (" << success[2] << "), Maximum_Iterations_Exceeded (" << success[3] << "),  Maximum_CpuTime_Exceeded (" << success[4] << ")" << std::endl;
+    }
     else {
-        std::cout << std::endl << std::endl << "*** The problem FAILED!" << std::endl;
+        std::cout << "*** The solve FAILED! " << std::endl <<
+        "*** Check https://www.coin-or.org/Ipopt/documentation/node36.html for what the status means" << std::endl;
         std::exit(1);
     }
     

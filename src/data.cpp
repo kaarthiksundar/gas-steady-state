@@ -4,6 +4,7 @@
 #include <sstream>
 #include <input_params.h>
 #include <csv.h>
+#include <iostream>
 
 ComponentData::ComponentData(std::string path, int units) { populate_component_data(path, units); };
 
@@ -76,6 +77,16 @@ void ComponentData::populate_gnode_data(std::string path, int units) {
     while (in.read_row(gnode_id, name, node_id))
         _gnodes.push_back(std::make_shared<Gnode>(gnode_id, name, node_id));
 };
+
+void ComponentData::print_summary() const {
+    std::cout << "------------------------------------" << std::endl;
+    std::cout << "        Summary of data read        " << std::endl;
+    std::cout << " Number of nodes : " << _nodes.size() << std::endl;
+    std::cout << " Number of pipes : " << _pipes.size() << std::endl;
+    std::cout << " Number of compressors : " << _compressors.size() << std::endl;
+    std::cout << " Number of gnodes : " << _gnodes.size() << std::endl;
+    std::cout << "------------------------------------" << std::endl;
+}
 
 ParameterData::ParameterData(std::string path, int units) {
     populate_slack_data(path, units);

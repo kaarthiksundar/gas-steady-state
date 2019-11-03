@@ -34,6 +34,7 @@ public:
     std::vector<std::shared_ptr<Gnode>> get_gnodes() const;
     int get_num_slack_nodes() const;
     int get_num_non_slack_nodes() const;
+    void print_summary() const;
 };
 
 class ParameterData {

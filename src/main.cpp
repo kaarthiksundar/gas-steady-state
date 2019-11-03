@@ -50,27 +50,36 @@ int main (int argc, char * argv[]) {
         std::exit(0);
     }
     
+    std::cout << "*** Reading the input parameters and network data " << std::endl;
     InputParams ip = build_input_params(opt["p"] + opt["n"] + "/");
     ConversionFactors cf(ip);
     Data data(opt["p"] + opt["n"] + "/", ip.get_units());
     ScalingFactors sf = build_scaling_factors(data.get_slack_pmin(), cf);
     data.make_per_unit(cf, sf);
+    std::cout << "*** All data read successfully and converted to per unit " << std::endl;
+    data.print_summary();
     
     SteadyStateData ssd(data, sf);
+    std::cout << "*** Parameters required for formulating steady state model created " << std::endl;
     SteadyStateProblem ssp("Steady State NLP model", ssd);
     ssp.add_variables();
     ssp.add_constraints(ip);
     ssp.add_objective(ip);
+    std::cout << "*** Steady state model created " << std::endl;
     
-    solve_model(&ssp.get_model());
+    solve_model(&ssp.get_model(), ip);
+    std::cout << "*** Steady state model solved " << std::endl;
     ssp.populate_solution();
     SteadyStateSolution sss(data, ssd, ssp, ip);
     if (ip.get_units() == 0)
         sss.make_si(cf, sf);
     else
         sss.make_standard(cf, sf);
+    std::cout << "*** Steady state solution data structures populated " << std::endl;
     
     sss.write_output(data, opt["o"] + opt["n"] + "/");
+    
+    std::cout << "*** Solution files saved in folder : " << opt["o"] + opt["n"] + "/" << std::endl;
     
     return 0;
 }
