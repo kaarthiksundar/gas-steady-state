@@ -43,7 +43,7 @@ int main (int argc, char * argv[]) {
         std::exit(0);
     }
     if (!out_dir.good()) {
-        std::cerr << "The output directory specified is " << opt["p"] + opt["n"] << "." << std::endl <<
+        std::cerr << "The output directory specified is " << opt["o"] + opt["n"] << "." << std::endl <<
         "This directory does not exist." << std::endl <<
         "Enter the correct directory using the flags -o and -n. " << std::endl <<
         "Use the -h or --help flag to get a detailed list of command line options available. " << std::endl;

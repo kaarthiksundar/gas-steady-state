@@ -1,3 +1,4 @@
+#include <cmath>
 #include <steady_state_data.h>
 #include <algorithm>
 

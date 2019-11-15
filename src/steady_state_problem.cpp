@@ -1,3 +1,4 @@
+#include <cmath>
 #include <steady_state_problem.h>
 
 SteadyStateProblem::SteadyStateProblem(std::string name, const SteadyStateData & ssd) :

@@ -1,3 +1,5 @@
+#include <functional>
+#include <cmath>
 #include <steady_state_solution.h>
 #include <csvwriter.h>
 #include <files.h>
