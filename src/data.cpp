@@ -439,8 +439,7 @@ void Data::make_per_unit(const ConversionFactors &cf, const ScalingFactors &sf) 
 };
 
 
-InputParams build_input_params(std::string path) {
-    io::CSVReader<2, io::trim_chars<' '>, io::double_quote_escape<',','\"'> > in(path + InputFilenames::input_params);
+InputParams build_input_params(std::string path, std::string data_format="csv") {
     double temperature;
     double gas_specific_gravity;
     double specific_heat_capacity_ratio;
@@ -457,6 +456,9 @@ InputParams build_input_params(std::string path) {
     int objective_scale_exponent;
     int extension_time_intervals;
     int exit_if_steady_state_check_infeasible;
+    if (data_format == "csv") {
+        io::CSVReader<2, io::trim_chars<' '>, io::double_quote_escape<',','\"'> > in(path + InputFilenames::input_params);
+    
     std::string parameter; double value;
     while (in.read_row(parameter, value)) {
         if (parameter.find("Temperature") != std::string::npos)
@@ -491,6 +493,7 @@ InputParams build_input_params(std::string path) {
             extension_time_intervals = (int) value;
         if (parameter.find("exit") != std::string::npos)
             exit_if_steady_state_check_infeasible = (int) value;
+    }
     }
     /* return the built input parameters */
     return InputParams(temperature, gas_specific_gravity, specific_heat_capacity_ratio,

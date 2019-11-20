@@ -53,6 +53,6 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const InputParams &ip);
 };
 
-InputParams build_input_params(std::string path);
+InputParams build_input_params(std::string path, std::string data_format="csv");
 
 #endif 
