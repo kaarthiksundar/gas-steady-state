@@ -675,19 +675,11 @@ InputParams build_input_params(std::string data_path, std::string case_name, std
     double temperature;
     double gas_specific_gravity;
     double specific_heat_capacity_ratio;
-    double time_horizon;
-    int eos;
     int units;
-    int intervals;
-    int save_csv_output;
-    int steady_state_solve_only;
-    double space_interval;
     double econ_weight;
     double max_iterations;
     int tolerance_exponent;
     int objective_scale_exponent;
-    int extension_time_intervals;
-    int exit_if_steady_state_check_infeasible;
     /* if data format is csv, read from csv and populate parameters */
     if (data_format == "csv") {
         io::CSVReader<2, io::trim_chars<' '>, io::double_quote_escape<',','\"'> > in(path + InputFilenames::input_params);
@@ -699,20 +691,8 @@ InputParams build_input_params(std::string data_path, std::string case_name, std
                 gas_specific_gravity = value;
             if (parameter.find("Specific") != std::string::npos)
                 specific_heat_capacity_ratio = value;
-            if (parameter.find("Time horizon") != std::string::npos)
-                time_horizon = value;
-            if (parameter.find("EOS") != std::string::npos)
-                eos = (int) value;
             if (parameter.find("units") != std::string::npos)
                 units = (int) value;
-            if (parameter.find("intervals") != std::string::npos)
-                intervals = (int) value;
-            if (parameter.find("save csv output") != std::string::npos)
-                save_csv_output = (int) value;
-            if (parameter.find("steady-state solve") != std::string::npos)
-                steady_state_solve_only = (int) value;
-            if (parameter.find("Space interval") != std::string::npos)
-                space_interval = value;
             if (parameter.find("Econ weight") != std::string::npos)
                 econ_weight = value;
             if (parameter.find("Max iterations") != std::string::npos)
@@ -721,10 +701,6 @@ InputParams build_input_params(std::string data_path, std::string case_name, std
                 tolerance_exponent = (int) value;
             if (parameter.find("Objective scale exponent") != std::string::npos)
                 objective_scale_exponent = (int) value;
-            if (parameter.find("time horizon extension") != std::string::npos)
-                extension_time_intervals = (int) value;
-            if (parameter.find("exit") != std::string::npos)
-                exit_if_steady_state_check_infeasible = (int) value;
         }
     }
     /* if data format is json, read from json and populate parameters */
@@ -742,20 +718,8 @@ InputParams build_input_params(std::string data_path, std::string case_name, std
                 gas_specific_gravity = value;
             if (parameter.find("Specific") != std::string::npos)
                 specific_heat_capacity_ratio = value;
-            if (parameter.find("Time horizon") != std::string::npos)
-                time_horizon = value;
-            if (parameter.find("EOS") != std::string::npos)
-                eos = (int) value;
             if (parameter.find("units") != std::string::npos)
                 units = (int) value;
-            if (parameter.find("intervals") != std::string::npos)
-                intervals = (int) value;
-            if (parameter.find("save csv output") != std::string::npos)
-                save_csv_output = (int) value;
-            if (parameter.find("steady-state solve") != std::string::npos)
-                steady_state_solve_only = (int) value;
-            if (parameter.find("Space interval") != std::string::npos)
-                space_interval = value;
             if (parameter.find("Econ weight") != std::string::npos)
                 econ_weight = value;
             if (parameter.find("Max iterations") != std::string::npos)
@@ -764,18 +728,11 @@ InputParams build_input_params(std::string data_path, std::string case_name, std
                 tolerance_exponent = (int) value;
             if (parameter.find("Objective scale exponent") != std::string::npos)
                 objective_scale_exponent = (int) value;
-            if (parameter.find("time horizon extension") != std::string::npos)
-                extension_time_intervals = (int) value;
-            if (parameter.find("exit") != std::string::npos)
-                exit_if_steady_state_check_infeasible = (int) value;
         }
         in.close();
     }
 
     /* return the built input parameters */
     return InputParams(temperature, gas_specific_gravity, specific_heat_capacity_ratio,
-                       time_horizon, eos, units, intervals, save_csv_output,
-                       steady_state_solve_only, space_interval, econ_weight,
-                       max_iterations, tolerance_exponent, objective_scale_exponent,
-                       extension_time_intervals, exit_if_steady_state_check_infeasible);
+                       units, econ_weight, max_iterations, tolerance_exponent, objective_scale_exponent);
 };
