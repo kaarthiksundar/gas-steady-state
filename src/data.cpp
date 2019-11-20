@@ -218,7 +218,7 @@ void ParameterData::populate_gnode_data(std::string path, int units) {
     /* read dmax */
     position = 0;
     line = std::string(dmax_in.next_line());
-    line = std::string(smax_in.next_line());
+    line = std::string(dmax_in.next_line());
     while ((position = line.find(delimiter)) != std::string::npos) {
         token = line.substr(0, position);
         _dmax.push_back(std::stod(token));
