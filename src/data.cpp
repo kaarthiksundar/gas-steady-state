@@ -22,6 +22,7 @@ int ComponentData::get_num_slack_nodes() const { return _num_slack_nodes; };
 int ComponentData::get_num_non_slack_nodes() const { return _num_non_slack_nodes; };
 
 void ComponentData::populate_component_data(std::string path, int units) {
+    _num_slack_nodes = 0; _num_non_slack_nodes = 0;
     populate_pipe_data(path, units); populate_node_data(path, units);
     populate_compressor_data(path, units); populate_gnode_data(path, units);
 };

@@ -10,6 +10,9 @@
 #include <ipopt_problem.h>
 #include <steady_state_solution.h>
 
+#include <nlohmann/json.hpp>
+
+using namespace nlohmann;
 
 int main (int argc, char * argv[]) {
     
@@ -19,6 +22,7 @@ int main (int argc, char * argv[]) {
     opt.add_option("n", "case_name", "case name", "model6ss_test_1");
     opt.add_option("p", "case_path", "case file path", "/Users/kaarthik/Documents/research/gas-steady-state/data/");
     opt.add_option("o", "output_path", "output folder path", "/Users/kaarthik/Documents/research/gas-steady-state/output/");
+    opt.add_option("t", "input_data_format", "input data format (csv/json)", "csv");
     
     /* parse options */
     bool correct_parsing = opt.parse_options(argc, argv);

@@ -23,6 +23,7 @@ set(LIBS ${LIBS} option_parser)
 set(CPP_OPTION_PARSER option_parser)
 
 include_directories(${PROJECT_SOURCE_DIR}/third_party/csv)
+include_directories(${PROJECT_SOURCE_DIR}/third_party/json/include)
 
 # Ipopt settings
 message("Enabling IPOPT")
