@@ -77,5 +77,6 @@
         "unordered_set": "cpp"
     },
     "C_Cpp.dimInactiveRegions": false,
-    "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools"
+    "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools",
+    "cmake.configureOnOpen": false
 }

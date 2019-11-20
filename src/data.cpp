@@ -198,6 +198,7 @@ void ParameterData::populate_gnode_data(std::string path, int units) {
     size_t position = 0;
     /* read gbar */
     line = std::string(gbar_in.next_line());
+    line = std::string(gbar_in.next_line());
     while ((position = line.find(delimiter)) != std::string::npos) {
         token = line.substr(0, position);
         _gbar.push_back(std::stod(token));
@@ -206,6 +207,7 @@ void ParameterData::populate_gnode_data(std::string path, int units) {
     _gbar.push_back(std::stod(line));
     /* read smax */
     position = 0;
+    line = std::string(smax_in.next_line());
     line = std::string(smax_in.next_line());
     while ((position = line.find(delimiter)) != std::string::npos) {
         token = line.substr(0, position);
@@ -216,6 +218,7 @@ void ParameterData::populate_gnode_data(std::string path, int units) {
     /* read dmax */
     position = 0;
     line = std::string(dmax_in.next_line());
+    line = std::string(smax_in.next_line());
     while ((position = line.find(delimiter)) != std::string::npos) {
         token = line.substr(0, position);
         _dmax.push_back(std::stod(token));
@@ -231,6 +234,7 @@ void ParameterData::populate_cost_data(std::string path, int units) {
     size_t position = 0;
     /* read cd */
     line = std::string(cd_in.next_line());
+    line = std::string(cd_in.next_line());
     while ((position = line.find(delimiter)) != std::string::npos) {
         token = line.substr(0, position);
         _cd.push_back(std::stod(token));
@@ -239,6 +243,7 @@ void ParameterData::populate_cost_data(std::string path, int units) {
     _cd.push_back(std::stod(line));
     /* read cs */
     position = 0;
+    line = std::string(cs_in.next_line());
     line = std::string(cs_in.next_line());
     while ((position = line.find(delimiter)) != std::string::npos) {
         token = line.substr(0, position);
