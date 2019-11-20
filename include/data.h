@@ -23,9 +23,17 @@ protected:
     void populate_node_data(std::string path, int units);
     void populate_compressor_data(std::string path, int units);
     void populate_gnode_data(std::string path, int units);
+
+    void populate_component_data(std::string data_path, std::string case_name, std::string data_format, int units);
+    void populate_pipe_data(std::string data_path, std::string case_name, std::string data_format, int units);
+    void populate_node_data(std::string data_path, std::string case_name, std::string data_format, int units);
+    void populate_compressor_data(std::string data_path, std::string case_name, std::string data_format, int units);
+    void populate_gnode_data(std::string data_path, std::string case_name, std::string data_format, int units);
+    
     
 public:
-    ComponentData(std::string, int units);
+    ComponentData(std::string path, int units);
+    ComponentData(std::string data_path, std::string case_name, std::string data_format, int units);
     ComponentData(const ComponentData &&);
     
     std::vector<std::shared_ptr<Pipe>> get_pipes() const;
@@ -68,6 +76,7 @@ protected:
     
 public:
     ParameterData(std::string path, int units);
+    ParameterData(std::string data_path, std::string case_name, std::string data_format, int units);
     ParameterData(const ParameterData &&);
     
     const std::vector<int> & get_pslack_ids() const;
@@ -97,9 +106,11 @@ public:
 class Data : public ComponentData, public ParameterData {
 public:
     Data(std::string path, int units);
+    Data(std::string data_path, std::string case_name, std::string data_format, int units);
     Data(const Data &&);
     
     double get_slack_pmin() const;
+    void fix_parameter_ordering();
     
     void make_si(const ConversionFactors &, const ScalingFactors &);
     void make_standard(const ConversionFactors &, const ScalingFactors &);
