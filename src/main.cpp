@@ -60,6 +60,7 @@ int main (int argc, char * argv[]) {
     InputParams ip = build_input_params(opt["p"], opt["n"], opt["f"]);
     ConversionFactors cf(ip);
     Data data(opt["p"], opt["n"], opt["f"], ip.get_units());   
+    data.fix_parameter_ordering();
     ScalingFactors sf = build_scaling_factors(data.get_slack_pmin(), cf);
     data.make_per_unit(cf, sf);
     std::cout << "*** All data read successfully and converted to per unit " << std::endl;

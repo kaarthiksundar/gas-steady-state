@@ -623,7 +623,7 @@ void ParameterData::make_parameters_si(const ConversionFactors & cf, const Scali
     _standard = false;
 };
 
-Data::Data(std::string data_path, std::string case_name, std::string data_format, int units) : 
+Data::Data(std::string data_path, std::string case_name, std::string data_format, int units) :
 ComponentData(data_path, case_name, data_format, units), 
 ParameterData(data_path, case_name, data_format, units) 
 {};
@@ -639,6 +639,34 @@ double Data::get_slack_pmin() const {
 };
 
 void Data::fix_parameter_ordering() {
+    std::vector<int> gnode_ordering;
+    for (auto gnode : _gnodes) 
+        gnode_ordering.push_back(gnode->get_id());
+    std::map<int, double> gbar, cs, cd, smax, dmax;
+    for (auto i=0; i<_gnodes.size(); ++i) {
+        gbar[_gbar_ids[i]] = _gbar[i];
+        smax[_smax_ids[i]] = _smax[i];
+        dmax[_dmax_ids[i]] = _dmax[i];
+        cs[_cs_ids[i]] = _cs[i];
+        cd[_cd_ids[i]] = _cd[i];
+    }
+    _gbar_ids.clear(); _gbar.clear();
+    _smax_ids.clear(); _smax.clear();
+    _dmax_ids.clear(); _dmax.clear();
+    _cs_ids.clear(); _cs.clear();
+    _cd_ids.clear(); _cd.clear();
+    for (auto gnode_id : gnode_ordering) {
+        _gbar_ids.push_back(gnode_id);
+        _smax_ids.push_back(gnode_id);
+        _dmax_ids.push_back(gnode_id);
+        _cs_ids.push_back(gnode_id);
+        _cd_ids.push_back(gnode_id);
+        _gbar.push_back(gbar.at(gnode_id));
+        _smax.push_back(smax.at(gnode_id));
+        _dmax.push_back(dmax.at(gnode_id));
+        _cs.push_back(cs.at(gnode_id));
+        _cd.push_back(cd.at(gnode_id));
+    }
 
 };
 
