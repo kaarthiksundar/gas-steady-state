@@ -196,28 +196,57 @@ void ParameterData::populate_gnode_data(std::string path, int units) {
     io::LineReader dmax_in(path + InputFilenames::demand_gnodes_max_offtakes);
     std::string line, token, delimiter = ",";
     size_t position = 0;
-    /* read gbar */
+    /* read gbar ids */
     line = std::string(gbar_in.next_line());
+    while ((position = line.find(delimiter)) != std::string::npos) {
+        token = line.substr(0, position);
+        _gbar_ids.push_back(std::stoi(token));
+        line.erase(0, position + delimiter.length());
+    }
+    _gbar_ids.push_back(std::stoi(line));
+
+    /* read gbar values */
     line = std::string(gbar_in.next_line());
+    position = 0;
     while ((position = line.find(delimiter)) != std::string::npos) {
         token = line.substr(0, position);
         _gbar.push_back(std::stod(token));
         line.erase(0, position + delimiter.length());
     }
     _gbar.push_back(std::stod(line));
-    /* read smax */
+
+    /* read smax ids */
     position = 0;
     line = std::string(smax_in.next_line());
+    while ((position = line.find(delimiter)) != std::string::npos) {
+        token = line.substr(0, position);
+        _smax_ids.push_back(std::stoi(token));
+        line.erase(0, position + delimiter.length());
+    }
+    _smax_ids.push_back(std::stoi(line));
+
+    /* read smax values */
     line = std::string(smax_in.next_line());
+    position = 0;
     while ((position = line.find(delimiter)) != std::string::npos) {
         token = line.substr(0, position);
         _smax.push_back(std::stod(token));
         line.erase(0, position + delimiter.length());
     }
     _smax.push_back(std::stod(line));
-    /* read dmax */
+
+    /* read dmax ids */
     position = 0;
     line = std::string(dmax_in.next_line());
+    while ((position = line.find(delimiter)) != std::string::npos) {
+        token = line.substr(0, position);
+        _dmax_ids.push_back(std::stoi(token));
+        line.erase(0, position + delimiter.length());
+    }
+    _dmax_ids.push_back(std::stoi(line));
+
+    /* read dmax values */
+    position = 0;
     line = std::string(smax_in.next_line());
     while ((position = line.find(delimiter)) != std::string::npos) {
         token = line.substr(0, position);
@@ -232,8 +261,17 @@ void ParameterData::populate_cost_data(std::string path, int units) {
     io::LineReader cs_in(path + InputFilenames::supply_gnodes_price_bids);
     std::string line, token, delimiter = ",";
     size_t position = 0;
-    /* read cd */
+    /* read cd ids*/
     line = std::string(cd_in.next_line());
+    while ((position = line.find(delimiter)) != std::string::npos) {
+        token = line.substr(0, position);
+        _cd_ids.push_back(std::stoi(token));
+        line.erase(0, position + delimiter.length());
+    }
+    _cd_ids.push_back(std::stoi(line));
+
+    /* read cd values */
+    position = 0;
     line = std::string(cd_in.next_line());
     while ((position = line.find(delimiter)) != std::string::npos) {
         token = line.substr(0, position);
@@ -241,9 +279,19 @@ void ParameterData::populate_cost_data(std::string path, int units) {
         line.erase(0, position + delimiter.length());
     }
     _cd.push_back(std::stod(line));
-    /* read cs */
+
+    /* read cs ids */
     position = 0;
     line = std::string(cs_in.next_line());
+    while ((position = line.find(delimiter)) != std::string::npos) {
+        token = line.substr(0, position);
+        _cs_ids.push_back(std::stoi(token));
+        line.erase(0, position + delimiter.length());
+    }
+    _cs_ids.push_back(std::stoi(line));
+
+    /* read cs values */
+    position = 0;
     line = std::string(cs_in.next_line());
     while ((position = line.find(delimiter)) != std::string::npos) {
         token = line.substr(0, position);
@@ -259,10 +307,15 @@ const std::vector<double> & ParameterData::get_pslack() const { return _pslack; 
 const std::vector<double> & ParameterData::get_cslack() const { return _cslack; };
 const std::vector<int> & ParameterData::get_qbar_ids() const { return _qbar_ids; };
 const std::vector<double> & ParameterData::get_qbar() const { return _qbar; };
+const std::vector<int> & ParameterData::get_gbar_ids() const { return _gbar_ids; };
 const std::vector<double> & ParameterData::get_gbar() const { return _gbar; };
+const std::vector<int> & ParameterData::get_smax_ids() const { return _smax_ids; };
 const std::vector<double> & ParameterData::get_smax() const { return _smax; };
+const std::vector<int> & ParameterData::get_dmax_ids() const { return _dmax_ids; };
 const std::vector<double> & ParameterData::get_dmax() const { return _dmax; };
+const std::vector<int> & ParameterData::get_cs_ids() const { return _cs_ids; };
 const std::vector<double> & ParameterData::get_cs() const { return _cs; };
+const std::vector<int> & ParameterData::get_cd_ids() const { return _cs_ids; };
 const std::vector<double> & ParameterData::get_cd() const { return _cd; };
 bool ParameterData::is_si() const { return _si; };
 bool ParameterData::is_standard() const { return _standard; };
