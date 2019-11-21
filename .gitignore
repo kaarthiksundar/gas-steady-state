@@ -5,7 +5,7 @@
 build/*
 bin/*
 output/*
-data/ihs_2/*.csv
+data/ihs_2/*.*
 data/ihs_2.zip
 data/ihs_2.json
 .vscode/
