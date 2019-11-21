@@ -101,11 +101,13 @@ public:
     Data(const Data &&);
     
     double get_slack_pmin() const;
-    void fix_parameter_ordering();
     
     void make_si(const ConversionFactors &, const ScalingFactors &);
     void make_standard(const ConversionFactors &, const ScalingFactors &);
     void make_per_unit(const ConversionFactors &, const ScalingFactors &);
+
+private:
+    void fix_parameter_ordering();
 };
 
 

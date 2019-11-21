@@ -625,8 +625,9 @@ void ParameterData::make_parameters_si(const ConversionFactors & cf, const Scali
 
 Data::Data(std::string data_path, std::string case_name, std::string data_format, int units) :
 ComponentData(data_path, case_name, data_format, units), 
-ParameterData(data_path, case_name, data_format, units) 
-{};
+ParameterData(data_path, case_name, data_format, units) {
+    this->fix_parameter_ordering();
+};
 
 double Data::get_slack_pmin() const {
     double pmin = std::numeric_limits<double>::max();

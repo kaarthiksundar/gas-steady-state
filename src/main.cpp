@@ -39,28 +39,47 @@ int main (int argc, char * argv[]) {
         std::exit(0);
     }
     
-    std::ifstream data_dir((opt["p"] + opt["n"]).c_str());
-    std::ifstream out_dir((opt["o"] + opt["n"]).c_str());
-    if (!data_dir.good()) {
-        std::cerr << "The data directory specified is " << opt["p"] + opt["n"] << "." << std::endl <<
-        "This directory does not exist." << std::endl <<
-        "Enter the correct directory using the flags -p and -n. " << std::endl <<
-        "Use the -h or --help flag to get a detailed list of command line options available. " << std::endl;
-        std::exit(0);
+    if (opt["f"] == "csv") {
+        std::ifstream data_dir((opt["p"] + opt["n"]).c_str());
+        std::ifstream out_dir((opt["o"] + opt["n"]).c_str());
+        if (!data_dir.good()) {
+            std::cerr << "The data directory specified is " << opt["p"] + opt["n"] << "." << std::endl <<
+            "This directory does not exist." << std::endl <<
+            "Enter the correct directory using the flags -p and -n. " << std::endl <<
+            "Use the -h or --help flag to get a detailed list of command line options available. " << std::endl;
+            std::exit(0);
+        }
+        if (!out_dir.good()) {
+            std::cerr << "The output directory specified is " << opt["o"] + opt["n"] << "." << std::endl <<
+            "This directory does not exist." << std::endl <<
+            "Enter the correct directory using the flags -o and -n. " << std::endl <<
+            "Use the -h or --help flag to get a detailed list of command line options available. " << std::endl;
+            std::exit(0);
+        }
     }
-    if (!out_dir.good()) {
-        std::cerr << "The output directory specified is " << opt["o"] + opt["n"] << "." << std::endl <<
-        "This directory does not exist." << std::endl <<
-        "Enter the correct directory using the flags -o and -n. " << std::endl <<
-        "Use the -h or --help flag to get a detailed list of command line options available. " << std::endl;
-        std::exit(0);
+    else {
+        std::ifstream data_dir((opt["p"]).c_str());
+        std::ifstream out_dir((opt["o"]).c_str());
+        if (!data_dir.good()) {
+            std::cerr << "The data directory specified is " << opt["p"] << "." << std::endl <<
+            "This directory does not exist." << std::endl <<
+            "Enter the correct directory using the flags -p and -n. " << std::endl <<
+            "Use the -h or --help flag to get a detailed list of command line options available. " << std::endl;
+            std::exit(0);
+        }
+        if (!out_dir.good()) {
+            std::cerr << "The output directory specified is " << opt["o"] << "." << std::endl <<
+            "This directory does not exist." << std::endl <<
+            "Enter the correct directory using the flags -o and -n. " << std::endl <<
+            "Use the -h or --help flag to get a detailed list of command line options available. " << std::endl;
+            std::exit(0);
+        }
     }
     
     std::cout << "*** Reading the input parameters and network data " << std::endl;
     InputParams ip = build_input_params(opt["p"], opt["n"], opt["f"]);
     ConversionFactors cf(ip);
-    Data data(opt["p"], opt["n"], opt["f"], ip.get_units());   
-    data.fix_parameter_ordering();
+    Data data(opt["p"], opt["n"], opt["f"], ip.get_units()); 
     ScalingFactors sf = build_scaling_factors(data.get_slack_pmin(), cf);
     data.make_per_unit(cf, sf);
     std::cout << "*** All data read successfully and converted to per unit " << std::endl;
@@ -83,10 +102,10 @@ int main (int argc, char * argv[]) {
     else
         sss.make_standard(cf, sf);
     std::cout << "*** Steady state solution data structures populated " << std::endl;
+
+    sss.write_output(data, ip, opt["o"], opt["n"], opt["f"]);
     
-    sss.write_output(data, opt["o"] + opt["n"] + "/");
-    
-    std::cout << "*** Solution files saved in folder : " << opt["o"] + opt["n"] + "/" << std::endl;
+    std::cout << "*** Solution files saved in folder : " << opt["o"] << std::endl;
     
     return 0;
 }
