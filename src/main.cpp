@@ -15,9 +15,9 @@ int main (int argc, char * argv[]) {
     /* creating command line options */
     op::OptionParser opt;
     opt.add_option("h", "help", "shows option help"); 
-    opt.add_option("n", "case_name", "case name", "model6ss_test_1");
-    opt.add_option("p", "case_path", "case file path", "/Users/kaarthik/Documents/research/gas-steady-state/data/");
-    opt.add_option("o", "output_path", "output folder path", "/Users/kaarthik/Documents/research/gas-steady-state/output/");
+    opt.add_option("n", "case_name", "case name", "ihs_2");
+    opt.add_option("p", "case_path", "case file path", "../../data/");
+    opt.add_option("o", "output_path", "output folder path", "../../output/");
     opt.add_option("f", "data_format", "data format (csv/json)", "json");
 
     

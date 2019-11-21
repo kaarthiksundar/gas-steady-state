@@ -86,7 +86,7 @@ void SteadyStateData::populate_parameters(const Data & data, const ScalingFactor
     _gbar.in(_gnodes); _smax.in(_gnodes); _dmax.in(_gnodes);
     _cs.in(_gnodes); _cd.in(_gnodes);
     for (size_t i=0; i<data.get_gnodes().size(); ++i) {
-        auto gnode_index = data.get_nodes().at(i)->get_id();
+        auto gnode_index = data.get_gnodes().at(i)->get_id();
         _gbar.set_value(gnode_index, data.get_gbar().at(i));
         _smax.set_value(gnode_index, data.get_smax().at(i));
         _dmax.set_value(gnode_index, data.get_dmax().at(i));

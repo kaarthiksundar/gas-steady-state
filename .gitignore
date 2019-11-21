@@ -1,6 +1,12 @@
+*.DS_Store
 build/*
 bin/*
 output/model6ss_test_0/*
 output/model6ss_test_1/*
+output/ihs_2/*
 output/*.json
+data/ihs_2/*
+data/ihs_2.zip
 .vscode/*
+data/csv-to-json-converter/__pycache__/*
+data/ihs_2.json
