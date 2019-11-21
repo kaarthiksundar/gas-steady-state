@@ -23,6 +23,7 @@ private:
     std::vector<double> _dual_solution;
     double _objective_value;
     int _solver_status;
+    std::vector<std::pair<int, int>> _hessian_sparsity_pattern;
     
 public:
     Model();
@@ -60,6 +61,7 @@ public:
     std::vector<std::tuple<int, double>> evaluate_constraint_gradient(int, const double *);
     
     /* eval_h functions (none so far - automatic hessian computations not implemented) */
+    std::vector<std::pair<int, int>> get_hessian_sparsity_pattern();
     
     /* finalize_solution functions */
     void set_primal_solution(const double *);

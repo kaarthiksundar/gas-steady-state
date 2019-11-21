@@ -106,6 +106,15 @@ bool GasNLP::eval_jac_g(Index n, const Number *x, bool new_x, Index m, Index nel
 };
 
 bool GasNLP::eval_h(Index n, const Number *x, bool new_x, Number obj_factor, Index m, const Number *lambda, bool new_lambda, Index nele_hess, Index *iRow, Index *jCol, Number *values) {
+    /* populate sparsity structure */
+    if (values == NULL) {
+        auto sparsity_pattern = _model->get_hessian_sparsity_pattern();
+        for (Index i=0; i<sparsity_pattern.size(); ++i) {
+            iRow[i] = sparsity_pattern[i].second;
+            jCol[i] = sparsity_pattern[i].first;
+        }
+    }
+    
     return false;
 };
 

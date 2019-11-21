@@ -4,3 +4,7 @@ output/model6ss_test_0/*
 output/model6ss_test_1/*
 output/*.json
 .vscode/*
+data/ihs_2/*
+data/ihs_2.json 
+output/ihs_2/*
+output/ihs_2_output.json

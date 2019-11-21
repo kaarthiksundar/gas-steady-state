@@ -113,6 +113,14 @@ std::set<std::pair<int, int>> Func::get_variable_id_pairs_with_nz_mixed_second_d
     return _variable_id_pairs_with_nz_mixed_second_derivative;
 };
 
+std::set<std::pair<int, int>> Func::get_hessian_sparsity() {
+    std::set<std::pair<int, int>> sparsity_pattern;
+    for (auto & id : _variable_ids_with_nz_second_derivative)
+        sparsity_pattern.insert(std::make_pair(id, id));
+    sparsity_pattern.insert(_variable_id_pairs_with_nz_mixed_second_derivative.begin(), _variable_id_pairs_with_nz_mixed_second_derivative.end());
+    return sparsity_pattern;
+}
+
 bool Func::has_variable_id(int id) {
     if (_variable_id_to_terms.find(id) == _variable_id_to_terms.end())
         return false;
