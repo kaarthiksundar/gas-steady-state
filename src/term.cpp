@@ -227,11 +227,45 @@ double Term::get_second_derivative(int wrt, const std::vector<double> values) {
             std::exit(1);
     }
     return 0.0;
-
 };
 
 double Term::get_second_derivative(const std::vector<double> values) { return get_second_derivative(0, values); };
 
-double Term::get_mixed_derivative(int wrt_x, int wrt_y, const std::vector<double> values) {
+double Term::get_mixed_derivative(const std::vector<double> values) {
+    if (values.size() != _variable_ids.size()) {
+        std::cerr << "Term evaluation invoked with incorrect number of arguments" << std::endl;
+        std::exit(1);
+    }
+
+    switch (_type) {
+        case TermType::constant :
+            return 0.0;
+            break;
+        case TermType::linear :
+            return 0.0;
+            break;
+        case TermType::quadratic :
+            return 0.0;
+            break;
+        case TermType::x_sq_y_sq :
+                return 4.0 * _coefficient * values[0] * values[1];
+            break;
+        case TermType::x_abs_x :
+            return 0.0;
+            break;
+        case TermType::xy :
+            return _coefficient;
+            break;
+        case TermType::xpowermminusone_absy :
+            if (values[1] >= 0.0)
+                return _coefficient *  (_power[0] * std::pow(values[0], _power[0] - 1.0)); 
+            else
+                return (-1.0) * _coefficient *  (_power[0] * std::pow(values[0], _power[0] - 1.0)); 
+            break;
+        default:
+            std::cerr << "term type not recognized " << std::endl;
+            std::exit(1);
+    }
+    return 0.0;
 
 };

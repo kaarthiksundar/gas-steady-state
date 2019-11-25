@@ -18,6 +18,8 @@ protected:
     std::string _name;
     std::set<int> _variable_ids_with_nz_second_derivative;
     std::set<std::pair<int, int>> _variable_id_pairs_with_nz_mixed_second_derivative;
+    std::unordered_map<int, std::vector<int>> _variable_ids_with_nz_second_derivative_to_terms;
+    std::unordered_map<std::pair<int, int>, std::vector<int>> _variable_id_pairs_with_nz_mixed_second_derivative_to_terms;
     
 public:
     Func();
