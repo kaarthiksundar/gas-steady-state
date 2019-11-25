@@ -38,6 +38,9 @@ public:
     double get_value(const std::vector<double>);
     double get_derivative(int wrt, const std::vector<double>);
     double get_derivative(const std::vector<double>);
+    double get_second_derivative(int wrt, const std::vector<double>);
+    double get_second_derivative(const std::vector<double>);
+    double get_mixed_derivative(int wrt_x, int wrt_y, const std::vector<double>);
 };
 
 #endif 

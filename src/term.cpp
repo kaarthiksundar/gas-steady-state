@@ -176,3 +176,62 @@ double Term::get_derivative(int wrt, const std::vector<double> values) {
 };
 
 double Term::get_derivative(const std::vector<double> values) { return get_derivative(0, values); };
+
+double Term::get_second_derivative(int wrt, const std::vector<double> values) {
+    if (wrt >= _variable_ids.size()) {
+        std::cerr << "wrt argument out of bounds; has to be < " << _variable_ids.size() << std::endl;
+        std::exit(1);
+    }
+    
+    if (values.size() != _variable_ids.size()) {
+        std::cerr << "Term evaluation invoked with incorrect number of arguments" << std::endl;
+        std::exit(1);
+    }
+
+    switch (_type) {
+        case TermType::constant :
+            return 0.0;
+            break;
+        case TermType::linear :
+            return 0.0;
+            break;
+        case TermType::quadratic :
+            return 2.0 * _coefficient;
+            break;
+        case TermType::x_sq_y_sq :
+            if (wrt == 0)
+                return 2.0 * _coefficient * std::pow(values[1], 2);
+            else
+                return 2.0 * _coefficient * std::pow(values[0], 2);
+            break;
+        case TermType::x_abs_x :
+            if (values[0] == 0.0)
+                return 0.0;
+            else {
+                if (values[0] > 0.0) return 2.0 * _coefficient;
+                else return (-1.0) * 2.0 * _coefficient;
+            }
+            break;
+        case TermType::xy :
+            return 0.0;
+            break;
+        case TermType::xpowermminusone_absy :
+            if (wrt == 0)
+                return _coefficient * (_power[0] * (_power[0] - 1) * std::pow(values[0], _power[0] - 2.0)) * abs(values[1]);
+            else {
+                return 0.0;
+            }
+            break;
+        default:
+            std::cerr << "term type not recognized " << std::endl;
+            std::exit(1);
+    }
+    return 0.0;
+
+};
+
+double Term::get_second_derivative(const std::vector<double> values) { return get_second_derivative(0, values); };
+
+double Term::get_mixed_derivative(int wrt_x, int wrt_y, const std::vector<double> values) {
+
+};
