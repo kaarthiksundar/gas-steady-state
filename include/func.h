@@ -30,6 +30,7 @@ public:
     int get_num_variables();
     std::set<int> get_variable_ids_with_nz_second_derivative();
     std::set<std::pair<int, int>> get_variable_id_pairs_with_nz_mixed_second_derivative();
+    std::set<std::pair<int, int>> get_hessian_sparsity();
     
     void set_name(std::string);
     void add_term(Term);

@@ -18,14 +18,15 @@ protected:
     int _num_slack_nodes;
     int _num_non_slack_nodes;
     
-    void populate_component_data(std::string path, int units);
-    void populate_pipe_data(std::string path, int units);
-    void populate_node_data(std::string path, int units);
-    void populate_compressor_data(std::string path, int units);
-    void populate_gnode_data(std::string path, int units);
+    void populate_component_data(std::string data_path, std::string case_name, std::string data_format, int units);
+    void populate_pipe_data(std::string data_path, std::string case_name, std::string data_format, int units);
+    void populate_node_data(std::string data_path, std::string case_name, std::string data_format, int units);
+    void populate_compressor_data(std::string data_path, std::string case_name, std::string data_format, int units);
+    void populate_gnode_data(std::string data_path, std::string case_name, std::string data_format, int units);
+    
     
 public:
-    ComponentData(std::string, int units);
+    ComponentData(std::string data_path, std::string case_name, std::string data_format, int units);
     ComponentData(const ComponentData &&);
     
     std::vector<std::shared_ptr<Pipe>> get_pipes() const;
@@ -59,15 +60,15 @@ protected:
     bool _standard;
     bool _per_unit;
     
-    void populate_slack_data(std::string path, int units);
-    void populate_slack_pressure_data(std::string path, int units);
-    void populate_slack_price_data(std::string path, int units);
-    void populate_non_slack_data(std::string path, int units);
-    void populate_gnode_data(std::string path, int units);
-    void populate_cost_data(std::string path, int units);
+    void populate_slack_data(std::string data_path, std::string case_name, std::string data_format, int units);
+    void populate_slack_pressure_data(std::string data_path, std::string case_name, std::string data_format, int units);
+    void populate_slack_price_data(std::string data_path, std::string case_name, std::string data_format, int units);
+    void populate_non_slack_data(std::string data_path, std::string case_name, std::string data_format, int units);
+    void populate_gnode_data(std::string data_path, std::string case_name, std::string data_format, int units);
+    void populate_cost_data(std::string data_path, std::string case_name, std::string data_format, int units);
     
 public:
-    ParameterData(std::string path, int units);
+    ParameterData(std::string data_path, std::string case_name, std::string data_format, int units);
     ParameterData(const ParameterData &&);
     
     const std::vector<int> & get_pslack_ids() const;
@@ -96,7 +97,7 @@ public:
 
 class Data : public ComponentData, public ParameterData {
 public:
-    Data(std::string path, int units);
+    Data(std::string data_path, std::string case_name, std::string data_format, int units);
     Data(const Data &&);
     
     double get_slack_pmin() const;
@@ -104,6 +105,9 @@ public:
     void make_si(const ConversionFactors &, const ScalingFactors &);
     void make_standard(const ConversionFactors &, const ScalingFactors &);
     void make_per_unit(const ConversionFactors &, const ScalingFactors &);
+
+private:
+    void fix_parameter_ordering();
 };
 
 

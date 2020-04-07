@@ -53,8 +53,8 @@ public:
     void make_si(const ConversionFactors &, const ScalingFactors &);
     void make_standard(const ConversionFactors &, const ScalingFactors &);
     void make_per_unit(const ConversionFactors &, const ScalingFactors &);
-    
-    void write_output(const Data &, std::string);
+
+    void write_output(const Data &, const InputParams &, std::string data_path, std::string case_name, std::string data_format);
     
 };
 

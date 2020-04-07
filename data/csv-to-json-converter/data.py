@@ -163,4 +163,4 @@ class Output:
 
     def write_to_json_file(self, filename):
         with open(filename, 'w') as json_file:
-            json.dump(self.output_dict, json_file, cls=NpEncoder)
+            json.dump(self.output_dict, json_file, cls=NpEncoder, indent=2)

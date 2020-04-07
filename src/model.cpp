@@ -12,7 +12,8 @@ _has_objective(false),
 _primal_solution(),
 _dual_solution(),
 _objective_value(),
-_solver_status()
+_solver_status(),
+_hessian_sparsity_pattern()
 {};
 
 Model::Model(std::string name) :
@@ -26,7 +27,8 @@ _has_objective(false),
 _primal_solution(),
 _dual_solution(),
 _objective_value(),
-_solver_status()
+_solver_status(),
+_hessian_sparsity_pattern()
 {};
 
 /* generic functions */
@@ -84,6 +86,18 @@ std::vector<std::tuple<int, double>> Model::evaluate_constraint_gradient(int i, 
 };
 
 /* eval_h functions (none so far - automatic hessian computations not implemented) */
+std::vector<std::pair<int, int>> Model::get_hessian_sparsity_pattern() {
+    if (_hessian_sparsity_pattern.size() == 0) {
+        std::set<std::pair<int, int>> hessian_sparsity_pattern = _objective->get_hessian_sparsity();
+        for (auto i=0; i<_num_constraints; ++i) {
+            auto constraint_hessian_sparsity_pattern = _constraints[i]->get_hessian_sparsity();
+            hessian_sparsity_pattern.insert(constraint_hessian_sparsity_pattern.begin(), constraint_hessian_sparsity_pattern.end());
+        }
+        std::vector<std::pair<int, int>> sparsity_pattern(hessian_sparsity_pattern.begin(), hessian_sparsity_pattern.end());
+        _hessian_sparsity_pattern = sparsity_pattern;
+    }
+    return _hessian_sparsity_pattern;
+};
 
 /* finalize_solution functions */
 void Model::set_primal_solution(const double * vals) {
