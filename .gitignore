@@ -3,3 +3,4 @@ bin/*
 output/model6ss_test_0/*
 output/model6ss_test_1/*
 .vscode/*
+output/*
