@@ -119,10 +119,55 @@ std::set<std::pair<int, int>> Func::get_hessian_sparsity() {
         sparsity_pattern.insert(std::make_pair(id, id));
     sparsity_pattern.insert(_variable_id_pairs_with_nz_mixed_second_derivative.begin(), _variable_id_pairs_with_nz_mixed_second_derivative.end());
     return sparsity_pattern;
-}
+};
 
 bool Func::has_variable_id(int id) {
     if (_variable_id_to_terms.find(id) == _variable_id_to_terms.end())
         return false;
     return true;
-}
+};
+
+std::vector<std::tuple<int, int, double>> Func::get_hessian(const double* var_values) {
+    std::vector<std::pair<int, int>> indices;
+    std::vector<double> hessian_values;
+    for (auto term : _terms) {
+        auto tt = term.get_term_type();
+        if (tt == TermType::linear || tt == TermType::constant) continue;
+        auto var_ids = term.get_variable_ids();
+        std::vector<double> values;
+        for (auto var_id : var_ids) values.push_back(var_values[var_id]);
+        for (auto i=0; i<var_ids.size(); ++i) {
+            double second_derivative = term.get_second_derivative(i, values);
+            std::pair<int, int> var_id_pair = std::make_pair(var_ids[i], var_ids[i]);
+            auto it = std::find(indices.begin(), indices.end(), var_id_pair);
+            if (it != indices.end()) {
+                int current_index = std::distance(indices.begin(), it);
+                hessian_values[current_index] += second_derivative;
+            }
+            else {
+                indices.push_back(var_id_pair);
+                hessian_values.push_back(second_derivative);
+            }
+        }
+        double mixed_derivative = term.get_mixed_derivative(values);
+        if (mixed_derivative != 0.0) {
+            int var_id_x = var_ids[0], var_id_y = var_ids[1];
+            auto var_id_pair = std::make_pair(std::min(var_id_x, var_id_y), std::max(var_id_x, var_id_y));
+            auto it = std::find(indices.begin(), indices.end(), var_id_pair);
+            if (it != indices.end()) {
+                int current_index = std::distance(indices.begin(), it);
+                hessian_values[current_index] += mixed_derivative;
+            }
+            else {
+                indices.push_back(var_id_pair);
+                hessian_values.push_back(mixed_derivative);
+            }
+        }
+    }
+    
+    std::vector<std::tuple<int, int, double>> hessian = {};
+    for (auto i=0; i<indices.size(); ++i)
+        hessian.push_back(std::make_tuple(indices[i].first, indices[i].second, hessian_values[i]));
+    
+    return hessian;
+};

@@ -62,6 +62,8 @@ public:
     
     /* eval_h functions (none so far - automatic hessian computations not implemented) */
     std::vector<std::pair<int, int>> get_hessian_sparsity_pattern();
+    std::vector<std::tuple<int, int, double>> evaluate_objective_hessian(const double *);
+    std::vector<std::tuple<int, int, double>> evaluate_constraint_hessian(int, const double *);
     
     /* finalize_solution functions */
     void set_primal_solution(const double *);

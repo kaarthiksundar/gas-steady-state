@@ -10,6 +10,7 @@
 #include <tuple>
 #include <set>
 #include <utility>
+#include <algorithm>
 
 class Func {
 protected:
@@ -18,8 +19,6 @@ protected:
     std::string _name;
     std::set<int> _variable_ids_with_nz_second_derivative;
     std::set<std::pair<int, int>> _variable_id_pairs_with_nz_mixed_second_derivative;
-    std::unordered_map<int, std::vector<int>> _variable_ids_with_nz_second_derivative_to_terms;
-    std::unordered_map<std::pair<int, int>, std::vector<int>> _variable_id_pairs_with_nz_mixed_second_derivative_to_terms;
     
 public:
     Func();
@@ -33,6 +32,7 @@ public:
     std::set<int> get_variable_ids_with_nz_second_derivative();
     std::set<std::pair<int, int>> get_variable_id_pairs_with_nz_mixed_second_derivative();
     std::set<std::pair<int, int>> get_hessian_sparsity();
+    std::vector<std::tuple<int, int, double>> get_hessian(const double *);
     
     void set_name(std::string);
     void add_term(Term);
