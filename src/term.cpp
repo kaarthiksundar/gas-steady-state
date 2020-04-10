@@ -46,7 +46,7 @@ Term::Term(std::vector<std::shared_ptr<Variable>> variables, TermType type) {
     _variables = variables;
     std::transform(variables.begin(), variables.end(), std::back_inserter(_variable_ids),
                    [](std::shared_ptr<Variable> variable) -> int { return variable->get_id(); });
-    _power = std::vector(variables.size(), 1.0);
+    _power = std::vector<double>(variables.size(), 1.0);
     _coefficient = 1.0;
     _type = type;
 };
@@ -64,7 +64,7 @@ Term::Term(std::vector<std::shared_ptr<Variable>> variables, double coefficient,
     _variables = variables;
     std::transform(variables.begin(), variables.end(), std::back_inserter(_variable_ids),
                    [](std::shared_ptr<Variable> variable) -> int { return variable->get_id(); });
-    _power = std::vector(variables.size(), 1.0);
+    _power = std::vector<double>(variables.size(), 1.0);
     _coefficient = coefficient;
     _type = type;
 };
