@@ -135,7 +135,8 @@ std::vector<std::tuple<int, int, double>> Func::get_hessian(const double* var_va
         if (tt == TermType::linear || tt == TermType::constant) continue;
         auto var_ids = term.get_variable_ids();
         std::vector<double> values;
-        for (auto var_id : var_ids) values.push_back(var_values[var_id]);
+        for (auto var_id : var_ids)
+            values.push_back(var_values[var_id]);
         for (auto i=0; i<var_ids.size(); ++i) {
             double second_derivative = term.get_second_derivative(i, values);
             std::pair<int, int> var_id_pair = std::make_pair(var_ids[i], var_ids[i]);
@@ -150,7 +151,7 @@ std::vector<std::tuple<int, int, double>> Func::get_hessian(const double* var_va
             }
         }
         double mixed_derivative = term.get_mixed_derivative(values);
-        if (mixed_derivative != 0.0) {
+        if (std::fabs(mixed_derivative) > 1e-12) {
             int var_id_x = var_ids[0], var_id_y = var_ids[1];
             auto var_id_pair = std::make_pair(std::min(var_id_x, var_id_y), std::max(var_id_x, var_id_y));
             auto it = std::find(indices.begin(), indices.end(), var_id_pair);

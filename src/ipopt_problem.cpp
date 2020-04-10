@@ -120,7 +120,7 @@ bool GasNLP::eval_h(Index n, const Number *x, bool new_x, Number obj_factor, Ind
     /* populate hessian */
     else {
         /* hessian of the objective function */
-        auto hessian = _model->evaluate_objective_hessian(values);
+        auto hessian = _model->evaluate_objective_hessian(x);
         for (auto element : hessian) {
             std::pair<int, int> index = std::make_pair(std::get<0>(element), std::get<1>(element));
             double value = std::get<2>(element);
@@ -129,7 +129,7 @@ bool GasNLP::eval_h(Index n, const Number *x, bool new_x, Number obj_factor, Ind
         }
         /* hessian of constraints */
         for (Index i=0; i<m; ++i) {
-            hessian = _model->evaluate_constraint_hessian(i, values);
+            hessian = _model->evaluate_constraint_hessian(i, x);
             for (auto element : hessian) {
                 std::pair<int, int> index = std::make_pair(std::get<0>(element), std::get<1>(element));
                 double value = std::get<2>(element);
@@ -186,13 +186,12 @@ void solve_model(Model * model, const InputParams & ip) {
     app->Options()->SetStringValue("mu_strategy", "adaptive");
     app->Options()->SetStringValue("output_file", "gas_ss_nlp.out");
     /*
-     * perform derivative test (for testing purposes only) */
-     app->Options()->SetStringValue("jacobian_approximation", "finite-difference-values");
-     app->Options()->SetStringValue("derivative_test", "second-order");
-     //*/
+     * perform derivative test (for testing purposes only)
+     * app->Options()->SetStringValue("jacobian_approximation", "finite-difference-values");
+     * app->Options()->SetStringValue("derivative_test", "second-order");
+     * app->Options()->SetStringValue("derivative_test_print_all", "yes");
+     */
     app->Options()->SetIntegerValue("max_iter", ip.get_max_iterations());
-//    app->Options()->SetStringValue("hessian_approximation", "limited-memory");
-//    app->Options()->SetStringValue("limited_memory_update_type", "sr1");
     app->Options()->SetStringValueIfUnset("linear_solver", "mumps");
     /* The following overwrites the default name (ipopt.opt) of the options file */
     app->Options()->SetStringValue("option_file_name", "gas_ss.opt");
