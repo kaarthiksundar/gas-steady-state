@@ -5,9 +5,6 @@
 build/*
 bin/*
 output/*
-data/ihs_2/*.*
-data/ihs_2.zip
-data/ihs_2.json
 .vscode/
 .vscode/*
 data/csv-to-json-converter/__pycache__
