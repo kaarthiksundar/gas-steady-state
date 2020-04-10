@@ -106,6 +106,8 @@ bool GasNLP::eval_jac_g(Index n, const Number *x, bool new_x, Index m, Index nel
 };
 
 bool GasNLP::eval_h(Index n, const Number *x, bool new_x, Number obj_factor, Index m, const Number *lambda, bool new_lambda, Index nele_hess, Index *iRow, Index *jCol, Number *values) {
+    std::vector<std::pair<int, int>> indices; std::vector<double> vals;
+    auto sparsity_pattern = _model->get_hessian_sparsity_pattern();
     /* populate sparsity structure */
     if (values == NULL) {
         auto sparsity_pattern = _model->get_hessian_sparsity_pattern();
@@ -113,9 +115,48 @@ bool GasNLP::eval_h(Index n, const Number *x, bool new_x, Number obj_factor, Ind
             iRow[i] = sparsity_pattern[i].second;
             jCol[i] = sparsity_pattern[i].first;
         }
+        assert(sparsity_pattern.size() == nele_hess);
+    }
+    /* populate hessian */
+    else {
+        /* hessian of the objective function */
+        auto hessian = _model->evaluate_objective_hessian(x);
+        for (auto element : hessian) {
+            std::pair<int, int> index = std::make_pair(std::get<0>(element), std::get<1>(element));
+            double value = std::get<2>(element);
+            indices.push_back(index);
+            vals.push_back(value * obj_factor);
+        }
+        /* hessian of constraints */
+        for (Index i=0; i<m; ++i) {
+            hessian = _model->evaluate_constraint_hessian(i, x);
+            for (auto element : hessian) {
+                std::pair<int, int> index = std::make_pair(std::get<0>(element), std::get<1>(element));
+                double value = std::get<2>(element);
+                auto it = std::find(indices.begin(), indices.end(), index);
+                if (it == indices.end()) {
+                    indices.push_back(index);
+                    vals.push_back(value * lambda[i]);
+                }
+                else {
+                    int position = std::distance(indices.begin(), it);
+                    vals[position] += (value * lambda[i]);
+                }
+            }
+        }
+        /* populate the hessian of the full problem */
+        for (Index i=0; i<sparsity_pattern.size(); ++i) {
+            auto index = std::make_pair(sparsity_pattern[i].first, sparsity_pattern[i].second);
+            auto it = std::find(indices.begin(), indices.end(), index);
+            if (it == indices.end()) values[i] = 0.0;
+            else {
+                int position = std::distance(indices.begin(), it);
+                values[i] = vals[position];
+            }
+        }
     }
     
-    return false;
+    return true;
 };
 
 void GasNLP::finalize_solution(SolverReturn status, Index n, const Number *x, const Number *z_L, const Number *z_U, Index m, const Number *g, const Number *lambda, Number obj_value, const IpoptData *ip_data, IpoptCalculatedQuantities *ip_cq) {
@@ -144,14 +185,13 @@ void solve_model(Model * model, const InputParams & ip) {
     app->Options()->SetNumericValue("constr_viol_tol", tolerance_value);
     app->Options()->SetStringValue("mu_strategy", "adaptive");
     app->Options()->SetStringValue("output_file", "gas_ss_nlp.out");
-    /**
+    /*
      * perform derivative test (for testing purposes only)
      * app->Options()->SetStringValue("jacobian_approximation", "finite-difference-values");
-     * app->Options()->SetStringValue("derivative_test", "first-order");
+     * app->Options()->SetStringValue("derivative_test", "second-order");
+     * app->Options()->SetStringValue("derivative_test_print_all", "yes");
      */
     app->Options()->SetIntegerValue("max_iter", ip.get_max_iterations());
-    app->Options()->SetStringValue("hessian_approximation", "limited-memory");
-    app->Options()->SetStringValue("limited_memory_update_type", "sr1");
     app->Options()->SetStringValueIfUnset("linear_solver", "mumps");
     /* The following overwrites the default name (ipopt.opt) of the options file */
     app->Options()->SetStringValue("option_file_name", "gas_ss.opt");

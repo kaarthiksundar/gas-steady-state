@@ -85,7 +85,7 @@ std::vector<std::tuple<int, double>> Model::evaluate_constraint_gradient(int i, 
     return _constraints[i]->get_gradient(get_num_variables(), vals);
 };
 
-/* eval_h functions (none so far - automatic hessian computations not implemented) */
+/* eval_h functions  */
 std::vector<std::pair<int, int>> Model::get_hessian_sparsity_pattern() {
     if (_hessian_sparsity_pattern.size() == 0) {
         std::set<std::pair<int, int>> hessian_sparsity_pattern = _objective->get_hessian_sparsity();
@@ -97,6 +97,12 @@ std::vector<std::pair<int, int>> Model::get_hessian_sparsity_pattern() {
         _hessian_sparsity_pattern = sparsity_pattern;
     }
     return _hessian_sparsity_pattern;
+};
+std::vector<std::tuple<int, int, double>> Model::evaluate_objective_hessian(const double * vals) {
+    return _objective->get_hessian(vals);
+};
+std::vector<std::tuple<int, int, double>> Model::evaluate_constraint_hessian(int i, const double * vals) {
+    return _constraints[i]->get_hessian(vals);
 };
 
 /* finalize_solution functions */
