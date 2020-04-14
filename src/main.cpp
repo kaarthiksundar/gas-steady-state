@@ -93,6 +93,7 @@ int main (int argc, char * argv[]) {
     ssp.add_objective(ip);
     std::cout << "*** Steady state model created " << std::endl;
     
+    
     solve_model(&ssp.get_model(), ip);
     std::cout << "*** Steady state model solved " << std::endl;
     ssp.populate_solution();

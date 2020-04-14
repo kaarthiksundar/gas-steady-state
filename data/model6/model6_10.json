@@ -1,0 +1,221 @@
+{
+    "input_param": {
+        "Temperature (K):": 288.70599999999996,
+        "Gas specific gravity (G):": 0.6,
+        "Specific heat capacity ratio": 1.4,
+        "units (SI = 0, standard = 1)": 0,
+        "Econ weight (between 0 and 1)": 0.5,
+        "Max iterations": 400,
+        "Tolerance exponent": -3,
+        "Objective scale exponent": 3
+    },
+    "nodes": {
+        "1": {
+            "node_id": 1,
+            "node_name": "None",
+            "x_coord": -0.655,
+            "y_coord": 0,
+            "min_pressure": 3000000,
+            "max_pressure": 6000000,
+            "min_injection": 0,
+            "max_injection": 1000,
+            "slack_bool": 1
+        },
+        "2": {
+            "node_id": 2,
+            "node_name": "None",
+            "x_coord": -0.0421,
+            "y_coord": 0,
+            "min_pressure": 3000000,
+            "max_pressure": 6000000,
+            "min_injection": -1000,
+            "max_injection": 1000,
+            "slack_bool": 0
+        },
+        "3": {
+            "node_id": 3,
+            "node_name": "None",
+            "x_coord": 0.64,
+            "y_coord": 0.5,
+            "min_pressure": 3000000,
+            "max_pressure": 6000000,
+            "min_injection": -1000,
+            "max_injection": 1000,
+            "slack_bool": 0
+        },
+        "4": {
+            "node_id": 4,
+            "node_name": "None",
+            "x_coord": 0.96,
+            "y_coord": -0.5,
+            "min_pressure": 3000000,
+            "max_pressure": 6000000,
+            "min_injection": -1000,
+            "max_injection": 1000,
+            "slack_bool": 0
+        },
+        "5": {
+            "node_id": 5,
+            "node_name": "None",
+            "x_coord": -0.605,
+            "y_coord": 0,
+            "min_pressure": 3000000,
+            "max_pressure": 6000000,
+            "min_injection": -1000,
+            "max_injection": 1000,
+            "slack_bool": 0
+        },
+        "6": {
+            "node_id": 6,
+            "node_name": "None",
+            "x_coord": -0.0021,
+            "y_coord": -0.04,
+            "min_pressure": 3000000,
+            "max_pressure": 6000000,
+            "min_injection": -1000,
+            "max_injection": 1000,
+            "slack_bool": 0
+        }
+    },
+    "pipes": {
+        "1": {
+            "pipe_id": 1,
+            "pipe_name": "Pipe1",
+            "from_node": 5,
+            "to_node": 2,
+            "diameter": 0.6,
+            "length": 50000,
+            "friction_factor": 0.01,
+            "disc_seg": 0
+        },
+        "2": {
+            "pipe_id": 2,
+            "pipe_name": "Pipe2",
+            "from_node": 2,
+            "to_node": 3,
+            "diameter": 0.6,
+            "length": 80000,
+            "friction_factor": 0.01,
+            "disc_seg": 0
+        },
+        "3": {
+            "pipe_id": 3,
+            "pipe_name": "Pipe3",
+            "from_node": 6,
+            "to_node": 4,
+            "diameter": 0.6,
+            "length": 80000,
+            "friction_factor": 0.01,
+            "disc_seg": 0
+        },
+        "4": {
+            "pipe_id": 4,
+            "pipe_name": "Pipe4",
+            "from_node": 3,
+            "to_node": 4,
+            "diameter": 0.3,
+            "length": 80000,
+            "friction_factor": 0.01,
+            "disc_seg": 0
+        }
+    },
+    "compressors": {
+        "1": {
+            "comp_id": 1,
+            "comp_name": "Comp1",
+            "from_node": 1,
+            "to_node": 5,
+            "c_min": 1,
+            "c_max": 1.4,
+            "max_power": 3000000,
+            "min_flow": 0,
+            "max_flow": 1000
+        },
+        "2": {
+            "comp_id": 2,
+            "comp_name": "Comp2",
+            "from_node": 2,
+            "to_node": 6,
+            "c_min": 1,
+            "c_max": 1.35,
+            "max_power": 2000000,
+            "min_flow": 0,
+            "max_flow": 1000
+        }
+    },
+    "gnodes": {
+        "1": {
+            "gnode_id": 1,
+            "gnode_name": "LDC_A",
+            "node_id": 2
+        },
+        "2": {
+            "gnode_id": 2,
+            "gnode_name": "LDC_B",
+            "node_id": 3
+        },
+        "3": {
+            "gnode_id": 3,
+            "gnode_name": "LDC_C",
+            "node_id": 4
+        },
+        "4": {
+            "gnode_id": 4,
+            "gnode_name": "PP_A",
+            "node_id": 3
+        },
+        "5": {
+            "gnode_id": 5,
+            "gnode_name": "PP_B",
+            "node_id": 4
+        }
+    },
+    "pslack": {
+        "1": 4000000
+    },
+    "cslack": {
+        "1": 1.25
+    },
+    "qbar": {
+        "2": 4.19,
+        "3": 9.82,
+        "4": 5.79,
+        "5": 2.17,
+        "6": 2.15
+    },
+    "gbar": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0
+    },
+    "smax": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0
+    },
+    "dmax": {
+        "1": 30,
+        "2": 40,
+        "3": 20,
+        "4": 30,
+        "5": 10
+    },
+    "cs": {
+        "1": 2,
+        "2": 2,
+        "3": 2,
+        "4": 2,
+        "5": 2
+    },
+    "cd": {
+        "1": 3,
+        "2": 4,
+        "3": 5,
+        "4": 2.5,
+        "5": 3
+    }
+}

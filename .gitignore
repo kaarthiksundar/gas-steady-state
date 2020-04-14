@@ -1,14 +1,18 @@
+# temp files
 */.DS_Store
 .DS_Store
-*.pyc
-*/*.pyc
-build/*
-bin/*
-output/*
-.vscode/
-.vscode/*
+
+# python files 
 data/csv-to-json-converter/__pycache__
 data/csv-to-json-converter/*.pyc
-output/ihs_2/*.csv
-output/ihs_2_output.json
-output/*
+*.pyc
+*/*.pyc
+data/*.zip 
+
+# bin, build dirs 
+build/*
+bin/*
+
+# vscode files 
+.vscode/
+.vscode/*
