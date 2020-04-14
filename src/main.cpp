@@ -16,8 +16,8 @@ int main (int argc, char * argv[]) {
     op::OptionParser opt;
     opt.add_option("h", "help", "shows option help");
     opt.add_option("n", "case_name", "case name", "model6");
-    opt.add_option("p", "case_path", "case file path", "../../data/model6/");
-    opt.add_option("o", "output_path", "output folder path", "../../output/");
+    opt.add_option("p", "case_path", "case file path", "../data/model6/");
+    opt.add_option("o", "output_path", "output folder path", "../output/");
     opt.add_option("c", "num_instances", "number of instances of the case apart from the base case", "10");
     opt.add_option("f", "data_format", "data format (csv/json)", "json");
     
