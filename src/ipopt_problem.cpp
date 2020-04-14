@@ -9,8 +9,13 @@
 using namespace Ipopt;
 
 GasNLP::GasNLP(Model * model) : _model(model) {};
+GasNLP::GasNLP() : _model(nullptr) {};
 
 GasNLP::~GasNLP() { };
+
+void GasNLP::set_model(Model * model) { _model = model; };
+bool GasNLP::is_model_empty() { return _model == nullptr; };
+void GasNLP::clear_model() { _model = nullptr; };
 
 bool GasNLP::get_nlp_info(Index &n, Index &m, Index &nnz_jac_g, Index &nnz_h_lag, IndexStyleEnum &index_style) {
     n = (Index)_model->get_num_variables();
@@ -166,10 +171,7 @@ void GasNLP::finalize_solution(SolverReturn status, Index n, const Number *x, co
     _model->set_dual_solution(lambda);
 };
 
-void solve_model(Model * model, const InputParams & ip) {
-    /* Create a new instance of the GasNLP */
-    SmartPtr<TNLP> gas_nlp = new GasNLP(model);
-    
+void solve_model(SmartPtr<GasNLP> gas_nlp, const InputParams & ip, std::string output_file) {
     /**
      * Create a new instance of IpoptApplication
      * We are using the factory, since this allows us to compile this
@@ -184,7 +186,7 @@ void solve_model(Model * model, const InputParams & ip) {
     app->Options()->SetNumericValue("acceptable_tol", tolerance_value);
     app->Options()->SetNumericValue("constr_viol_tol", tolerance_value);
     app->Options()->SetStringValue("mu_strategy", "adaptive");
-    app->Options()->SetStringValue("output_file", "gas_ss_nlp.out");
+    app->Options()->SetStringValue("output_file", output_file);
     /*
      * perform derivative test (for testing purposes only)
      * app->Options()->SetStringValue("jacobian_approximation", "finite-difference-values");

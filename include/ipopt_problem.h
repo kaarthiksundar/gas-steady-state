@@ -15,6 +15,12 @@ protected:
 public:
     /** Default constructor */
     GasNLP(Model *);
+    GasNLP();
+    
+    /** Other helper methods */
+    void set_model(Model *);
+    bool is_model_empty();
+    void clear_model();
     
     /** Default destructor */
     virtual ~GasNLP();
@@ -145,5 +151,6 @@ private:
     //@}
 };
 
-void solve_model(Model * model, const InputParams & ip);
+void solve_model(SmartPtr<GasNLP> gas_nlp, const InputParams & ip,
+                 const std::string output_file = "gas_ss.opt");
 #endif 
