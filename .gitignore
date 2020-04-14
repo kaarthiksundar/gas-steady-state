@@ -10,8 +10,8 @@ data/csv-to-json-converter/*.pyc
 data/*.zip 
 
 # bin, build dirs 
-build/*
-bin/*
+build
+bin
 
 # vscode files 
 .vscode/
