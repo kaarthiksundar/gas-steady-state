@@ -187,12 +187,9 @@ void solve_model(SmartPtr<GasNLP> gas_nlp, const InputParams & ip, std::string o
     app->Options()->SetNumericValue("constr_viol_tol", tolerance_value);
     app->Options()->SetStringValue("mu_strategy", "adaptive");
     app->Options()->SetStringValue("output_file", output_file);
-    /*
-     * perform derivative test (for testing purposes only)
-     * app->Options()->SetStringValue("jacobian_approximation", "finite-difference-values");
-     * app->Options()->SetStringValue("derivative_test", "second-order");
-     * app->Options()->SetStringValue("derivative_test_print_all", "yes");
-     */
+    /* perform derivative test (for testing purposes only) */
+    app->Options()->SetStringValue("derivative_test", "second-order");
+     
     app->Options()->SetIntegerValue("max_iter", ip.get_max_iterations());
     app->Options()->SetStringValueIfUnset("linear_solver", "mumps");
     /* The following overwrites the default name (ipopt.opt) of the options file */
