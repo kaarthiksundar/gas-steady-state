@@ -1,17 +1,17 @@
+#include <fstream>
 #include <iostream>
 #include <optionParser.hpp>
-#include <fstream>
 
-#include <input_params.h>
 #include <conversions.h>
 #include <data.h>
+#include <input_params.h>
+#include <ipopt_problem.h>
 #include <steady_state_data.h>
 #include <steady_state_problem.h>
-#include <ipopt_problem.h>
 #include <steady_state_solution.h>
 
-int main (int argc, char * argv[]) {
-    
+int main(int argc, char *argv[]) {
+
     /* creating command line options */
     op::OptionParser opt;
     opt.add_option("h", "help", "shows option help"); 
@@ -23,11 +23,11 @@ int main (int argc, char * argv[]) {
     
     /* parse options */
     bool correct_parsing = opt.parse_options(argc, argv);
-    
-    if(!correct_parsing) {
+
+    if (!correct_parsing) {
         return EXIT_FAILURE;
     }
-    
+
     bool has_help = op::str2bool(opt["h"]);
     if (has_help) { 
         opt.show_help(); 
@@ -35,43 +35,65 @@ int main (int argc, char * argv[]) {
     }
 
     if (opt["f"] != "csv" && opt["f"] != "json") {
-        std::cerr << "The data format has to be either json or csv. The supplied data format is " << opt["f"] << std::endl;
+        std::cerr
+            << "The data format has to be either json or csv. The supplied "
+               "data format is "
+            << opt["f"] << std::endl;
         std::exit(0);
     }
-    
+
     if (opt["f"] == "csv") {
         std::ifstream data_dir((opt["p"] + opt["n"]).c_str());
         std::ifstream out_dir((opt["o"] + opt["n"]).c_str());
         if (!data_dir.good()) {
-            std::cerr << "The data directory specified is " << opt["p"] + opt["n"] << "." << std::endl <<
-            "This directory does not exist." << std::endl <<
-            "Enter the correct directory using the flags -p and -n. " << std::endl <<
-            "Use the -h or --help flag to get a detailed list of command line options available. " << std::endl;
+            std::cerr
+                << "The data directory specified is " << opt["p"] + opt["n"]
+                << "." << std::endl
+                << "This directory does not exist." << std::endl
+                << "Enter the correct directory using the flags -p and -n. "
+                << std::endl
+                << "Use the -h or --help flag to get a detailed list of "
+                   "command line options available. "
+                << std::endl;
             std::exit(0);
         }
         if (!out_dir.good()) {
-            std::cerr << "The output directory specified is " << opt["o"] + opt["n"] << "." << std::endl <<
-            "This directory does not exist." << std::endl <<
-            "Enter the correct directory using the flags -o and -n. " << std::endl <<
-            "Use the -h or --help flag to get a detailed list of command line options available. " << std::endl;
+            std::cerr
+                << "The output directory specified is " << opt["o"] + opt["n"]
+                << "." << std::endl
+                << "This directory does not exist." << std::endl
+                << "Enter the correct directory using the flags -o and -n. "
+                << std::endl
+                << "Use the -h or --help flag to get a detailed list of "
+                   "command line options available. "
+                << std::endl;
             std::exit(0);
         }
-    }
-    else {
+    } else {
         std::ifstream data_dir((opt["p"]).c_str());
         std::ifstream out_dir((opt["o"]).c_str());
         if (!data_dir.good()) {
-            std::cerr << "The data directory specified is " << opt["p"] << "." << std::endl <<
-            "This directory does not exist." << std::endl <<
-            "Enter the correct directory using the flags -p and -n. " << std::endl <<
-            "Use the -h or --help flag to get a detailed list of command line options available. " << std::endl;
+            std::cerr
+                << "The data directory specified is " << opt["p"] << "."
+                << std::endl
+                << "This directory does not exist." << std::endl
+                << "Enter the correct directory using the flags -p and -n. "
+                << std::endl
+                << "Use the -h or --help flag to get a detailed list of "
+                   "command line options available. "
+                << std::endl;
             std::exit(0);
         }
         if (!out_dir.good()) {
-            std::cerr << "The output directory specified is " << opt["o"] << "." << std::endl <<
-            "This directory does not exist." << std::endl <<
-            "Enter the correct directory using the flags -o and -n. " << std::endl <<
-            "Use the -h or --help flag to get a detailed list of command line options available. " << std::endl;
+            std::cerr
+                << "The output directory specified is " << opt["o"] << "."
+                << std::endl
+                << "This directory does not exist." << std::endl
+                << "Enter the correct directory using the flags -o and -n. "
+                << std::endl
+                << "Use the -h or --help flag to get a detailed list of "
+                   "command line options available. "
+                << std::endl;
             std::exit(0);
         }
     }

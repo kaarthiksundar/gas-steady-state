@@ -1,14 +1,25 @@
+# temp files
 */.DS_Store
 .DS_Store
+
+# python files 
+data/csv-to-json-converter/__pycache__
+data/csv-to-json-converter/*.pyc
 *.pyc
 */*.pyc
+data/*.zip 
+
+# bin, build dirs 
 build/*
 bin/*
 output/*
+
+# vscode files 
 .vscode/
 .vscode/*
-data/csv-to-json-converter/__pycache__
-data/csv-to-json-converter/*.pyc
-output/ihs_2/*.csv
-output/ihs_2_output.json
-output/*
+
+# code formatter 
+format_code.sh
+.clang-format
+
+!*/.gitkeep

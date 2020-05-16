@@ -1,33 +1,36 @@
 #ifndef CONSTRAINT_H
 #define CONSTRAINT_H
 
-#pragma once 
+#pragma once
 
 #include <func.h>
-#include <vector>
 #include <string>
-#include <unordered_map>
 #include <tuple>
+#include <unordered_map>
+#include <vector>
 
 class Constraint : public Func {
-protected:
+  protected:
     int _id;
     double _lb;
     double _ub;
-    
-public:
+
+  public:
     Constraint();
     Constraint(std::string);
-    
+
     std::tuple<double, double> get_bounds();
-    
+
     void equal_to(double);
     void less_than_equal_to(double);
     void greater_than_equal_to(double);
     void two_sided(double, double);
-    
+
     void set_id(int);
     int get_id();
+
+    friend std::ostream &operator<<(std::ostream &os,
+                                    const Constraint &constraint);
 };
 
-#endif 
+#endif

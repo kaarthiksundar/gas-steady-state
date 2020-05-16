@@ -6,7 +6,7 @@
 #include <input_params.h>
 
 class ConversionFactors {
-private:
+  private:
     double _psi_to_pascal;
     double _km_to_m;
     double _universal_R;
@@ -18,9 +18,10 @@ private:
     double _a;
     double _miles_to_m;
     double _inches_to_m;
-public:
+
+  public:
     ConversionFactors(const InputParams &);
-    
+
     double psi_to_pascal() const;
     double pascal_to_psi() const;
     double km_to_m() const;
@@ -41,14 +42,15 @@ public:
 };
 
 class ScalingFactors {
-private:
+  private:
     double _pressure_scaling;
     double _flow_scaling;
     double _time_scaling;
     double _space_scaling;
-public:
+
+  public:
     ScalingFactors(double, double, double, double);
-    
+
     double get_pressure_scaling() const;
     double get_flow_scaling() const;
     double get_time_scaling() const;
@@ -57,8 +59,4 @@ public:
 
 ScalingFactors build_scaling_factors(double, const ConversionFactors &);
 
-
-
 #endif
-
-

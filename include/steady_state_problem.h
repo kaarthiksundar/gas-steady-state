@@ -1,29 +1,35 @@
 #ifndef STEADY_STATE_PROBLEM_H
 #define STEADY_STATE_PROBLEM_H
 
-#pragma once 
+#pragma once
 
+#include <data.h>
+#include <input_params.h>
+#include <memory>
 #include <model.h>
 #include <steady_state_data.h>
-#include <data.h>
-#include <memory>
-#include <input_params.h>
 
 class SteadyStateProblem {
-private:
+  private:
     Model _model;
-    const SteadyStateData & _ssd;
-    std::unordered_map<std::string, std::unordered_map<int, std::shared_ptr<Variable>>> _variables;
-    std::unordered_map<std::string, std::unordered_map<int, std::shared_ptr<Constraint>>> _constraints;
+    const SteadyStateData &_ssd;
+    std::unordered_map<std::string,
+                       std::unordered_map<int, std::shared_ptr<Variable>>>
+        _variables;
+    std::unordered_map<std::string,
+                       std::unordered_map<int, std::shared_ptr<Constraint>>>
+        _constraints;
     std::shared_ptr<Func> _objective;
-    std::unordered_map<std::string, std::unordered_map<int, double>> _primal_values;
-    std::unordered_map<std::string, std::unordered_map<int, double>> _dual_values;
+    std::unordered_map<std::string, std::unordered_map<int, double>>
+        _primal_values;
+    std::unordered_map<std::string, std::unordered_map<int, double>>
+        _dual_values;
     double _objective_value;
 
-public:
+  public:
     SteadyStateProblem(std::string, const SteadyStateData &);
-    
-    Model & get_model();
+
+    Model &get_model();
     std::shared_ptr<Variable> rho(int);
     std::shared_ptr<Variable> phi_p(int);
     std::shared_ptr<Variable> phi_c(int);
@@ -37,7 +43,7 @@ public:
     std::shared_ptr<Constraint> compressor_bounds(int);
     std::shared_ptr<Constraint> compressor_power_bounds(int);
     std::shared_ptr<Func> objective();
-    
+
     double get_rho(int) const;
     double get_phi_p(int) const;
     double get_phi_c(int) const;
@@ -51,15 +57,14 @@ public:
     double get_compressor_bounds(int) const;
     double get_compressor_power_bounds(int) const;
     double get_objective_value() const;
-    
-    
+
     void add_variables();
     void add_constraints(const InputParams &);
     void add_objective(const InputParams &);
-    
+
     void populate_solution();
-    
-private:
+
+  private:
     /* variables */
     void add_rho_variables();
     void add_phi_variables();
@@ -74,4 +79,4 @@ private:
     void add_compressor_power_bounds(const InputParams &);
 };
 
-#endif 
+#endif

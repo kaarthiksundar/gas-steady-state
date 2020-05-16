@@ -5,7 +5,7 @@
 #include <ostream>
 
 class InputParams {
-private:
+  private:
     double _temperature;
     double _gas_specific_gravity;
     double _specific_heat_capacity_ratio;
@@ -14,13 +14,13 @@ private:
     double _max_iterations;
     int _tolerance_exponent;
     int _objective_scale_exponent;
-    
-public:
+
+  public:
     InputParams(double temperature, double gas_specific_gravity,
-                double specific_heat_capacity_ratio,
-                int units, double econ_weight, double max_iterations,
+                double specific_heat_capacity_ratio, int units,
+                double econ_weight, double max_iterations,
                 int tolerance_exponent, int objective_scale_exponent);
-    
+
     double get_temperature() const;
     double get_gas_specific_gravity() const;
     double get_specific_heat_capacity_ratio() const;
@@ -29,10 +29,11 @@ public:
     double get_max_iterations() const;
     int get_tolerance_exponent() const;
     int get_objective_scale_exponent() const;
-    
-    friend std::ostream& operator<<(std::ostream& os, const InputParams &ip);
+
+    friend std::ostream &operator<<(std::ostream &os, const InputParams &ip);
 };
 
-InputParams build_input_params(std::string data_path, std::string case_name, std::string data_format="csv");
+InputParams build_input_params(std::string data_path, std::string case_name,
+                               std::string data_format = "csv");
 
-#endif 
+#endif
