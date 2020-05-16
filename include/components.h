@@ -3,11 +3,11 @@
 
 #pragma once
 
-#include <string>
 #include <conversions.h>
+#include <string>
 
 class Pipe {
-private:
+  private:
     int _id;
     std::string _name;
     int _fnode;
@@ -20,12 +20,12 @@ private:
     bool _si;
     bool _status;
     bool _per_unit;
-    
-public:
-    Pipe(int id, std::string name, int fnode, int tnode,
-         double diameter, double length, double friction_factor,
-         int num_discretization_segments, int units);
-    
+
+  public:
+    Pipe(int id, std::string name, int fnode, int tnode, double diameter,
+         double length, double friction_factor, int num_discretization_segments,
+         int units);
+
     std::string get_name() const;
     int get_id() const;
     int get_fnode_id() const;
@@ -38,16 +38,16 @@ public:
     bool is_si() const;
     bool is_per_unit() const;
     bool get_status() const;
-    
+
     void make_per_unit(const ConversionFactors &, const ScalingFactors &);
     void make_standard(const ConversionFactors &, const ScalingFactors &);
     void make_si(const ConversionFactors &, const ScalingFactors &);
-    
-    friend std::ostream& operator<<(std::ostream& os, const Pipe &pipe);
+
+    friend std::ostream &operator<<(std::ostream &os, const Pipe &pipe);
 };
 
 class Node {
-private:
+  private:
     int _id;
     std::string _name;
     std::pair<double, double> _coords;
@@ -60,12 +60,11 @@ private:
     bool _si;
     bool _status;
     bool _per_unit;
-    
-public:
-    Node(int id, std::string name, double x, double y,
-         double pmin, double pmax, double injection_min,
-         double injection_max, bool slack, int units);
-    
+
+  public:
+    Node(int id, std::string name, double x, double y, double pmin, double pmax,
+         double injection_min, double injection_max, bool slack, int units);
+
     int get_id() const;
     std::string get_name() const;
     std::pair<double, double> get_coords() const;
@@ -78,15 +77,15 @@ public:
     bool is_standard() const;
     bool is_per_unit() const;
     bool get_status() const;
-    
+
     void make_per_unit(const ConversionFactors &, const ScalingFactors &);
     void make_standard(const ConversionFactors &, const ScalingFactors &);
     void make_si(const ConversionFactors &, const ScalingFactors &);
-    friend std::ostream& operator<<(std::ostream& os, const Node &node);
+    friend std::ostream &operator<<(std::ostream &os, const Node &node);
 };
 
 class Compressor {
-private:
+  private:
     int _id;
     std::string _name;
     int _fnode;
@@ -103,12 +102,12 @@ private:
     bool _si;
     bool _status;
     bool _per_unit;
-    
-public:
-    Compressor(int id, std::string name, int fnode, int tnode,
-               double cmin, double cmax, double power_max,
-               double flow_min, double flow_max, int units);
-    
+
+  public:
+    Compressor(int id, std::string name, int fnode, int tnode, double cmin,
+               double cmax, double power_max, double flow_min, double flow_max,
+               int units);
+
     int get_id() const;
     std::string get_name() const;
     int get_fnode_id() const;
@@ -125,30 +124,31 @@ public:
     bool is_si() const;
     bool is_per_unit() const;
     bool get_status() const;
-    
+
     void make_per_unit(const ConversionFactors &, const ScalingFactors &);
     void make_standard(const ConversionFactors &, const ScalingFactors &);
     void make_si(const ConversionFactors &, const ScalingFactors &);
-    friend std::ostream& operator<<(std::ostream& os, const Compressor &compressor);
+    friend std::ostream &operator<<(std::ostream &os,
+                                    const Compressor &compressor);
 };
 
 class Gnode {
-private:
+  private:
     int _id;
     std::string _name;
     int _node;
     bool _status;
-    
-public:
+
+  public:
     Gnode();
     Gnode(int id, std::string name, int node);
-    
+
     int get_id() const;
     std::string get_name() const;
     int get_node_id() const;
     bool get_status() const;
-    
-    friend std::ostream& operator<<(std::ostream& os, const Gnode &gnode);
+
+    friend std::ostream &operator<<(std::ostream &os, const Gnode &gnode);
 };
 
 #endif
