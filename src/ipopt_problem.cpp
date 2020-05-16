@@ -8,25 +8,11 @@
 
 using namespace Ipopt;
 
-<<<<<<< HEAD
 GasNLP::GasNLP(Model * model) : _model(model) {};
-=======
-GasNLP::GasNLP(Model *model) : _model(model){};
-GasNLP::GasNLP() : _model(nullptr){};
->>>>>>> d2940da... Updates
 
 GasNLP::~GasNLP(){};
 
-<<<<<<< HEAD
 bool GasNLP::get_nlp_info(Index &n, Index &m, Index &nnz_jac_g, Index &nnz_h_lag, IndexStyleEnum &index_style) {
-=======
-void GasNLP::set_model(Model *model) { _model = model; };
-bool GasNLP::is_model_empty() { return _model == nullptr; };
-void GasNLP::clear_model() { _model = nullptr; };
-
-bool GasNLP::get_nlp_info(Index &n, Index &m, Index &nnz_jac_g,
-                          Index &nnz_h_lag, IndexStyleEnum &index_style) {
->>>>>>> d2940da... Updates
     n = (Index)_model->get_num_variables();
     m = (Index)_model->get_num_constraints();
     nnz_jac_g = (Index)_model->get_nnz_jacobian();

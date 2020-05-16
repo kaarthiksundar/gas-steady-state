@@ -16,17 +16,7 @@ class GasNLP : public TNLP {
   public:
     /** Default constructor */
     GasNLP(Model *);
-<<<<<<< HEAD
     
-=======
-    GasNLP();
-
-    /** Other helper methods */
-    void set_model(Model *);
-    bool is_model_empty();
-    void clear_model();
-
->>>>>>> d2940da... Updates
     /** Default destructor */
     virtual ~GasNLP();
 
@@ -103,11 +93,5 @@ class GasNLP : public TNLP {
     //@}
 };
 
-<<<<<<< HEAD
 void solve_model(Model * model, const InputParams & ip);
 #endif 
-=======
-void solve_model(SmartPtr<GasNLP> gas_nlp, const InputParams &ip,
-                 const std::string output_file = "gas_ss.opt");
-#endif
->>>>>>> d2940da... Updates
