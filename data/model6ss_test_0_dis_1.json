@@ -219,7 +219,11 @@
     "5": 3
   },
   "disruption": {
-    "node_id": [],
+    "node_id": [
+      3,
+      4,
+      5
+    ],
     "pipe_id": [],
     "compressor_id": [],
     "gnode_id": []

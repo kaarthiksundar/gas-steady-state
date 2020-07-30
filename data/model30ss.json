@@ -838,5 +838,11 @@
     "13": 16.5,
     "14": 11.0,
     "15": 12.0
+  },
+  "disruption": {
+    "node_id": [],
+    "pipe_id": [],
+    "compressor_id": [],
+    "gnode_id": []
   }
 }

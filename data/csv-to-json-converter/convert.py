@@ -53,6 +53,7 @@ def main():
     parsed_output.add_field(data.dmax, 'dmax')
     parsed_output.add_field(data.cs, 'cs')
     parsed_output.add_field(data.cd, 'cd')
+    parsed_output.add_field(data.disruption, 'disruption')
 
     parsed_output.write_to_json_file(args.outputfolder + args.jsonfile)
 

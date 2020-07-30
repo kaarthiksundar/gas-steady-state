@@ -217,5 +217,11 @@
     "3": 5,
     "4": 2.5,
     "5": 3
+  },
+  "disruption": {
+    "node_id": [],
+    "pipe_id": [],
+    "compressor_id": [],
+    "gnode_id": []
   }
 }

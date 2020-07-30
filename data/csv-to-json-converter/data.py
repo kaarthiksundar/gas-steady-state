@@ -3,6 +3,7 @@ import csv
 import json
 import pandas as pd
 import numpy as np
+import os
 
 class NpEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -33,6 +34,7 @@ class Data:
         self.dmax = {}
         self.cs = {}
         self.cd = {}
+        self.disruption = {}
 
     def set_log_level(self, loglevel):
         self.logger.setLevel(loglevel)
@@ -122,6 +124,31 @@ class Data:
         for column_id in df.columns:
             self.cd[column_id] = df[column_id][0]
     
+    def read_disrtupted_nodes(self, filename):
+        self.disruption['node_id'] = []
+        if os.path.isfile(filename):
+            df = pd.read_csv(filename)
+            self.disruption['node_id'] += list(df['node_id'])
+    
+    def read_disrtupted_pipes(self, filename):
+        self.disruption['pipe_id'] = []
+        if os.path.isfile(filename):
+            df = pd.read_csv(filename)
+            self.disruption['pipe_id'] += list(df['pipe_id'])
+    
+    def read_disrtupted_compressors(self, filename):
+        self.disruption['compressor_id'] = []
+        if os.path.isfile(filename):
+            df = pd.read_csv(filename)
+            self.disruption['compressor_id'] += list(df['compressor_id'])
+            
+    def read_disrtupted_gnodes(self, filename):
+        self.disruption['gnode_id'] = []
+        if os.path.isfile(filename):
+            df = pd.read_csv(filename)
+            self.disruption['gnode_id'] += list(df['gnode_id'])
+            
+    
     def read_data(self, input_data_folder, 
                     input_param_file='input_param.csv', 
                     nodes_file='input_network_nodes.csv', 
@@ -135,7 +162,11 @@ class Data:
                     smax_file='input_int_smax.csv', 
                     dmax_file='input_int_dmax.csv',
                     cs_file='input_int_cs.csv',
-                    cd_file='input_int_cd.csv'):
+                    cd_file='input_int_cd.csv',
+                    disrupted_nodes_file='input_network_nodesout.csv',
+                    disrupted_pipes_file='input_network_pipesout.csv',
+                    disrupted_compressors_file='input_network_compressorsout.csv',
+                    disrupted_gnodes_file='input_network_gnodesout.csv'):
         # call all the read functions
         self.read_input_parameters(input_data_folder + input_param_file)
         self.read_nodes(input_data_folder + nodes_file)
@@ -150,6 +181,10 @@ class Data:
         self.read_dmax(input_data_folder + dmax_file)
         self.read_cs(input_data_folder + cs_file)
         self.read_cd(input_data_folder + cd_file)
+        self.read_disrtupted_nodes(input_data_folder + disrupted_nodes_file)
+        self.read_disrtupted_pipes(input_data_folder + disrupted_pipes_file)
+        self.read_disrtupted_compressors(input_data_folder + disrupted_compressors_file)
+        self.read_disrtupted_gnodes(input_data_folder + disrupted_gnodes_file)
         
 
 class Output:
