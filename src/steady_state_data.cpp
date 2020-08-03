@@ -170,12 +170,13 @@ void SteadyStateData::populate_parameters(const Data &data,
     _cd.in(_gnodes);
     for (size_t i = 0; i < data.get_gnodes().size(); ++i) {
         auto gnode_index = data.get_gnodes().at(i)->get_id();
-        if (std::find(_gnodes.begin(), _gnodes.end(), gnode_index) == _gnodes.end())
+        if (std::find(_gnodes.begin(), _gnodes.end(), gnode_index) ==
+            _gnodes.end())
             continue;
         _gbar.set_value(gnode_index, data.get_gbar().at(i));
         _smax.set_value(gnode_index, data.get_smax().at(i));
         _dmax.set_value(gnode_index, data.get_dmax().at(i));
-        
+
         _cs.set_value(gnode_index, data.get_cs().at(i));
         _cd.set_value(gnode_index, data.get_cd().at(i));
     }
@@ -183,7 +184,8 @@ void SteadyStateData::populate_parameters(const Data &data,
     _pslack.in(_slack_nodes);
     for (size_t i = 0; i < data.get_num_slack_nodes(); ++i) {
         auto slack_node_index = data.get_pslack_ids().at(i);
-        if (std::find(_slack_nodes.begin(), _slack_nodes.end(), slack_node_index) == _slack_nodes.end())
+        if (std::find(_slack_nodes.begin(), _slack_nodes.end(),
+                      slack_node_index) == _slack_nodes.end())
             continue;
         _pslack.set_value(slack_node_index, data.get_pslack().at(i));
     }
@@ -191,15 +193,17 @@ void SteadyStateData::populate_parameters(const Data &data,
     _cslack.in(_slack_nodes);
     for (size_t i = 0; i < data.get_num_slack_nodes(); ++i) {
         auto slack_node_index = data.get_cslack_ids().at(i);
-        if (std::find(_slack_nodes.begin(), _slack_nodes.end(), slack_node_index) == _slack_nodes.end())
-        continue;
+        if (std::find(_slack_nodes.begin(), _slack_nodes.end(),
+                      slack_node_index) == _slack_nodes.end())
+            continue;
         _cslack.set_value(slack_node_index, data.get_cslack().at(i));
     }
 
     _qbar.in(_non_slack_nodes);
     for (size_t i = 0; i < data.get_num_non_slack_nodes(); ++i) {
         auto non_slack_node_index = data.get_qbar_ids().at(i);
-        if (std::find(_non_slack_nodes.begin(), _non_slack_nodes.end(), non_slack_node_index) == _non_slack_nodes.end())
+        if (std::find(_non_slack_nodes.begin(), _non_slack_nodes.end(),
+                      non_slack_node_index) == _non_slack_nodes.end())
             continue;
         _qbar.set_value(non_slack_node_index, data.get_qbar().at(i));
     }
@@ -253,7 +257,8 @@ void SteadyStateData::populate_parameters(const Data &data,
     _power_max_compressor.in(_compressors);
     for (auto compressor : data.get_compressors()) {
         auto compressor_index = compressor->get_id();
-        if (std::find(_compressors.begin(), _compressors.end(), compressor_index) == _compressors.end())
+        if (std::find(_compressors.begin(), _compressors.end(),
+                      compressor_index) == _compressors.end())
             continue;
         _c_ratio_min.set_value(compressor_index, compressor->get_cmin());
         _c_ratio_max.set_value(compressor_index, compressor->get_cmax());
@@ -284,30 +289,35 @@ void SteadyStateData::populate_indices(const Data &data) {
         _disrupted_nodes.insert(node_id);
         auto in_pipe_ids = data.get_in_pipe_ids_of_disrupted_node(node_id);
         auto out_pipe_ids = data.get_out_pipe_ids_of_disrupted_node(node_id);
-        _dependent_distrupted_pipes.insert(in_pipe_ids.begin(), in_pipe_ids.end());
-        _dependent_distrupted_pipes.insert(out_pipe_ids.begin(), out_pipe_ids.end());
+        _dependent_distrupted_pipes.insert(in_pipe_ids.begin(),
+                                           in_pipe_ids.end());
+        _dependent_distrupted_pipes.insert(out_pipe_ids.begin(),
+                                           out_pipe_ids.end());
         auto in_compressor_ids =
             data.get_in_compressor_ids_of_disrupted_node(node_id);
         auto out_compressor_ids =
             data.get_out_compressor_ids_of_disrupted_node(node_id);
-        _dependent_disrupted_compressors.insert(in_compressor_ids.begin(), in_compressor_ids.end());
-        _dependent_disrupted_compressors.insert(out_compressor_ids.begin(), out_compressor_ids.end());
+        _dependent_disrupted_compressors.insert(in_compressor_ids.begin(),
+                                                in_compressor_ids.end());
+        _dependent_disrupted_compressors.insert(out_compressor_ids.begin(),
+                                                out_compressor_ids.end());
         auto gnode_ids = data.get_gnodes_of_node(node_id);
         _dependent_disrupted_gnodes.insert(gnode_ids.begin(), gnode_ids.end());
     }
-    
+
     for (auto pipe_id : data.get_disrupted_pipe_ids())
         _disrupted_pipes.insert(pipe_id);
-    
+
     for (auto compressor_id : data.get_disrupted_compressor_ids())
         _disrupted_compressors.insert(compressor_id);
-    
+
     for (auto gnode_id : data.get_disruption_gnode_ids())
         _disrupted_gnodes.insert(gnode_id);
 
     for (auto node : data.get_nodes()) {
         auto node_index = node->get_id();
-        if (std::find(_disrupted_nodes.begin(), _disrupted_nodes.end(), node_index) != _disrupted_nodes.end())
+        if (std::find(_disrupted_nodes.begin(), _disrupted_nodes.end(),
+                      node_index) != _disrupted_nodes.end())
             continue;
         _nodes.insert(node_index);
         if (node->is_slack())
@@ -323,9 +333,12 @@ void SteadyStateData::populate_indices(const Data &data) {
 
     for (auto pipe : data.get_pipes()) {
         auto pipe_index = pipe->get_id();
-        if (std::find(_disrupted_pipes.begin(), _disrupted_pipes.end(), pipe_index) != _disrupted_pipes.end())
+        if (std::find(_disrupted_pipes.begin(), _disrupted_pipes.end(),
+                      pipe_index) != _disrupted_pipes.end())
             continue;
-        if (std::find(_dependent_distrupted_pipes.begin(), _dependent_distrupted_pipes.end(), pipe_index) != _dependent_distrupted_pipes.end())
+        if (std::find(_dependent_distrupted_pipes.begin(),
+                      _dependent_distrupted_pipes.end(),
+                      pipe_index) != _dependent_distrupted_pipes.end())
             continue;
         _pipes.insert(pipe_index);
         auto fnode_index = pipe->get_fnode_id();
@@ -338,9 +351,14 @@ void SteadyStateData::populate_indices(const Data &data) {
 
     for (auto compressor : data.get_compressors()) {
         auto compressor_index = compressor->get_id();
-        if (std::find(_disrupted_compressors.begin(), _disrupted_compressors.end(), compressor_index) != _disrupted_compressors.end())
+        if (std::find(_disrupted_compressors.begin(),
+                      _disrupted_compressors.end(),
+                      compressor_index) != _disrupted_compressors.end())
             continue;
-        if (std::find(_dependent_disrupted_compressors.begin(), _dependent_disrupted_compressors.end(), compressor_index) != _dependent_disrupted_compressors.end())
+        if (std::find(_dependent_disrupted_compressors.begin(),
+                      _dependent_disrupted_compressors.end(),
+                      compressor_index) !=
+            _dependent_disrupted_compressors.end())
             continue;
         _compressors.insert(compressor_index);
         auto fnode_index = compressor->get_fnode_id();
@@ -353,9 +371,12 @@ void SteadyStateData::populate_indices(const Data &data) {
 
     for (auto gnode : data.get_gnodes()) {
         auto gnode_index = gnode->get_id();
-        if (std::find(_disrupted_gnodes.begin(), _disrupted_gnodes.end(), gnode_index) != _disrupted_gnodes.end())
+        if (std::find(_disrupted_gnodes.begin(), _disrupted_gnodes.end(),
+                      gnode_index) != _disrupted_gnodes.end())
             continue;
-        if (std::find(_dependent_disrupted_gnodes.begin(), _dependent_disrupted_gnodes.end(), gnode_index) != _dependent_disrupted_gnodes.end())
+        if (std::find(_dependent_disrupted_gnodes.begin(),
+                      _dependent_disrupted_gnodes.end(),
+                      gnode_index) != _dependent_disrupted_gnodes.end())
             continue;
         _gnodes.insert(gnode_index);
         auto node_index = gnode->get_node_id();

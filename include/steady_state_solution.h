@@ -10,6 +10,7 @@
 
 class SteadyStateSolution {
   private:
+    double _atm_pressure_per_unit;
     std::vector<double> _pipe_flow_in, _pipe_flow_out;
     std::vector<double> _pipe_pressure_in, _pipe_pressure_out;
     std::vector<double> _slack_flows;
@@ -26,8 +27,10 @@ class SteadyStateSolution {
 
   public:
     SteadyStateSolution(const Data &, const SteadyStateData &,
-                        const SteadyStateProblem &, const InputParams &);
+                        const SteadyStateProblem &, const InputParams &,
+                        const ScalingFactors &);
 
+    const double get_atm_pressure_per_unit() const;
     const std::vector<double> &get_pipe_flow_in() const;
     const std::vector<double> &get_pipe_flow_out() const;
     const std::vector<double> &get_pipe_pressure_in() const;

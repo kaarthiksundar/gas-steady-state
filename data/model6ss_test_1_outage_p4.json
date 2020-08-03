@@ -4,7 +4,7 @@
     "Gas specific gravity (G):": 0.6,
     "Specific heat capacity ratio": 1.4,
     "units (SI = 0, standard = 1)": 0.0,
-    "Econ weight (between 0 and 1)": 0.95,
+    "Econ weight (between 0 and 1)": 0.5,
     "Max iterations": 400.0,
     "Tolerance exponent": -3.0,
     "Objective scale exponent": 3.0
@@ -126,8 +126,8 @@
       "from_node": 1,
       "to_node": 5,
       "c_min": 1,
-      "c_max": 2,
-      "max_power": 10000000,
+      "c_max": 1.4,
+      "max_power": 3000000,
       "min_flow": 0,
       "max_flow": 1000
     },
@@ -137,8 +137,8 @@
       "from_node": 2,
       "to_node": 6,
       "c_min": 1,
-      "c_max": 2,
-      "max_power": 10000000,
+      "c_max": 1.35,
+      "max_power": 2000000,
       "min_flow": 0,
       "max_flow": 1000
     }
@@ -219,10 +219,10 @@
     "5": 3
   },
   "disruption": {
-    "node_id": [
-      3
+    "node_id": [],
+    "pipe_id": [
+      4
     ],
-    "pipe_id": [],
     "compressor_id": [],
     "gnode_id": []
   }

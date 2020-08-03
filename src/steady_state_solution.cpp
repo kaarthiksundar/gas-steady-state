@@ -11,45 +11,86 @@ using json = nlohmann::json;
 SteadyStateSolution::SteadyStateSolution(const Data &data,
                                          const SteadyStateData &ssd,
                                          const SteadyStateProblem &ssp,
-                                         const InputParams &ip) {
+                                         const InputParams &ip,
+                                         const ScalingFactors &sf) {
+    _atm_pressure_per_unit = 101325 / sf.get_pressure_scaling();
     auto area_pipe = ssd.get_area_pipe();
     for (auto pipe : data.get_pipes()) {
         auto pipe_id = pipe->get_id();
-        auto pipe_flow = ssp.get_phi_p(pipe_id);
-        _pipe_flow_in.push_back(pipe_flow * area_pipe.get_value(pipe_id));
-        _pipe_flow_out.push_back(pipe_flow * area_pipe.get_value(pipe_id));
-        auto fnode_id = pipe->get_fnode_id();
-        auto tnode_id = pipe->get_tnode_id();
-        _pipe_pressure_in.push_back(ssp.get_rho(fnode_id));
-        _pipe_pressure_out.push_back(ssp.get_rho(tnode_id));
+        double pipe_flow = 0.0;
+        if (std::find(ssd.get_pipe_indexes().begin(),
+                      ssd.get_pipe_indexes().end(),
+                      pipe_id) == ssd.get_pipe_indexes().end()) {
+            double pipe_flow = 0.0;
+            _pipe_flow_in.push_back(0.0);
+            _pipe_flow_out.push_back(0.0);
+            _pipe_pressure_in.push_back(get_atm_pressure_per_unit());
+            _pipe_pressure_out.push_back(get_atm_pressure_per_unit());
+        } else {
+            auto pipe_flow = ssp.get_phi_p(pipe_id);
+            _pipe_flow_in.push_back(pipe_flow * area_pipe.get_value(pipe_id));
+            _pipe_flow_out.push_back(pipe_flow * area_pipe.get_value(pipe_id));
+            auto fnode_id = pipe->get_fnode_id();
+            auto tnode_id = pipe->get_tnode_id();
+            _pipe_pressure_in.push_back(ssp.get_rho(fnode_id));
+            _pipe_pressure_out.push_back(ssp.get_rho(tnode_id));
+        }
     }
 
-    for (auto slack_node_id : data.get_pslack_ids())
-        _slack_flows.push_back(ssp.get_slack_production(slack_node_id));
+    for (auto slack_node_id : data.get_pslack_ids()) {
+        if (std::find(ssd.get_slack_node_indexes().begin(),
+                      ssd.get_slack_node_indexes().end(),
+                      slack_node_id) == ssd.get_slack_node_indexes().end()) {
+            _slack_flows.push_back(0.0);
+        } else {
+            _slack_flows.push_back(ssp.get_slack_production(slack_node_id));
+        }
+    }
 
     auto qbar = ssd.get_qbar();
     auto gbar = ssd.get_gbar();
     for (auto non_slack_node_id : data.get_qbar_ids()) {
-        double val = qbar.get_value(non_slack_node_id);
-        for (auto gnode_id : ssd.get_gnodes_in_node(non_slack_node_id)) {
-            val += ssp.get_d(gnode_id);
-            val -= ssp.get_s(gnode_id);
-            val += gbar.get_value(gnode_id);
+        if (std::find(ssd.get_non_slack_node_indexes().begin(),
+                      ssd.get_non_slack_node_indexes().end(),
+                      non_slack_node_id) ==
+            ssd.get_non_slack_node_indexes().end()) {
+            _non_slack_flows.push_back(0.0);
+        } else {
+            double val = qbar.get_value(non_slack_node_id);
+            for (auto gnode_id : ssd.get_gnodes_in_node(non_slack_node_id)) {
+                val += ssp.get_d(gnode_id);
+                val -= ssp.get_s(gnode_id);
+                val += gbar.get_value(gnode_id);
+            }
+            _non_slack_flows.push_back(val);
         }
-        _non_slack_flows.push_back(val);
     }
 
     auto pslack = ssd.get_pslack();
     for (auto node : data.get_nodes()) {
-        if (node->is_slack())
-            _nodal_pressure.push_back(pslack.get_value(node->get_id()));
-        else
-            _nodal_pressure.push_back(ssp.get_rho(node->get_id()));
+        if (std::find(ssd.get_node_indexes().begin(),
+                      ssd.get_node_indexes().end(),
+                      node->get_id()) == ssd.get_node_indexes().end()) {
+            _nodal_pressure.push_back(get_atm_pressure_per_unit());
+        } else {
+            if (node->is_slack())
+                _nodal_pressure.push_back(pslack.get_value(node->get_id()));
+            else
+                _nodal_pressure.push_back(ssp.get_rho(node->get_id()));
+        }
     }
 
     for (auto gnode : data.get_gnodes()) {
-        _gnode_demand_flows.push_back(ssp.get_d(gnode->get_id()));
-        _gnode_supply_flows.push_back(ssp.get_s(gnode->get_id()));
+        auto gnode_id = gnode->get_id();
+        if (std::find(ssd.get_gnode_indexes().begin(),
+                      ssd.get_gnode_indexes().end(),
+                      gnode_id) == ssd.get_gnode_indexes().end()) {
+            _gnode_demand_flows.push_back(0.0);
+            _gnode_supply_flows.push_back(0.0);
+        } else {
+            _gnode_demand_flows.push_back(ssp.get_d(gnode_id));
+            _gnode_supply_flows.push_back(ssp.get_s(gnode_id));
+        }
     }
 
     auto area_compressor = ssd.get_area_compressor();
@@ -58,36 +99,51 @@ SteadyStateSolution::SteadyStateSolution(const Data &data,
     double Wc =
         286.76 * ip.get_temperature() / ip.get_gas_specific_gravity() / m;
     for (auto compressor : data.get_compressors()) {
-        _comp_ratios.push_back(ssp.get_alpha(compressor->get_id()));
-        _comp_flow_in.push_back(
-            ssp.get_phi_c(compressor->get_id()) *
-            area_compressor.get_value(compressor->get_id()));
-        _comp_flow_out.push_back(
-            ssp.get_phi_c(compressor->get_id()) *
-            area_compressor.get_value(compressor->get_id()));
-        _comp_discharge_pressure.push_back(
-            ssp.get_rho(compressor->get_tnode_id()));
-        _comp_pressure_out.push_back(ssp.get_rho(compressor->get_tnode_id()));
-        if (ssd.get_slack_node_indexes().find(compressor->get_fnode_id()) !=
-            ssd.get_slack_node_indexes().end())
-            _comp_pressure_in.push_back(
-                pslack.get_value(compressor->get_fnode_id()));
-        else
-            _comp_pressure_in.push_back(
-                ssp.get_rho(compressor->get_fnode_id()));
-        /* compressor power calculation */
-        double alpha = ssp.get_alpha(compressor->get_id());
-        double q = ssp.get_phi_c(compressor->get_id());
-        double area = area_compressor.get_value(compressor->get_id());
-        double power_consumption =
-            Wc * (std::pow(alpha, m) - 1) * std::abs(q) * area;
-        _comp_power.push_back(power_consumption);
+        auto compressor_id = compressor->get_id();
+        if (std::find(ssd.get_compressor_indexes().begin(),
+                      ssd.get_compressor_indexes().end(),
+                      compressor_id) == ssd.get_compressor_indexes().end()) {
+            _comp_ratios.push_back(1.0);
+            _comp_flow_in.push_back(0.0);
+            _comp_flow_out.push_back(0.0);
+            _comp_discharge_pressure.push_back(get_atm_pressure_per_unit());
+            _comp_pressure_in.push_back(get_atm_pressure_per_unit());
+            _comp_pressure_out.push_back(get_atm_pressure_per_unit());
+            _comp_power.push_back(0.0);
+        } else {
+            _comp_ratios.push_back(ssp.get_alpha(compressor_id));
+            _comp_flow_in.push_back(ssp.get_phi_c(compressor_id) *
+                                    area_compressor.get_value(compressor_id));
+            _comp_flow_out.push_back(ssp.get_phi_c(compressor_id) *
+                                     area_compressor.get_value(compressor_id));
+            _comp_discharge_pressure.push_back(
+                ssp.get_rho(compressor->get_tnode_id()));
+            _comp_pressure_out.push_back(
+                ssp.get_rho(compressor->get_tnode_id()));
+            if (ssd.get_slack_node_indexes().find(compressor->get_fnode_id()) !=
+                ssd.get_slack_node_indexes().end())
+                _comp_pressure_in.push_back(
+                    pslack.get_value(compressor->get_fnode_id()));
+            else
+                _comp_pressure_in.push_back(
+                    ssp.get_rho(compressor->get_fnode_id()));
+            /* compressor power calculation */
+            double alpha = ssp.get_alpha(compressor_id);
+            double q = ssp.get_phi_c(compressor_id);
+            double area = area_compressor.get_value(compressor_id);
+            double power_consumption =
+                Wc * (std::pow(alpha, m) - 1) * std::abs(q) * area;
+            _comp_power.push_back(power_consumption);
+        }
     }
     _si = false;
     _standard = false;
     _per_unit = true;
 };
 
+const double SteadyStateSolution::get_atm_pressure_per_unit() const {
+    return _atm_pressure_per_unit;
+};
 const std::vector<double> &SteadyStateSolution::get_pipe_flow_in() const {
     return _pipe_flow_in;
 };
