@@ -777,12 +777,15 @@ DisruptionData::DisruptionData(const DisruptionData &&dd)
     : _pipe_ids(std::move(dd._pipe_ids)), _node_ids(std::move(dd._node_ids)),
       _compressor_ids(std::move(dd._compressor_ids)),
       _gnode_ids(std::move(dd._gnode_ids)),
-      _fnode_ids_of_pipe(std::move(dd._fnode_ids_of_pipe)),
-      _tnode_ids_of_pipe(std::move(dd._tnode_ids_of_pipe)),
+      _fnode_id_of_pipe(std::move(dd._fnode_id_of_pipe)),
+      _tnode_id_of_pipe(std::move(dd._tnode_id_of_pipe)),
+      _fnode_id_of_compressor(std::move(dd._fnode_id_of_compressor)),
+      _tnode_id_of_compressor(std::move(dd._tnode_id_of_compressor)),
       _in_pipe_ids_of_node(std::move(dd._in_pipe_ids_of_node)),
       _out_pipe_ids_of_node(std::move(dd._out_pipe_ids_of_node)),
       _in_compressor_ids_of_node(std::move(dd._in_compressor_ids_of_node)),
-      _out_compressor_ids_of_node(std::move(dd._out_compressor_ids_of_node)){};
+      _out_compressor_ids_of_node(std::move(dd._out_compressor_ids_of_node)),
+      _gnodes_of_node(std::move(dd._gnodes_of_node)){};
 
 Data::Data(std::string data_path, std::string case_name,
            std::string data_format, int units)
@@ -953,13 +956,17 @@ const std::vector<int> &DisruptionData::get_disrupted_compressor_ids() const {
 const std::vector<int> &DisruptionData::get_disruption_gnode_ids() const {
     return _gnode_ids;
 };
-const int &
-DisruptionData::get_fnode_ids_of_disrupted_pipe(int i) const {
-    return _fnode_ids_of_pipe.at(i);
+const int &DisruptionData::get_fnode_id_of_disrupted_pipe(int i) const {
+    return _fnode_id_of_pipe.at(i);
 };
-const int &
-DisruptionData::get_tnode_ids_of_disrupted_pipe(int i) const {
-    return _tnode_ids_of_pipe.at(i);
+const int &DisruptionData::get_tnode_id_of_disrupted_pipe(int i) const {
+    return _tnode_id_of_pipe.at(i);
+};
+const int &DisruptionData::get_fnode_id_of_disrupted_compressor(int i) const {
+    return _fnode_id_of_compressor.at(i);
+};
+const int &DisruptionData::get_tnode_id_of_disrupted_compressor(int i) const {
+    return _tnode_id_of_compressor.at(i);
 };
 const std::set<int> &
 DisruptionData::get_in_pipe_ids_of_disrupted_node(int i) const {
@@ -976,6 +983,9 @@ DisruptionData::get_in_compressor_ids_of_disrupted_node(int i) const {
 const std::set<int> &
 DisruptionData::get_out_compressor_ids_of_disrupted_node(int i) const {
     return _out_compressor_ids_of_node.at(i);
+};
+const std::set<int> &DisruptionData::get_gnodes_of_node(int i) const {
+    return _gnodes_of_node.at(i);
 };
 
 double Data::get_slack_pmin() const {
@@ -1025,40 +1035,61 @@ void Data::fix_parameter_ordering() {
     }
 };
 
-void Data::populate_dependent_disruptions(){
+void Data::populate_dependent_disruptions() {
     for (auto id : _pipe_ids) {
-        _fnode_ids_of_pipe[id] = 0;
-        _tnode_ids_of_pipe[id] = 0;
+        _fnode_id_of_pipe[id] = 0;
+        _tnode_id_of_pipe[id] = 0;
     }
-    for (auto id: _node_ids) {
+    for (auto id : _compressor_ids) {
+        _fnode_id_of_compressor[id] = 0;
+        _tnode_id_of_compressor[id] = 0;
+    }
+    for (auto id : _node_ids) {
         _in_pipe_ids_of_node[id] = {};
         _out_pipe_ids_of_node[id] = {};
         _in_compressor_ids_of_node[id] = {};
         _out_compressor_ids_of_node[id] = {};
+        _gnodes_of_node[id] = {};
     }
     for (auto pipe : get_pipes()) {
         int pipe_id = pipe->get_id();
         int fnode_id = pipe->get_fnode_id();
         int tnode_id = pipe->get_tnode_id();
-        if (std::find(_pipe_ids.begin(), _pipe_ids.end(), pipe_id) != _pipe_ids.end()) {
-            _fnode_ids_of_pipe[pipe_id] = fnode_id;
-            _tnode_ids_of_pipe[pipe_id] = tnode_id;
+        if (std::find(_pipe_ids.begin(), _pipe_ids.end(), pipe_id) !=
+            _pipe_ids.end()) {
+            _fnode_id_of_pipe[pipe_id] = fnode_id;
+            _tnode_id_of_pipe[pipe_id] = tnode_id;
         }
-        if (std::find(_node_ids.begin(), _node_ids.end(), fnode_id) != _node_ids.end())
+        if (std::find(_node_ids.begin(), _node_ids.end(), fnode_id) !=
+            _node_ids.end())
             _out_pipe_ids_of_node[fnode_id].insert(pipe_id);
-        if (std::find(_node_ids.begin(), _node_ids.end(), tnode_id) != _node_ids.end())
+        if (std::find(_node_ids.begin(), _node_ids.end(), tnode_id) !=
+            _node_ids.end())
             _in_pipe_ids_of_node[tnode_id].insert(pipe_id);
     }
     for (auto compressor : get_compressors()) {
         int compressor_id = compressor->get_id();
         int fnode_id = compressor->get_fnode_id();
         int tnode_id = compressor->get_tnode_id();
-        if (std::find(_node_ids.begin(), _node_ids.end(), fnode_id) != _node_ids.end())
+        if (std::find(_compressor_ids.begin(), _compressor_ids.end(),
+                      compressor_id) != _compressor_ids.end()) {
+            _fnode_id_of_compressor[compressor_id] = fnode_id;
+            _tnode_id_of_compressor[compressor_id] = tnode_id;
+        }
+        if (std::find(_node_ids.begin(), _node_ids.end(), fnode_id) !=
+            _node_ids.end())
             _out_compressor_ids_of_node[fnode_id].insert(compressor_id);
-        if (std::find(_node_ids.begin(), _node_ids.end(), tnode_id) != _node_ids.end())
+        if (std::find(_node_ids.begin(), _node_ids.end(), tnode_id) !=
+            _node_ids.end())
             _in_compressor_ids_of_node[tnode_id].insert(compressor_id);
     }
-    
+    for (auto gnode : get_gnodes()) {
+        int gnode_id = gnode->get_id();
+        int node_id = gnode->get_node_id();
+        if (std::find(_node_ids.begin(), _node_ids.end(), node_id) !=
+            _node_ids.end())
+            _gnodes_of_node[node_id].insert(gnode_id);
+    }
 };
 
 void Data::make_si(const ConversionFactors &cf, const ScalingFactors &sf) {

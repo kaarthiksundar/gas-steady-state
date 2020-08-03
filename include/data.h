@@ -118,12 +118,14 @@ class DisruptionData {
     std::vector<int> _node_ids;
     std::vector<int> _compressor_ids;
     std::vector<int> _gnode_ids;
-    std::unordered_map<int, int> _fnode_ids_of_pipe,
-        _tnode_ids_of_pipe;
+    std::unordered_map<int, int> _fnode_id_of_pipe, _tnode_id_of_pipe;
+    std::unordered_map<int, int> _fnode_id_of_compressor,
+        _tnode_id_of_compressor;
     std::unordered_map<int, std::set<int>> _in_pipe_ids_of_node,
         _out_pipe_ids_of_node;
     std::unordered_map<int, std::set<int>> _in_compressor_ids_of_node,
         _out_compressor_ids_of_node;
+    std::unordered_map<int, std::set<int>> _gnodes_of_node;
 
     void populate_disrupted_pipes(std::string data_path, std::string case_name,
                                   std::string data_format);
@@ -144,12 +146,15 @@ class DisruptionData {
     const std::vector<int> &get_disrupted_node_ids() const;
     const std::vector<int> &get_disrupted_compressor_ids() const;
     const std::vector<int> &get_disruption_gnode_ids() const;
-    const int &get_fnode_ids_of_disrupted_pipe(int) const;
-    const int &get_tnode_ids_of_disrupted_pipe(int) const;
+    const int &get_fnode_id_of_disrupted_pipe(int) const;
+    const int &get_tnode_id_of_disrupted_pipe(int) const;
+    const int &get_fnode_id_of_disrupted_compressor(int) const;
+    const int &get_tnode_id_of_disrupted_compressor(int) const;
     const std::set<int> &get_in_pipe_ids_of_disrupted_node(int) const;
     const std::set<int> &get_out_pipe_ids_of_disrupted_node(int) const;
     const std::set<int> &get_in_compressor_ids_of_disrupted_node(int) const;
     const std::set<int> &get_out_compressor_ids_of_disrupted_node(int) const;
+    const std::set<int> &get_gnodes_of_node(int) const;
 };
 
 class Data : public ComponentData, public ParameterData, public DisruptionData {

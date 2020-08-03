@@ -148,12 +148,12 @@ void SteadyStateData::populate_parameters(const Data &data,
     auto disrupted_gnode_ids = data.get_disruption_gnode_ids();
     for (size_t i = 0; i < data.get_gnodes().size(); ++i) {
         auto gnode_index = data.get_gnodes().at(i)->get_id();
-        if (find(disrupted_gnode_ids.begin(), disrupted_gnode_ids.end(), gnode_index) != disrupted_gnode_ids.end()) {
+        if (find(disrupted_gnode_ids.begin(), disrupted_gnode_ids.end(),
+                 gnode_index) != disrupted_gnode_ids.end()) {
             _gbar.set_value(gnode_index, data.get_gbar().at(i));
             _smax.set_value(gnode_index, data.get_smax().at(i));
             _dmax.set_value(gnode_index, data.get_dmax().at(i));
-        }
-        else {
+        } else {
             _gbar.set_value(gnode_index, 0.0);
             _smax.set_value(gnode_index, 0.0);
             _dmax.set_value(gnode_index, 0.0);
@@ -228,11 +228,12 @@ void SteadyStateData::populate_parameters(const Data &data,
     auto disrupted_compressor_ids = data.get_disrupted_compressor_ids();
     for (auto compressor : data.get_compressors()) {
         auto compressor_index = compressor->get_id();
-        if (std::find(disrupted_compressor_ids.begin(), disrupted_compressor_ids.end(), compressor_index) != disrupted_compressor_ids.end()) {
+        if (std::find(disrupted_compressor_ids.begin(),
+                      disrupted_compressor_ids.end(),
+                      compressor_index) != disrupted_compressor_ids.end()) {
             _c_ratio_min.set_value(compressor_index, compressor->get_cmin());
             _c_ratio_max.set_value(compressor_index, compressor->get_cmax());
-        }
-        else {
+        } else {
             _c_ratio_min.set_value(compressor_index, 1.0);
             _c_ratio_max.set_value(compressor_index, 1.0);
         }
@@ -259,6 +260,28 @@ void SteadyStateData::populate_parameters(const Data &data,
 };
 
 void SteadyStateData::populate_indices(const Data &data) {
+    auto disrupted_node_ids = data.get_disrupted_node_ids();
+    auto disrupted_pipe_ids = data.get_disrupted_pipe_ids();
+    auto disrupted_compressor_ids = data.get_disrupted_compressor_ids();
+    auto disrupted_gnode_ids = data.get_disrupted_compressor_ids();
+    std::set<int> disrupted_dependent_pipe_ids = {};
+    std::set<int> disrupted_dependent_compressor_ids = {};
+    std::set<int> disrupted_dependent_gnode_ids {};
+    for (auto node_id : disrupted_node_ids) {
+        auto in_pipe_ids = data.get_in_pipe_ids_of_disrupted_node(node_id);
+        auto out_pipe_ids = data.get_out_pipe_ids_of_disrupted_node(node_id);
+        disrupted_dependent_pipe_ids.insert(in_pipe_ids.begin(), in_pipe_ids.end());
+        disrupted_dependent_pipe_ids.insert(out_pipe_ids.begin(), out_pipe_ids.end());
+        auto in_compressor_ids =
+            data.get_in_compressor_ids_of_disrupted_node(node_id);
+        auto out_compressor_ids =
+            data.get_out_compressor_ids_of_disrupted_node(node_id);
+        disrupted_dependent_compressor_ids.insert(in_compressor_ids.begin(), in_compressor_ids.end());
+        disrupted_dependent_compressor_ids.insert(out_compressor_ids.begin(), out_compressor_ids.end());
+        auto gnode_ids = data.get_gnodes_of_node(node_id);
+        disrupted_dependent_gnode_ids.insert(gnode_ids.begin(), gnode_ids.end());
+    }
+
     for (auto node : data.get_nodes()) {
         auto node_index = node->get_id();
         _nodes.insert(node_index);
@@ -275,6 +298,7 @@ void SteadyStateData::populate_indices(const Data &data) {
 
     for (auto pipe : data.get_pipes()) {
         auto pipe_index = pipe->get_id();
+
         _pipes.insert(pipe_index);
         auto fnode_index = pipe->get_fnode_id();
         auto tnode_index = pipe->get_tnode_id();
