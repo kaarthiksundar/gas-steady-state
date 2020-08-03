@@ -117,6 +117,27 @@ const Indices &SteadyStateData::get_in_compressor_indexes_in_node(int i) const {
 const Indices &SteadyStateData::get_gnodes_in_node(int i) const {
     return _gnodes_in_node.at(i);
 };
+const Indices &SteadyStateData::get_disrupted_nodes() const {
+    return _disrupted_nodes;
+};
+const Indices &SteadyStateData::get_disrupted_pipes() const {
+    return _disrupted_pipes;
+};
+const Indices &SteadyStateData::get_disrupted_compressors() const {
+    return _disrupted_compressors;
+};
+const Indices &SteadyStateData::get_disrupted_gnodes() const {
+    return _disrupted_gnodes;
+};
+const Indices &SteadyStateData::get_dependent_disrupted_pipes() const {
+    return _dependent_distrupted_pipes;
+};
+const Indices &SteadyStateData::get_dependent_disrupted_compressors() const {
+    return _dependent_disrupted_compressors;
+};
+const Indices &SteadyStateData::get_dependent_disrupted_gnodes() const {
+    return _dependent_disrupted_gnodes;
+};
 int SteadyStateData::get_fnode_index_of_pipe(int i) const {
     return _fnode_of_pipe.at(i);
 };

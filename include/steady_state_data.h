@@ -34,6 +34,14 @@ class SteadyStateData {
     std::unordered_map<int, Indices> _gnodes_in_node;
     std::unordered_map<int, int> _fnode_of_pipe, _tnode_of_pipe;
     std::unordered_map<int, int> _fnode_of_compressor, _tnode_of_compressor;
+    /* disruption information */
+    Indices _disrupted_nodes;
+    Indices _disrupted_pipes;
+    Indices _disrupted_compressors;
+    Indices _disrupted_gnodes;
+    Indices _dependent_distrupted_pipes;
+    Indices _dependent_disrupted_compressors;
+    Indices _dependent_disrupted_gnodes;
 
   public:
     SteadyStateData(const Data &data, const ScalingFactors &sf);
@@ -75,6 +83,13 @@ class SteadyStateData {
     const Indices &get_out_compressor_indexes_in_node(int i) const;
     const Indices &get_in_compressor_indexes_in_node(int i) const;
     const Indices &get_gnodes_in_node(int i) const;
+    const Indices &get_disrupted_nodes() const;
+    const Indices &get_disrupted_pipes() const;
+    const Indices &get_disrupted_compressors() const;
+    const Indices &get_disrupted_gnodes() const;
+    const Indices &get_dependent_disrupted_pipes() const;
+    const Indices &get_dependent_disrupted_compressors() const;
+    const Indices &get_dependent_disrupted_gnodes() const;
     int get_fnode_index_of_pipe(int i) const;
     int get_tnode_index_of_pipe(int i) const;
     int get_fnode_index_of_compressor(int i) const;
