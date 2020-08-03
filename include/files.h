@@ -25,6 +25,11 @@ struct InputFilenames {
 
     const static std::string nonslack_physical_baseline_withdrawals;
     const static std::string gnodes_baseline_consumer_withdrawals;
+
+    const static std::string disruption_pipes;
+    const static std::string disruption_nodes;
+    const static std::string disruption_compressors;
+    const static std::string disruption_gnodes;
 };
 
 struct OutputFilenames {

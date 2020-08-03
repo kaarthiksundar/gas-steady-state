@@ -6,7 +6,9 @@
 #include <components.h>
 #include <conversions.h>
 #include <memory>
+#include <set>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 class ComponentData {
@@ -110,7 +112,47 @@ class ParameterData {
                                   const ScalingFactors &);
 };
 
-class Data : public ComponentData, public ParameterData {
+class DisruptionData {
+  protected:
+    std::vector<int> _pipe_ids;
+    std::vector<int> _node_ids;
+    std::vector<int> _compressor_ids;
+    std::vector<int> _gnode_ids;
+    std::unordered_map<int, int> _fnode_ids_of_pipe,
+        _tnode_ids_of_pipe;
+    std::unordered_map<int, std::set<int>> _in_pipe_ids_of_node,
+        _out_pipe_ids_of_node;
+    std::unordered_map<int, std::set<int>> _in_compressor_ids_of_node,
+        _out_compressor_ids_of_node;
+
+    void populate_disrupted_pipes(std::string data_path, std::string case_name,
+                                  std::string data_format);
+    void populate_disrupted_nodes(std::string data_path, std::string case_name,
+                                  std::string data_format);
+    void populate_disrupted_compressors(std::string data_path,
+                                        std::string case_name,
+                                        std::string data_format);
+    void populate_disrupted_gnodes(std::string data_path, std::string case_name,
+                                   std::string data_format);
+
+  public:
+    DisruptionData(std::string data_path, std::string case_name,
+                   std::string data_format);
+    DisruptionData(const DisruptionData &&);
+
+    const std::vector<int> &get_disrupted_pipe_ids() const;
+    const std::vector<int> &get_disrupted_node_ids() const;
+    const std::vector<int> &get_disrupted_compressor_ids() const;
+    const std::vector<int> &get_disruption_gnode_ids() const;
+    const int &get_fnode_ids_of_disrupted_pipe(int) const;
+    const int &get_tnode_ids_of_disrupted_pipe(int) const;
+    const std::set<int> &get_in_pipe_ids_of_disrupted_node(int) const;
+    const std::set<int> &get_out_pipe_ids_of_disrupted_node(int) const;
+    const std::set<int> &get_in_compressor_ids_of_disrupted_node(int) const;
+    const std::set<int> &get_out_compressor_ids_of_disrupted_node(int) const;
+};
+
+class Data : public ComponentData, public ParameterData, public DisruptionData {
   public:
     Data(std::string data_path, std::string case_name, std::string data_format,
          int units);
@@ -124,6 +166,7 @@ class Data : public ComponentData, public ParameterData {
 
   private:
     void fix_parameter_ordering();
+    void populate_dependent_disruptions();
 };
 
 #endif

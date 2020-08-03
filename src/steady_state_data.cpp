@@ -145,11 +145,19 @@ void SteadyStateData::populate_parameters(const Data &data,
     _dmax.in(_gnodes);
     _cs.in(_gnodes);
     _cd.in(_gnodes);
+    auto disrupted_gnode_ids = data.get_disruption_gnode_ids();
     for (size_t i = 0; i < data.get_gnodes().size(); ++i) {
         auto gnode_index = data.get_gnodes().at(i)->get_id();
-        _gbar.set_value(gnode_index, data.get_gbar().at(i));
-        _smax.set_value(gnode_index, data.get_smax().at(i));
-        _dmax.set_value(gnode_index, data.get_dmax().at(i));
+        if (find(disrupted_gnode_ids.begin(), disrupted_gnode_ids.end(), gnode_index) != disrupted_gnode_ids.end()) {
+            _gbar.set_value(gnode_index, data.get_gbar().at(i));
+            _smax.set_value(gnode_index, data.get_smax().at(i));
+            _dmax.set_value(gnode_index, data.get_dmax().at(i));
+        }
+        else {
+            _gbar.set_value(gnode_index, 0.0);
+            _smax.set_value(gnode_index, 0.0);
+            _dmax.set_value(gnode_index, 0.0);
+        }
         _cs.set_value(gnode_index, data.get_cs().at(i));
         _cd.set_value(gnode_index, data.get_cd().at(i));
     }
@@ -217,10 +225,17 @@ void SteadyStateData::populate_parameters(const Data &data,
     _area_compressor.in(_compressors);
     _resistance_compressor.in(_compressors);
     _power_max_compressor.in(_compressors);
+    auto disrupted_compressor_ids = data.get_disrupted_compressor_ids();
     for (auto compressor : data.get_compressors()) {
         auto compressor_index = compressor->get_id();
-        _c_ratio_min.set_value(compressor_index, compressor->get_cmin());
-        _c_ratio_max.set_value(compressor_index, compressor->get_cmax());
+        if (std::find(disrupted_compressor_ids.begin(), disrupted_compressor_ids.end(), compressor_index) != disrupted_compressor_ids.end()) {
+            _c_ratio_min.set_value(compressor_index, compressor->get_cmin());
+            _c_ratio_max.set_value(compressor_index, compressor->get_cmax());
+        }
+        else {
+            _c_ratio_min.set_value(compressor_index, 1.0);
+            _c_ratio_max.set_value(compressor_index, 1.0);
+        }
         _length_compressor.set_value(compressor_index,
                                      compressor->get_length());
         _diameter_compressor.set_value(compressor_index,

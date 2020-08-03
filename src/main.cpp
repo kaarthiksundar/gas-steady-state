@@ -14,13 +14,12 @@ int main(int argc, char *argv[]) {
 
     /* creating command line options */
     op::OptionParser opt;
-    opt.add_option("h", "help", "shows option help"); 
-    opt.add_option("n", "case_name", "case name", "model6ss_test_0");
+    opt.add_option("h", "help", "shows option help");
+    opt.add_option("n", "case_name", "case name", "model6ss_test_0_dis_1");
     opt.add_option("p", "case_path", "case file path", "../../data/");
     opt.add_option("o", "output_path", "output folder path", "../../output/");
     opt.add_option("f", "data_format", "data format (csv/json)", "json");
 
-    
     /* parse options */
     bool correct_parsing = opt.parse_options(argc, argv);
 
@@ -29,9 +28,9 @@ int main(int argc, char *argv[]) {
     }
 
     bool has_help = op::str2bool(opt["h"]);
-    if (has_help) { 
-        opt.show_help(); 
-        std::exit(0); 
+    if (has_help) {
+        opt.show_help();
+        std::exit(0);
     }
 
     if (opt["f"] != "csv" && opt["f"] != "json") {
@@ -97,24 +96,28 @@ int main(int argc, char *argv[]) {
             std::exit(0);
         }
     }
-    
-    std::cout << "*** Reading the input parameters and network data " << std::endl;
+
+    std::cout << "*** Reading the input parameters and network data "
+              << std::endl;
     InputParams ip = build_input_params(opt["p"], opt["n"], opt["f"]);
     ConversionFactors cf(ip);
-    Data data(opt["p"], opt["n"], opt["f"], ip.get_units()); 
+    Data data(opt["p"], opt["n"], opt["f"], ip.get_units());
     ScalingFactors sf = build_scaling_factors(data.get_slack_pmin(), cf);
     data.make_per_unit(cf, sf);
-    std::cout << "*** All data read successfully and converted to per unit " << std::endl;
+    std::cout << "*** All data read successfully and converted to per unit "
+              << std::endl;
     data.print_summary();
-    
+
     SteadyStateData ssd(data, sf);
-    std::cout << "*** Parameters required for formulating steady state model created " << std::endl;
+    std::cout
+        << "*** Parameters required for formulating steady state model created "
+        << std::endl;
     SteadyStateProblem ssp("Steady State NLP model", ssd);
     ssp.add_variables();
     ssp.add_constraints(ip);
     ssp.add_objective(ip);
     std::cout << "*** Steady state model created " << std::endl;
-    
+
     solve_model(&ssp.get_model(), ip);
     std::cout << "*** Steady state model solved " << std::endl;
     ssp.populate_solution();
@@ -123,11 +126,13 @@ int main(int argc, char *argv[]) {
         sss.make_si(cf, sf);
     else
         sss.make_standard(cf, sf);
-    std::cout << "*** Steady state solution data structures populated " << std::endl;
+    std::cout << "*** Steady state solution data structures populated "
+              << std::endl;
 
     sss.write_output(data, ip, opt["o"], opt["n"], opt["f"]);
-    
-    std::cout << "*** Solution files saved in folder : " << opt["o"] << std::endl;
-    
+
+    std::cout << "*** Solution files saved in folder : " << opt["o"]
+              << std::endl;
+
     return 0;
 }

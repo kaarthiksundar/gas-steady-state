@@ -220,9 +220,7 @@
   },
   "disruption": {
     "node_id": [
-      3,
-      4,
-      5
+      3
     ],
     "pipe_id": [],
     "compressor_id": [],

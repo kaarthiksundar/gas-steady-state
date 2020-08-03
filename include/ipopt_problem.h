@@ -16,7 +16,7 @@ class GasNLP : public TNLP {
   public:
     /** Default constructor */
     GasNLP(Model *);
-    
+
     /** Default destructor */
     virtual ~GasNLP();
 
@@ -93,5 +93,5 @@ class GasNLP : public TNLP {
     //@}
 };
 
-void solve_model(Model * model, const InputParams & ip);
-#endif 
+void solve_model(Model *model, const InputParams &ip);
+#endif

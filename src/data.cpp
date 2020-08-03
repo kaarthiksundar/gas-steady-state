@@ -765,11 +765,217 @@ void ParameterData::make_parameters_si(const ConversionFactors &cf,
     _standard = false;
 };
 
+DisruptionData::DisruptionData(std::string data_path, std::string case_name,
+                               std::string data_format) {
+    populate_disrupted_pipes(data_path, case_name, data_format);
+    populate_disrupted_nodes(data_path, case_name, data_format);
+    populate_disrupted_compressors(data_path, case_name, data_format);
+    populate_disrupted_gnodes(data_path, case_name, data_format);
+};
+
+DisruptionData::DisruptionData(const DisruptionData &&dd)
+    : _pipe_ids(std::move(dd._pipe_ids)), _node_ids(std::move(dd._node_ids)),
+      _compressor_ids(std::move(dd._compressor_ids)),
+      _gnode_ids(std::move(dd._gnode_ids)),
+      _fnode_ids_of_pipe(std::move(dd._fnode_ids_of_pipe)),
+      _tnode_ids_of_pipe(std::move(dd._tnode_ids_of_pipe)),
+      _in_pipe_ids_of_node(std::move(dd._in_pipe_ids_of_node)),
+      _out_pipe_ids_of_node(std::move(dd._out_pipe_ids_of_node)),
+      _in_compressor_ids_of_node(std::move(dd._in_compressor_ids_of_node)),
+      _out_compressor_ids_of_node(std::move(dd._out_compressor_ids_of_node)){};
+
 Data::Data(std::string data_path, std::string case_name,
            std::string data_format, int units)
     : ComponentData(data_path, case_name, data_format, units),
-      ParameterData(data_path, case_name, data_format, units) {
+      ParameterData(data_path, case_name, data_format, units),
+      DisruptionData(data_path, case_name, data_format) {
     this->fix_parameter_ordering();
+    this->populate_dependent_disruptions();
+};
+
+void DisruptionData::populate_disrupted_pipes(std::string data_path,
+                                              std::string case_name,
+                                              std::string data_format) {
+    std::string path;
+    std::string filename;
+    /* adjusting the path and file according for the data format provided */
+    if (data_format == "csv") {
+        path = data_path + case_name + "/";
+        filename = "";
+    } else {
+        path = data_path + case_name;
+        filename = path + ".json";
+    }
+    if (data_format == "csv") {
+        std::ifstream file(path + InputFilenames::disruption_pipes);
+        if (file.good()) {
+            _pipe_ids = std::vector<int>();
+        } else {
+            _pipe_ids = std::vector<int>();
+            io::CSVReader<1> in(path + InputFilenames::disruption_pipes);
+            in.read_header(io::ignore_extra_column, "pipe_id");
+            int id;
+            while (in.read_row(id))
+                _pipe_ids.push_back(id);
+        }
+    } else {
+        _pipe_ids = std::vector<int>();
+        std::ifstream in(filename);
+        json json_stream;
+        in >> json_stream;
+        auto pipe_ids = json_stream["disruption"]["pipe_id"];
+        for (auto &element : pipe_ids.items())
+            _pipe_ids.push_back(element.value());
+        in.close();
+    }
+};
+
+void DisruptionData::populate_disrupted_nodes(std::string data_path,
+                                              std::string case_name,
+                                              std::string data_format) {
+    std::string path;
+    std::string filename;
+    /* adjusting the path and file according for the data format provided */
+    if (data_format == "csv") {
+        path = data_path + case_name + "/";
+        filename = "";
+    } else {
+        path = data_path + case_name;
+        filename = path + ".json";
+    }
+    if (data_format == "csv") {
+        std::ifstream file(path + InputFilenames::disruption_nodes);
+        if (file.good()) {
+            _node_ids = std::vector<int>();
+        } else {
+            _node_ids = std::vector<int>();
+            io::CSVReader<1> in(path + InputFilenames::disruption_nodes);
+            in.read_header(io::ignore_extra_column, "node_id");
+            int id;
+            while (in.read_row(id))
+                _node_ids.push_back(id);
+        }
+    } else {
+        _node_ids = std::vector<int>();
+        std::ifstream in(filename);
+        json json_stream;
+        in >> json_stream;
+        auto node_ids = json_stream["disruption"]["node_id"];
+        for (auto &element : node_ids.items())
+            _node_ids.push_back(element.value());
+        in.close();
+    }
+};
+
+void DisruptionData::populate_disrupted_compressors(std::string data_path,
+                                                    std::string case_name,
+                                                    std::string data_format) {
+    std::string path;
+    std::string filename;
+    /* adjusting the path and file according for the data format provided */
+    if (data_format == "csv") {
+        path = data_path + case_name + "/";
+        filename = "";
+    } else {
+        path = data_path + case_name;
+        filename = path + ".json";
+    }
+    if (data_format == "csv") {
+        std::ifstream file(path + InputFilenames::disruption_compressors);
+        if (file.good()) {
+            _compressor_ids = std::vector<int>();
+        } else {
+            _compressor_ids = std::vector<int>();
+            io::CSVReader<1> in(path + InputFilenames::disruption_compressors);
+            in.read_header(io::ignore_extra_column, "compressor_id");
+            int id;
+            while (in.read_row(id))
+                _compressor_ids.push_back(id);
+        }
+    } else {
+        _compressor_ids = std::vector<int>();
+        std::ifstream in(filename);
+        json json_stream;
+        in >> json_stream;
+        auto compressor_ids = json_stream["disruption"]["compressor_id"];
+        for (auto &element : compressor_ids.items())
+            _compressor_ids.push_back(element.value());
+        in.close();
+    }
+};
+
+void DisruptionData::populate_disrupted_gnodes(std::string data_path,
+                                               std::string case_name,
+                                               std::string data_format) {
+    std::string path;
+    std::string filename;
+    /* adjusting the path and file according for the data format provided */
+    if (data_format == "csv") {
+        path = data_path + case_name + "/";
+        filename = "";
+    } else {
+        path = data_path + case_name;
+        filename = path + ".json";
+    }
+    if (data_format == "csv") {
+        std::ifstream file(path + InputFilenames::disruption_gnodes);
+        if (file.good()) {
+            _gnode_ids = std::vector<int>();
+        } else {
+            _gnode_ids = std::vector<int>();
+            io::CSVReader<1> in(path + InputFilenames::disruption_gnodes);
+            in.read_header(io::ignore_extra_column, "gnode_id");
+            int id;
+            while (in.read_row(id))
+                _gnode_ids.push_back(id);
+        }
+    } else {
+        _gnode_ids = std::vector<int>();
+        std::ifstream in(filename);
+        json json_stream;
+        in >> json_stream;
+        auto gnode_ids = json_stream["disruption"]["gnode_id"];
+        for (auto &element : gnode_ids.items())
+            _gnode_ids.push_back(element.value());
+        in.close();
+    }
+};
+
+const std::vector<int> &DisruptionData::get_disrupted_pipe_ids() const {
+    return _pipe_ids;
+};
+const std::vector<int> &DisruptionData::get_disrupted_node_ids() const {
+    return _node_ids;
+};
+const std::vector<int> &DisruptionData::get_disrupted_compressor_ids() const {
+    return _compressor_ids;
+};
+const std::vector<int> &DisruptionData::get_disruption_gnode_ids() const {
+    return _gnode_ids;
+};
+const int &
+DisruptionData::get_fnode_ids_of_disrupted_pipe(int i) const {
+    return _fnode_ids_of_pipe.at(i);
+};
+const int &
+DisruptionData::get_tnode_ids_of_disrupted_pipe(int i) const {
+    return _tnode_ids_of_pipe.at(i);
+};
+const std::set<int> &
+DisruptionData::get_in_pipe_ids_of_disrupted_node(int i) const {
+    return _in_pipe_ids_of_node.at(i);
+};
+const std::set<int> &
+DisruptionData::get_out_pipe_ids_of_disrupted_node(int i) const {
+    return _out_pipe_ids_of_node.at(i);
+};
+const std::set<int> &
+DisruptionData::get_in_compressor_ids_of_disrupted_node(int i) const {
+    return _in_compressor_ids_of_node.at(i);
+};
+const std::set<int> &
+DisruptionData::get_out_compressor_ids_of_disrupted_node(int i) const {
+    return _out_compressor_ids_of_node.at(i);
 };
 
 double Data::get_slack_pmin() const {
@@ -817,6 +1023,42 @@ void Data::fix_parameter_ordering() {
         _cs.push_back(cs.at(gnode_id));
         _cd.push_back(cd.at(gnode_id));
     }
+};
+
+void Data::populate_dependent_disruptions(){
+    for (auto id : _pipe_ids) {
+        _fnode_ids_of_pipe[id] = 0;
+        _tnode_ids_of_pipe[id] = 0;
+    }
+    for (auto id: _node_ids) {
+        _in_pipe_ids_of_node[id] = {};
+        _out_pipe_ids_of_node[id] = {};
+        _in_compressor_ids_of_node[id] = {};
+        _out_compressor_ids_of_node[id] = {};
+    }
+    for (auto pipe : get_pipes()) {
+        int pipe_id = pipe->get_id();
+        int fnode_id = pipe->get_fnode_id();
+        int tnode_id = pipe->get_tnode_id();
+        if (std::find(_pipe_ids.begin(), _pipe_ids.end(), pipe_id) != _pipe_ids.end()) {
+            _fnode_ids_of_pipe[pipe_id] = fnode_id;
+            _tnode_ids_of_pipe[pipe_id] = tnode_id;
+        }
+        if (std::find(_node_ids.begin(), _node_ids.end(), fnode_id) != _node_ids.end())
+            _out_pipe_ids_of_node[fnode_id].insert(pipe_id);
+        if (std::find(_node_ids.begin(), _node_ids.end(), tnode_id) != _node_ids.end())
+            _in_pipe_ids_of_node[tnode_id].insert(pipe_id);
+    }
+    for (auto compressor : get_compressors()) {
+        int compressor_id = compressor->get_id();
+        int fnode_id = compressor->get_fnode_id();
+        int tnode_id = compressor->get_tnode_id();
+        if (std::find(_node_ids.begin(), _node_ids.end(), fnode_id) != _node_ids.end())
+            _out_compressor_ids_of_node[fnode_id].insert(compressor_id);
+        if (std::find(_node_ids.begin(), _node_ids.end(), tnode_id) != _node_ids.end())
+            _in_compressor_ids_of_node[tnode_id].insert(compressor_id);
+    }
+    
 };
 
 void Data::make_si(const ConversionFactors &cf, const ScalingFactors &sf) {

@@ -25,6 +25,15 @@ const std::string InputFilenames::nonslack_physical_baseline_withdrawals =
 const std::string InputFilenames::gnodes_baseline_consumer_withdrawals =
     "input_int_gbar.csv";
 
+const std::string InputFilenames::disruption_pipes =
+    "input_network_pipesout.csv";
+const std::string InputFilenames::disruption_nodes =
+    "input_network_nodesout.csv";
+const std::string InputFilenames::disruption_compressors =
+    "input_network_compressorsout.csv";
+const std::string InputFilenames::disruption_gnodes =
+    "input_network_gnodesout.csv";
+
 const std::string OutputFilenames::pipe_flow_in = "output_ss_pipe_flow_in.csv";
 const std::string OutputFilenames::pipe_flow_out =
     "output_ss_pipe_flow_out.csv";

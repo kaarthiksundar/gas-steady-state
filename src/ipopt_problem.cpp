@@ -8,11 +8,12 @@
 
 using namespace Ipopt;
 
-GasNLP::GasNLP(Model * model) : _model(model) {};
+GasNLP::GasNLP(Model *model) : _model(model){};
 
 GasNLP::~GasNLP(){};
 
-bool GasNLP::get_nlp_info(Index &n, Index &m, Index &nnz_jac_g, Index &nnz_h_lag, IndexStyleEnum &index_style) {
+bool GasNLP::get_nlp_info(Index &n, Index &m, Index &nnz_jac_g,
+                          Index &nnz_h_lag, IndexStyleEnum &index_style) {
     n = (Index)_model->get_num_variables();
     m = (Index)_model->get_num_constraints();
     nnz_jac_g = (Index)_model->get_nnz_jacobian();
@@ -187,10 +188,10 @@ void GasNLP::finalize_solution(SolverReturn status, Index n, const Number *x,
     _model->set_dual_solution(lambda);
 };
 
-void solve_model(Model * model, const InputParams & ip) {
+void solve_model(Model *model, const InputParams &ip) {
     /* Create a new instance of the GasNLP */
     SmartPtr<TNLP> gas_nlp = new GasNLP(model);
-    
+
     /**
      * Create a new instance of IpoptApplication
      * We are using the factory, since this allows us to compile this
@@ -208,7 +209,8 @@ void solve_model(Model * model, const InputParams & ip) {
     app->Options()->SetStringValue("output_file", "gas_ss_nlp.out");
     /*
      * perform derivative test (for testing purposes only)
-     * app->Options()->SetStringValue("jacobian_approximation", "finite-difference-values");
+     * app->Options()->SetStringValue("jacobian_approximation",
+     * "finite-difference-values");
      * app->Options()->SetStringValue("derivative_test", "second-order");
      * app->Options()->SetStringValue("derivative_test_print_all", "yes");
      */
