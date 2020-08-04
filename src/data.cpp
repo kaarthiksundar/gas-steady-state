@@ -890,7 +890,7 @@ void DisruptionData::populate_disrupted_compressors(std::string data_path,
         } else {
             _compressor_ids = std::vector<int>();
             io::CSVReader<1> in(path + InputFilenames::disruption_compressors);
-            in.read_header(io::ignore_extra_column, "compressor_id");
+            in.read_header(io::ignore_extra_column, "comp_id");
             int id;
             while (in.read_row(id))
                 _compressor_ids.push_back(id);
@@ -900,7 +900,7 @@ void DisruptionData::populate_disrupted_compressors(std::string data_path,
         std::ifstream in(filename);
         json json_stream;
         in >> json_stream;
-        auto compressor_ids = json_stream["disruption"]["compressor_id"];
+        auto compressor_ids = json_stream["disruption"]["comp_id"];
         for (auto &element : compressor_ids.items())
             _compressor_ids.push_back(element.value());
         in.close();

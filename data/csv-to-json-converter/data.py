@@ -137,10 +137,10 @@ class Data:
             self.disruption['pipe_id'] += list(df['pipe_id'])
     
     def read_disrtupted_compressors(self, filename):
-        self.disruption['compressor_id'] = []
+        self.disruption['comp_id'] = []
         if os.path.isfile(filename):
             df = pd.read_csv(filename)
-            self.disruption['compressor_id'] += list(df['compressor_id'])
+            self.disruption['compressor_id'] += list(df['comp_id'])
             
     def read_disrtupted_gnodes(self, filename):
         self.disruption['gnode_id'] = []
@@ -163,10 +163,10 @@ class Data:
                     dmax_file='input_int_dmax.csv',
                     cs_file='input_int_cs.csv',
                     cd_file='input_int_cd.csv',
-                    disrupted_nodes_file='input_network_nodesout.csv',
-                    disrupted_pipes_file='input_network_pipesout.csv',
-                    disrupted_compressors_file='input_network_compressorsout.csv',
-                    disrupted_gnodes_file='input_network_gnodesout.csv'):
+                    disrupted_nodes_file='input_disrupt_node.csv',
+                    disrupted_pipes_file='input_disrupt_pipe.csv',
+                    disrupted_compressors_file='input_disrupt_comp.csv',
+                    disrupted_gnodes_file='input_disrupt_gnode.csv'):
         # call all the read functions
         self.read_input_parameters(input_data_folder + input_param_file)
         self.read_nodes(input_data_folder + nodes_file)

@@ -26,13 +26,13 @@ const std::string InputFilenames::gnodes_baseline_consumer_withdrawals =
     "input_int_gbar.csv";
 
 const std::string InputFilenames::disruption_pipes =
-    "input_network_pipesout.csv";
+    "input_disrupt_pipe.csv";
 const std::string InputFilenames::disruption_nodes =
-    "input_network_nodesout.csv";
+    "input_disrupt_node.csv";
 const std::string InputFilenames::disruption_compressors =
-    "input_network_compressorsout.csv";
+    "input_disrupt_comp.csv";
 const std::string InputFilenames::disruption_gnodes =
-    "input_network_gnodesout.csv";
+    "input_disrupt_gnode.csv";
 
 const std::string OutputFilenames::pipe_flow_in = "output_ss_pipe_flow_in.csv";
 const std::string OutputFilenames::pipe_flow_out =
