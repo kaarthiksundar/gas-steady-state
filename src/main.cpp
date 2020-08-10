@@ -16,9 +16,9 @@ int main(int argc, char *argv[]) {
     op::OptionParser opt;
     opt.add_option("h", "help", "shows option help");
     opt.add_option("n", "case_name", "case name", "model6ss_test_1_outage_n3");
-    opt.add_option("p", "case_path", "case file path", "../../data/");
+    opt.add_option("p", "case_path", "case file path", "../../data/csv_data/");
     opt.add_option("o", "output_path", "output folder path", "../../output/");
-    opt.add_option("f", "data_format", "data format (csv/json)", "json");
+    opt.add_option("f", "data_format", "data format (csv/json)", "csv");
 
     /* parse options */
     bool correct_parsing = opt.parse_options(argc, argv);

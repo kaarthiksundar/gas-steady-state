@@ -811,7 +811,7 @@ void DisruptionData::populate_disrupted_pipes(std::string data_path,
     }
     if (data_format == "csv") {
         std::ifstream file(path + InputFilenames::disruption_pipes);
-        if (file.good()) {
+        if (!file.good()) {
             _pipe_ids = std::vector<int>();
         } else {
             _pipe_ids = std::vector<int>();
@@ -848,7 +848,7 @@ void DisruptionData::populate_disrupted_nodes(std::string data_path,
     }
     if (data_format == "csv") {
         std::ifstream file(path + InputFilenames::disruption_nodes);
-        if (file.good()) {
+        if (!file.good()) {
             _node_ids = std::vector<int>();
         } else {
             _node_ids = std::vector<int>();
@@ -885,7 +885,7 @@ void DisruptionData::populate_disrupted_compressors(std::string data_path,
     }
     if (data_format == "csv") {
         std::ifstream file(path + InputFilenames::disruption_compressors);
-        if (file.good()) {
+        if (!file.good()) {
             _compressor_ids = std::vector<int>();
         } else {
             _compressor_ids = std::vector<int>();
@@ -922,7 +922,7 @@ void DisruptionData::populate_disrupted_gnodes(std::string data_path,
     }
     if (data_format == "csv") {
         std::ifstream file(path + InputFilenames::disruption_gnodes);
-        if (file.good()) {
+        if (!file.good()) {
             _gnode_ids = std::vector<int>();
         } else {
             _gnode_ids = std::vector<int>();
