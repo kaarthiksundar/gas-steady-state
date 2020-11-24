@@ -5,7 +5,8 @@
 InputParams::InputParams(double temperature, double gas_specific_gravity,
                          double specific_heat_capacity_ratio, int units,
                          double econ_weight, double max_iterations,
-                         int tolerance_exponent, int objective_scale_exponent) {
+                         int tolerance_exponent, int objective_scale_exponent,
+                         std::string linear_solver) {
     _temperature = temperature;
     _gas_specific_gravity = gas_specific_gravity;
     _specific_heat_capacity_ratio = specific_heat_capacity_ratio;
@@ -13,6 +14,7 @@ InputParams::InputParams(double temperature, double gas_specific_gravity,
     _econ_weight = econ_weight, _max_iterations = max_iterations;
     _tolerance_exponent = tolerance_exponent;
     _objective_scale_exponent = objective_scale_exponent;
+    _linear_solver = linear_solver;
 };
 
 double InputParams::get_temperature() const { return _temperature; };
@@ -29,6 +31,7 @@ int InputParams::get_tolerance_exponent() const { return _tolerance_exponent; };
 int InputParams::get_objective_scale_exponent() const {
     return _objective_scale_exponent;
 };
+std::string InputParams::get_linear_solver() const { return _linear_solver; };
 
 std::ostream &operator<<(std::ostream &os, const InputParams &ip) {
     os << "input_parameters(" << std::endl

@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <coin/IpTNLP.hpp>
+#include <coin-or/IpTNLP.hpp>
 #include <input_params.h>
 #include <model.h>
 

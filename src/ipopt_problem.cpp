@@ -4,7 +4,7 @@
 #include <cmath>
 #include <iostream>
 
-#include <coin/IpIpoptApplication.hpp>
+#include <coin-or/IpIpoptApplication.hpp>
 
 using namespace Ipopt;
 
@@ -215,7 +215,7 @@ void solve_model(Model *model, const InputParams &ip) {
      * app->Options()->SetStringValue("derivative_test_print_all", "yes");
      */
     app->Options()->SetIntegerValue("max_iter", ip.get_max_iterations());
-    app->Options()->SetStringValueIfUnset("linear_solver", "mumps");
+    app->Options()->SetStringValueIfUnset("linear_solver", ip.get_linear_solver());
     /* The following overwrites the default name (ipopt.opt) of the options file
      */
     app->Options()->SetStringValue("option_file_name", "gas_ss.opt");

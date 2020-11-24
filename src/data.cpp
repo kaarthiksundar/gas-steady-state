@@ -1125,7 +1125,7 @@ void Data::make_per_unit(const ConversionFactors &cf,
 };
 
 InputParams build_input_params(std::string data_path, std::string case_name,
-                               std::string data_format) {
+                               std::string data_format, std::string linear_solver) {
     std::string path;
     std::string filename;
     /* adjusting the path and file according for the data format provided */
@@ -1204,5 +1204,5 @@ InputParams build_input_params(std::string data_path, std::string case_name,
     return InputParams(temperature, gas_specific_gravity,
                        specific_heat_capacity_ratio, units, econ_weight,
                        max_iterations, tolerance_exponent,
-                       objective_scale_exponent);
+                       objective_scale_exponent, linear_solver);
 };

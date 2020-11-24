@@ -5,7 +5,8 @@ message("Looking for Ipopt in ${IPOPT_ROOT_DIR}")
 find_path(IPOPT_INCLUDE_DIR
 	NAMES IpNLP.hpp 
 	HINTS /usr/local/include/coin
-	HINTS ${IPOPT_ROOT_DIR}/include/coin
+    HINTS ${IPOPT_ROOT_DIR}/include/coin
+    HINTS ${IPOPT_ROOT_DIR}/include/coin-or
 	HINTS ${IPOPT_ROOT_DIR}/include
 	HINTS ${PROJECT_SOURCE_DIR}/third_party/CoinIpopt/build/include/coin
 )

@@ -15,10 +15,11 @@ int main(int argc, char *argv[]) {
     /* creating command line options */
     op::OptionParser opt;
     opt.add_option("h", "help", "shows option help");
-    opt.add_option("n", "case_name", "case name", "model6ss_test_1_outage_n3");
+    opt.add_option("n", "case_name", "case name", "model6ss_test_1");
     opt.add_option("p", "case_path", "case file path", "../data/");
     opt.add_option("o", "output_path", "output folder path", "../output/");
     opt.add_option("f", "data_format", "data format (csv/json)", "json");
+    opt.add_option("s", "linear_solver", "linear solver to be used (mumps/ma27/ma57)", "ma27");
 
     /* parse options */
     bool correct_parsing = opt.parse_options(argc, argv);
@@ -99,7 +100,7 @@ int main(int argc, char *argv[]) {
 
     std::cout << "*** Reading the input parameters and network data "
               << std::endl;
-    InputParams ip = build_input_params(opt["p"], opt["n"], opt["f"]);
+    InputParams ip = build_input_params(opt["p"], opt["n"], opt["f"], opt["s"]);
     ConversionFactors cf(ip);
     Data data(opt["p"], opt["n"], opt["f"], ip.get_units());
     ScalingFactors sf = build_scaling_factors(data.get_slack_pmin(), cf);
