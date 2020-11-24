@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
     opt.add_option("p", "case_path", "case file path", "../data/");
     opt.add_option("o", "output_path", "output folder path", "../output/");
     opt.add_option("f", "data_format", "data format (csv/json)", "json");
-    opt.add_option("s", "linear_solver", "linear solver to be used (mumps/ma27/ma57)", "ma27");
+    opt.add_option("s", "linear_solver", "linear solver to be used (mumps/ma27/ma57/ma97)", "mumps");
 
     /* parse options */
     bool correct_parsing = opt.parse_options(argc, argv);
