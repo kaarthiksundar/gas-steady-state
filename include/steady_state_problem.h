@@ -59,7 +59,7 @@ class SteadyStateProblem {
     double get_objective_value() const;
 
     void add_variables();
-    void add_constraints(const InputParams &);
+    void add_constraints(const InputParams &, const ScalingFactors &);
     void add_objective(const InputParams &);
 
     void populate_solution();
@@ -73,10 +73,12 @@ class SteadyStateProblem {
     void add_slack_production_variables();
     /* constraints */
     void add_nodal_balance_constraints();
-    void add_pipe_physics_constraints();
-    void add_compressor_physics_constraints();
+    void add_pipe_physics_constraints(const InputParams &, const ScalingFactors &);
+    void add_compressor_physics_constraints(const InputParams &, const ScalingFactors &);
     void add_compressor_discharge_pressure_bounds();
     void add_compressor_power_bounds(const InputParams &);
+    /* helper for model type */
+    std::pair<double, double> get_coeffs(const InputParams &, const ScalingFactors &);
 };
 
 #endif

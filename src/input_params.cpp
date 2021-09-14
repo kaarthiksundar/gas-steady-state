@@ -6,7 +6,7 @@ InputParams::InputParams(double temperature, double gas_specific_gravity,
                          double specific_heat_capacity_ratio, int units,
                          double econ_weight, double max_iterations,
                          int tolerance_exponent, int objective_scale_exponent,
-                         std::string linear_solver) {
+                         std::string linear_solver, std::string model_type) {
     _temperature = temperature;
     _gas_specific_gravity = gas_specific_gravity;
     _specific_heat_capacity_ratio = specific_heat_capacity_ratio;
@@ -15,6 +15,7 @@ InputParams::InputParams(double temperature, double gas_specific_gravity,
     _tolerance_exponent = tolerance_exponent;
     _objective_scale_exponent = objective_scale_exponent;
     _linear_solver = linear_solver;
+    _model_type = model_type;
 };
 
 double InputParams::get_temperature() const { return _temperature; };
@@ -32,6 +33,7 @@ int InputParams::get_objective_scale_exponent() const {
     return _objective_scale_exponent;
 };
 std::string InputParams::get_linear_solver() const { return _linear_solver; };
+std::string InputParams::get_model_type() const { return _model_type; };
 
 std::ostream &operator<<(std::ostream &os, const InputParams &ip) {
     os << "input_parameters(" << std::endl
@@ -43,7 +45,8 @@ std::ostream &operator<<(std::ostream &os, const InputParams &ip) {
        << "econ weight: " << ip._econ_weight << std::endl
        << "max iterations: " << ip._max_iterations << std::endl
        << "tolerance exponent: " << ip._tolerance_exponent << std::endl
-       << "objective scale exponent: " << ip._objective_scale_exponent << ")"
+       << "objective scale exponent: " << ip._objective_scale_exponent << std::endl
+       << "model type: " << ip._model_type << ")"
        << std::endl;
     return os;
 };

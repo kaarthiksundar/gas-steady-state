@@ -57,7 +57,7 @@ class SteadyStateSolution {
     void make_per_unit(const ConversionFactors &, const ScalingFactors &);
 
     void write_output(const Data &, const InputParams &, std::string data_path,
-                      std::string case_name, std::string data_format);
+                      std::string case_name, std::string model_type, std::string data_format);
 };
 
 #endif

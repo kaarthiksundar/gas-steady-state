@@ -507,6 +507,7 @@ void SteadyStateSolution::make_per_unit(const ConversionFactors &cf,
 void SteadyStateSolution::write_output(const Data &data, const InputParams &ip,
                                        std::string data_path,
                                        std::string case_name,
+                                       std::string model_type,
                                        std::string data_format) {
     std::string path;
     std::string filename;
@@ -515,7 +516,7 @@ void SteadyStateSolution::write_output(const Data &data, const InputParams &ip,
         path = data_path + case_name + "/";
         filename = "";
     } else {
-        path = data_path + case_name;
+        path = data_path + case_name + "_" + model_type;
         filename = path + "_output.json";
     }
     if (data_format == "csv") {

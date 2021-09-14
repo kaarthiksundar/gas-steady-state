@@ -4,14 +4,14 @@
 #include <iostream>
 
 Func::Func()
-    : _terms(), _variable_id_to_terms(), _name(""),
-      _variable_ids_with_nz_second_derivative(),
-      _variable_id_pairs_with_nz_mixed_second_derivative(){};
+: _terms(), _variable_id_to_terms(), _name(""),
+_variable_ids_with_nz_second_derivative(),
+_variable_id_pairs_with_nz_mixed_second_derivative(){};
 
 Func::Func(std::string name)
-    : _terms(), _variable_id_to_terms(), _name(name),
-      _variable_ids_with_nz_second_derivative(),
-      _variable_id_pairs_with_nz_mixed_second_derivative(){};
+: _terms(), _variable_id_to_terms(), _name(name),
+_variable_ids_with_nz_second_derivative(),
+_variable_id_pairs_with_nz_mixed_second_derivative(){};
 
 std::string Func::get_name() { return _name; };
 
@@ -24,51 +24,67 @@ void Func::add_term(Term term) {
             _variable_id_to_terms[variable_id].push_back(_terms.size() - 1);
         else
             _variable_id_to_terms[variable_id] =
-                std::vector<int>(1, _terms.size() - 1);
+            std::vector<int>(1, _terms.size() - 1);
     }
     switch (term.get_term_type()) {
-    case TermType::quadratic: {
-        _variable_ids_with_nz_second_derivative.insert(
-            term.get_variable_ids()[0]);
-        break;
-    }
-    case TermType::x_abs_x: {
-        _variable_ids_with_nz_second_derivative.insert(
-            term.get_variable_ids()[0]);
-        break;
-    }
-    case TermType::x_sq_y_sq: {
-        int var_id_x = term.get_variable_ids()[0],
+        case TermType::quadratic: {
+            _variable_ids_with_nz_second_derivative.insert(
+                                                           term.get_variable_ids()[0]);
+            break;
+        }
+        case TermType::cubic: {
+            _variable_ids_with_nz_second_derivative.insert(
+                                                           term.get_variable_ids()[0]);
+            break;
+        }
+        case TermType::x_abs_x: {
+            _variable_ids_with_nz_second_derivative.insert(
+                                                           term.get_variable_ids()[0]);
+            break;
+        }
+        case TermType::x_sq_y_sq: {
+            int var_id_x = term.get_variable_ids()[0],
             var_id_y = term.get_variable_ids()[1];
-        _variable_ids_with_nz_second_derivative.insert(var_id_x);
-        _variable_ids_with_nz_second_derivative.insert(var_id_y);
-        auto variable_id_pair = std::make_pair(std::min(var_id_x, var_id_y),
-                                               std::max(var_id_x, var_id_y));
-        _variable_id_pairs_with_nz_mixed_second_derivative.insert(
-            variable_id_pair);
-        break;
-    }
-    case TermType::xy: {
-        int var_id_x = term.get_variable_ids()[0],
+            _variable_ids_with_nz_second_derivative.insert(var_id_x);
+            _variable_ids_with_nz_second_derivative.insert(var_id_y);
+            auto variable_id_pair = std::make_pair(std::min(var_id_x, var_id_y),
+                                                   std::max(var_id_x, var_id_y));
+            _variable_id_pairs_with_nz_mixed_second_derivative.insert(
+                                                                      variable_id_pair);
+            break;
+        }
+        case TermType::x_cube_y_cube: {
+            int var_id_x = term.get_variable_ids()[0],
             var_id_y = term.get_variable_ids()[1];
-        auto variable_id_pair = std::make_pair(std::min(var_id_x, var_id_y),
-                                               std::max(var_id_x, var_id_y));
-        _variable_id_pairs_with_nz_mixed_second_derivative.insert(
-            variable_id_pair);
-        break;
-    }
-    case TermType::xpowermminusone_absy: {
-        int var_id_x = term.get_variable_ids()[0],
+            _variable_ids_with_nz_second_derivative.insert(var_id_x);
+            _variable_ids_with_nz_second_derivative.insert(var_id_y);
+            auto variable_id_pair = std::make_pair(std::min(var_id_x, var_id_y),
+                                                   std::max(var_id_x, var_id_y));
+            _variable_id_pairs_with_nz_mixed_second_derivative.insert(
+                                                                      variable_id_pair);
+            break;
+        }
+        case TermType::xy: {
+            int var_id_x = term.get_variable_ids()[0],
             var_id_y = term.get_variable_ids()[1];
-        _variable_ids_with_nz_second_derivative.insert(var_id_x);
-        auto variable_id_pair = std::make_pair(std::min(var_id_x, var_id_y),
-                                               std::max(var_id_x, var_id_y));
-        _variable_id_pairs_with_nz_mixed_second_derivative.insert(
-            variable_id_pair);
-        break;
-    }
-    default:
-        break;
+            auto variable_id_pair = std::make_pair(std::min(var_id_x, var_id_y),
+                                                   std::max(var_id_x, var_id_y));
+            _variable_id_pairs_with_nz_mixed_second_derivative.insert(
+                                                                      variable_id_pair);
+            break;
+        }
+        case TermType::xpowermminusone_absy: {
+            int var_id_x = term.get_variable_ids()[0],
+            var_id_y = term.get_variable_ids()[1];
+            _variable_ids_with_nz_second_derivative.insert(var_id_x);
+            auto variable_id_pair = std::make_pair(std::min(var_id_x, var_id_y),
+                                                   std::max(var_id_x, var_id_y));
+            _variable_id_pairs_with_nz_mixed_second_derivative.insert(
+                                                                      variable_id_pair);
+            break;
+        }
+        default:
+            break;
     }
 };
 
@@ -111,8 +127,8 @@ Func::get_gradient(int num_variables, const double *var_values) {
 std::vector<int> Func::get_gradient_sparsity(int num_variables) {
     std::vector<int> sparsity_pattern;
     for (auto i = 0; i < num_variables; ++i)
-        if (has_variable_id(i))
-            sparsity_pattern.push_back(i);
+    if (has_variable_id(i))
+        sparsity_pattern.push_back(i);
     return sparsity_pattern;
 };
 
@@ -131,8 +147,8 @@ std::set<std::pair<int, int>> Func::get_hessian_sparsity() {
     for (auto &id : _variable_ids_with_nz_second_derivative)
         sparsity_pattern.insert(std::make_pair(id, id));
     sparsity_pattern.insert(
-        _variable_id_pairs_with_nz_mixed_second_derivative.begin(),
-        _variable_id_pairs_with_nz_mixed_second_derivative.end());
+                            _variable_id_pairs_with_nz_mixed_second_derivative.begin(),
+                            _variable_id_pairs_with_nz_mixed_second_derivative.end());
     return sparsity_pattern;
 };
 
@@ -157,7 +173,7 @@ Func::get_hessian(const double *var_values) {
         for (auto i = 0; i < var_ids.size(); ++i) {
             double second_derivative = term.get_second_derivative(i, values);
             std::pair<int, int> var_id_pair =
-                std::make_pair(var_ids[i], var_ids[i]);
+            std::make_pair(var_ids[i], var_ids[i]);
             auto it = std::find(indices.begin(), indices.end(), var_id_pair);
             if (it != indices.end()) {
                 int current_index = std::distance(indices.begin(), it);
@@ -182,12 +198,12 @@ Func::get_hessian(const double *var_values) {
             }
         }
     }
-
+    
     std::vector<std::tuple<int, int, double>> hessian = {};
     for (auto i = 0; i < indices.size(); ++i)
-        hessian.push_back(std::make_tuple(indices[i].first, indices[i].second,
-                                          hessian_values[i]));
-
+    hessian.push_back(std::make_tuple(indices[i].first, indices[i].second,
+                                      hessian_values[i]));
+    
     return hessian;
 };
 

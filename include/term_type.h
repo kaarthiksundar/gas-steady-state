@@ -10,7 +10,9 @@ enum class TermType {
     x_abs_x,
     constant,
     xy,
-    xpowermminusone_absy
+    xpowermminusone_absy,
+    cubic,
+    x_cube_y_cube
 };
 
 #endif

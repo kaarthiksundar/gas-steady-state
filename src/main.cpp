@@ -20,6 +20,7 @@ int main(int argc, char *argv[]) {
     opt.add_option("o", "output_path", "output folder path", "../output/");
     opt.add_option("f", "data_format", "data format (csv/json)", "json");
     opt.add_option("s", "linear_solver", "linear solver to be used (mumps/ma27/ma57/ma97)", "mumps");
+    opt.add_option("m", "model_type", "model type (ideal/cnga/fullcnga)", "ideal");
 
     /* parse options */
     bool correct_parsing = opt.parse_options(argc, argv);
@@ -100,7 +101,7 @@ int main(int argc, char *argv[]) {
 
     std::cout << "*** Reading the input parameters and network data "
               << std::endl;
-    InputParams ip = build_input_params(opt["p"], opt["n"], opt["f"], opt["s"]);
+    InputParams ip = build_input_params(opt["p"], opt["n"], opt["f"], opt["s"], opt["m"]);
     ConversionFactors cf(ip);
     Data data(opt["p"], opt["n"], opt["f"], ip.get_units());
     ScalingFactors sf = build_scaling_factors(data.get_slack_pmin(), cf);
@@ -115,7 +116,7 @@ int main(int argc, char *argv[]) {
         << std::endl;
     SteadyStateProblem ssp("Steady State NLP model", ssd);
     ssp.add_variables();
-    ssp.add_constraints(ip);
+    ssp.add_constraints(ip, sf);
     ssp.add_objective(ip);
     std::cout << "*** Steady state model created " << std::endl;
 
@@ -130,7 +131,7 @@ int main(int argc, char *argv[]) {
     std::cout << "*** Steady state solution data structures populated "
               << std::endl;
 
-    sss.write_output(data, ip, opt["o"], opt["n"], opt["f"]);
+    sss.write_output(data, ip, opt["o"], opt["n"], opt["m"], opt["f"]);
 
     std::cout << "*** Solution files saved in folder : " << opt["o"]
               << std::endl;
